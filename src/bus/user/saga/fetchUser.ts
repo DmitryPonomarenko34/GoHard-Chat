@@ -21,23 +21,23 @@ function* fetchUser() {
     const userId: string | null = yield localStorage.getItem(USER_ID);
     console.log('🚀 ~ file: fetchUser.ts ~ line 22 ~ function*fetchUser ~ userId', userId);
 
-    // if (userId) {
-    //     yield makeRequest<User>({
-    //         fetchOptions: {
-    //             successStatusCode: 200,
-    //             fetch:             () => fetch(`${API_URL}/user`, {
-    //                 method:  'GET',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                 },
-    //             }),
-    //         },
-    //         succes: function* (result) {
-    //             yield console.log(result);
-    //             yield put(userActions.setUser(result));
-    //         },
-    //     });
-    // }
+    if (userId) {
+        yield makeRequest<User>({
+            fetchOptions: {
+                successStatusCode: 200,
+                fetch:             () => fetch(`${API_URL}/users/refresh/:userId`, {
+                    method:  'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }),
+            },
+            succes: function* (result) {
+                yield console.log(result);
+                yield put(userActions.setUser(result));
+            },
+        });
+    }
 
     // yield makeRequest<User>({
     //     fetchOptions: {
