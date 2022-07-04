@@ -2,7 +2,10 @@
 import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
 // State
-export type User = Array<any>
+export type User = {
+    username: string;
+    _id: string;
+}
 export type UserState = User | null
 
 // Contracts

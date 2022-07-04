@@ -15,7 +15,13 @@ type PropTypes = {
 export const RegistrationForm: FC<PropTypes> = () => {
     return (
         <S.Container>
-            Component: RegistrationForm
+            <form action = '#'>
+                <label htmlFor = ''>
+                    <span>Enter your NinjaName:</span>
+                    <input type = 'text' />
+                </label>
+                <button type = 'submit'>Submit</button>
+            </form>
         </S.Container>
     );
 };

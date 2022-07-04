@@ -10,7 +10,7 @@ export const useUserSaga = () => {
     const dispatch = useDispatch();
 
     return {
-        fetchUser: () => void dispatch(fetchUserAction(1)),
+        fetchUser: () => void dispatch(fetchUserAction()),
     };
 };
 

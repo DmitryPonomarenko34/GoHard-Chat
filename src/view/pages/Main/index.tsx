@@ -1,6 +1,6 @@
 // Core
 import React, { FC } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -8,16 +8,12 @@ import { ErrorBoundary } from '../../components';
 // Styles
 import { Container } from './styles';
 
-// Book
-import { LESSON1 } from '../../routes/book';
-
 const Main: FC = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     return (
         <Container>
             <p>Page: Main</p>
-            <button onClick = { () => navigate(LESSON1) }>Lesson 1</button>
         </Container>
     );
 };

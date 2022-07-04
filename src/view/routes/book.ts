@@ -1,2 +1,2 @@
 export const ROOT = '/';
-export const LESSON1 = '/lesson1';
+export const REGISTRATION = '/registration';
