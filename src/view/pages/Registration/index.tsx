@@ -1,5 +1,5 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 // Bus
 import { useUser } from '../../../bus/user';
@@ -20,6 +20,7 @@ import NinjaIcon from '../../../assets/icons/ninja-mask.svg';
 
 const Registration: FC<PropTypes> = () => {
     const { user, fetchUser } = useUser();
+    const [ username, setUsername ] = useState('');
     console.log('🚀 ~ file: index.tsx ~ line 20 ~ user', user);
 
     return (
@@ -36,10 +37,7 @@ const Registration: FC<PropTypes> = () => {
             </S.Title>
             <S.Form
                 action = '#'
-                onSubmit = { (event) => {
-                    event.preventDefault();
-                    fetchUser();
-                } }>
+                onSubmit = { fetchUser(username) }>
                 <S.Label htmlFor = 'text'>
                     <S.LabelText>
                         Enter your NinjaName:
@@ -48,6 +46,8 @@ const Registration: FC<PropTypes> = () => {
                         name = 'text'
                         placeholder = 'Write your ninja name'
                         type = 'text'
+                        value = { username }
+                        onChange = { (event) => setUsername(event.target.value) }
                     />
                 </S.Label>
                 <S.SubmitBtn
