@@ -1,20 +1,31 @@
 // Core
 import React, { FC } from 'react';
-// import { useNavigate } from 'react-router-dom';
+
+// Bus
+import { useUser } from '../../../bus/user';
 
 // Components
 import { ErrorBoundary } from '../../components';
 
 // Styles
-import { Container } from './styles';
+import * as S from './styles';
 
 const Main: FC = () => {
-    // const navigate = useNavigate();
+    const { user, logoutUser } = useUser();
 
     return (
-        <Container>
-            <p>Page: Main</p>
-        </Container>
+        <S.Container>
+            <p>Welcome to Ninja-Chat:
+                {
+                    user && user.username
+                }
+            </p>
+            <button onClick = { () => {
+                logoutUser();
+            } }>
+                Logout
+            </button>
+        </S.Container>
     );
 };
 
