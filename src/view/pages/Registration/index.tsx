@@ -19,9 +19,10 @@ type PropTypes = {
 import NinjaIcon from '../../../assets/icons/ninja-mask.svg';
 
 const Registration: FC<PropTypes> = () => {
-    const { user, fetchUser } = useUser();
-    const [ username, setUsername ] = useState('');
-    console.log('🚀 ~ file: index.tsx ~ line 20 ~ user', user);
+    const { registerUser } = useUser();
+
+    const random = () => Math.floor(1000 + (Math.random() * 9000));
+    const [ username, setUsername ] = useState(`NINJA:${random()}`);
 
     return (
         <S.Container>
@@ -37,7 +38,10 @@ const Registration: FC<PropTypes> = () => {
             </S.Title>
             <S.Form
                 action = '#'
-                onSubmit = { fetchUser(username) }>
+                onSubmit = { (event) => {
+                    event.preventDefault();
+                    registerUser(username);
+                }  }>
                 <S.Label htmlFor = 'text'>
                     <S.LabelText>
                         Enter your NinjaName:

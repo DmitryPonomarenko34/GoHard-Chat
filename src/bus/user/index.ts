@@ -8,11 +8,12 @@ import { useSelector } from '../../tools/hooks';
 import { useUserSaga } from './saga';
 
 export const useUser = () => {
-    const { fetchUser } = useUserSaga();
+    const { refreshUser, registerUser } = useUserSaga();
     const user = useSelector((state) => state.user); // Add user to ./src/init/redux/index.ts
 
     return {
         user,
-        fetchUser,
+        refreshUser,
+        registerUser,
     };
 };

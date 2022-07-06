@@ -1,6 +1,6 @@
 // Core
 import React, { FC } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 // Pages
 import * as Pages from '../pages';
@@ -14,6 +14,15 @@ export const Private: FC = () => {
             <Route
                 element = { <Pages.Main /> }
                 path = { book.ROOT }
+            />
+            <Route
+                element = {
+                    <Navigate
+                        replace
+                        to = { book.ROOT }
+                    />
+                }
+                path = '*'
             />
         </Routes>
     );

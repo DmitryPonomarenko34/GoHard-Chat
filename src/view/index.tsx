@@ -3,7 +3,7 @@ import React, { FC, useEffect, useCallback } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
 // Bus
-// import { useUser } from '../bus/user';
+import { useUser } from '../bus/user';
 
 // Containers
 import { Routes } from './routes';
@@ -26,7 +26,7 @@ export const AppContainer = styled.div`
 export const App: FC = () => {
     const { setTogglerAction } = useTogglersRedux();
     const [ isDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
-    // const { fetchUser } = useUser();
+    const { refreshUser } = useUser();
 
     const setOnlineStatusHanlder = useCallback(() => void setTogglerAction({
         type:  'isOnline',
@@ -34,7 +34,7 @@ export const App: FC = () => {
     }), [ setTogglerAction ]);
 
     useEffect(() => {
-        // fetchUser(messega);
+        refreshUser();
         setOnlineStatusHanlder();
         window.addEventListener('online', setOnlineStatusHanlder);
         window.addEventListener('offline', setOnlineStatusHanlder);
