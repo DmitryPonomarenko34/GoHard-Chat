@@ -10,99 +10,42 @@ import { ErrorBoundary } from '../../components';
 // Styles
 import * as S from './styles';
 
+// Asset
+import ninjaImg from '../../../assets/images/ninjaImg.jpg';
+
 const Main: FC = () => {
-    const { user, logoutUser } = useUser();
+    const { user, logoutUser, getMessagesAction } = useUser();
+    getMessagesAction();
 
     return (
         <S.Container>
-            <p>
-                Welcome to Shinoby-Chat:
-                {
-                    user && user.username
-                }
-            </p>
-            <button onClick = { () => void logoutUser() }>
-                Logout
-            </button>
-            <S.ScrollBox>
-                <S.Chat>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                    <S.Message>
-                        <S.UserName>Ninja San</S.UserName>
-                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                        <S.DispatchTime></S.DispatchTime>
-                    </S.Message>
-                </S.Chat>
-            </S.ScrollBox>
+            <S.FlexWrap>
+                <S.Title>
+                    Welcome to Chat:
+                    {
+                        user
+                        && (
+                            <S.AccentTitleWord>
+                                {user.username}
+                            </S.AccentTitleWord>
+                        )
+                    }
+                </S.Title>
+                <S.LogoutBtn onClick = { () => void logoutUser() }>
+                    Logout
+                </S.LogoutBtn>
+            </S.FlexWrap>
+            <S.Chat>
+                <S.Message>
+                    {
+                        /// array
+                    }
+                    <S.UserName>Ninja San</S.UserName>
+                    <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                    <S.DispatchTime dateTime = ''></S.DispatchTime>
+                </S.Message>
+            </S.Chat>
+            <S.DecorImg src = { ninjaImg } />
         </S.Container>
     );
 };

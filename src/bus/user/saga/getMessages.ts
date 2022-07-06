@@ -11,7 +11,7 @@ import { makeRequest } from '../../../tools/utils';
 import { API_URL, USER_ID } from '../../../init/constants';
 
 // Action
-export const getMessagesAction = createAction<string | undefined>(`${sliceName}/REGISTER_USER_ASYNC`);
+export const getMessagesAction = createAction(`${sliceName}/GET_USER_MESSAGES_ASYNC`);
 
 // Types
 import { User } from '../types';
@@ -20,8 +20,8 @@ import { User } from '../types';
 function* getMessages() {
     yield makeRequest<User>({
         fetchOptions: {
-            successStatusCode: 201,
-            fetch:             () => fetch(`${API_URL}/users/register`, {
+            successStatusCode: 200,
+            fetch:             () => fetch(`${API_URL}/messages`, {
                 method:  'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -29,8 +29,8 @@ function* getMessages() {
             }),
         },
         succes: function* (result) {
-            yield localStorage.setItem(USER_ID, result._id);
-            yield put(userActions.setUser(result));
+            yield console.log(result);
+            // yield put(userActions.setUser(result));
         },
     });
 }
