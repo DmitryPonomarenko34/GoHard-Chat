@@ -15,16 +15,94 @@ const Main: FC = () => {
 
     return (
         <S.Container>
-            <p>Welcome to Ninja-Chat:
+            <p>
+                Welcome to Shinoby-Chat:
                 {
                     user && user.username
                 }
             </p>
-            <button onClick = { () => {
-                logoutUser();
-            } }>
+            <button onClick = { () => void logoutUser() }>
                 Logout
             </button>
+            <S.ScrollBox>
+                <S.Chat>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                </S.Chat>
+            </S.ScrollBox>
         </S.Container>
     );
 };
