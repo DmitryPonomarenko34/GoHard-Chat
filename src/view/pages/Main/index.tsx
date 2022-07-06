@@ -1,20 +1,109 @@
 // Core
 import React, { FC } from 'react';
-// import { useNavigate } from 'react-router-dom';
+
+// Bus
+import { useUser } from '../../../bus/user';
 
 // Components
 import { ErrorBoundary } from '../../components';
 
 // Styles
-import { Container } from './styles';
+import * as S from './styles';
 
 const Main: FC = () => {
-    // const navigate = useNavigate();
+    const { user, logoutUser } = useUser();
 
     return (
-        <Container>
-            <p>Page: Main</p>
-        </Container>
+        <S.Container>
+            <p>
+                Welcome to Shinoby-Chat:
+                {
+                    user && user.username
+                }
+            </p>
+            <button onClick = { () => void logoutUser() }>
+                Logout
+            </button>
+            <S.ScrollBox>
+                <S.Chat>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                    <S.Message>
+                        <S.UserName>Ninja San</S.UserName>
+                        <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
+                        <S.DispatchTime></S.DispatchTime>
+                    </S.Message>
+                </S.Chat>
+            </S.ScrollBox>
+        </S.Container>
     );
 };
 

@@ -10,7 +10,6 @@ export const Container = styled.section`
 `;
 
 export const DecorIcon = styled.img`
-    
 `;
 
 export const Title = styled.h1`
