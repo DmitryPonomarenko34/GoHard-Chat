@@ -56,14 +56,18 @@ export const LogoutBtn = styled.button`
     }
 `;
 
-export const Chat = styled.div`
+export const ChatBox = styled.div`
     padding: 10px 20px;
     max-width: 500px;
     width: 100%;
     margin: 0 auto;
-    height: 40vh;
+    height: 65vh;
     overflow-y: auto;
     background: #6C6C6C;
+`;
+
+export const Chat = styled.div`
+    overflow-y: auto;
 `;
 
 export const Message = styled.div`
@@ -74,24 +78,68 @@ export const Message = styled.div`
     margin-bottom: 10px;
 `;
 
+export const MessageFlexColumn = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+`;
+
 export const UserName = styled.span`
+    display: block;
     font-size: 14px;
     color: #fff;
     margin-bottom: 5px;
 `;
 
 export const UserMessage = styled.p`
-    font-size: 16px;
+    font-size: 17px;
     word-break: break-all;
+    margin-bottom: 6px;
 `;
 
 export const DispatchTime = styled.time`
+    font-size: 13px;
+    margin-right: 5px;
+    text-align: end;
+    display: block;
+`;
 
+export const EditedText = styled(DispatchTime)`
+    text-align: end;
+    color: #fff;
+`;
+
+export const Form = styled.form`
+    display: flex;
+    align-items: center;
+`;
+
+export const Input = styled.input`
+    font-family: 'Inter-Regular';
+    padding: 5px 10px 5px 0;
+    font-weight: 400;
+    font-size: 18px;
+    color: var(--bg);
+    height: 100%;
+    flex: 1 1 auto;
+    align-self: flex-end;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 3px solid  rgba(255, 255, 255, 0.9);
+    margin-right: 10px;
+`;
+
+export const SubmitBtn = styled(LogoutBtn)`
+    text-transform: uppercase;
+    width: 20%;
+    
 `;
 
 export const DecorImg = styled.img`
     max-width: 100%;
-    height: 100%;
+    height: 60%;
     object-fit: cover;
     z-index: 3;
     position: relative;

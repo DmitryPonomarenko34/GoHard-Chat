@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 
 // Bus
 import { useUser } from '../../../bus/user';
+import { useMessage } from '../../../bus/messages';
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -14,8 +15,9 @@ import * as S from './styles';
 import ninjaImg from '../../../assets/images/ninjaImg.jpg';
 
 const Main: FC = () => {
-    const { user, logoutUser, getMessagesAction } = useUser();
-    getMessagesAction();
+    const { user, logoutUser } = useUser();
+    const { messages } = useMessage();
+
 
     return (
         <S.Container>
@@ -24,27 +26,54 @@ const Main: FC = () => {
                     Welcome to Chat:
                     {
                         user
-                        && (
-                            <S.AccentTitleWord>
-                                {user.username}
-                            </S.AccentTitleWord>
-                        )
+                            && (
+                                <S.AccentTitleWord>
+                                    {user.username}
+                                </S.AccentTitleWord>
+                            )
                     }
                 </S.Title>
                 <S.LogoutBtn onClick = { () => void logoutUser() }>
                     Logout
                 </S.LogoutBtn>
             </S.FlexWrap>
-            <S.Chat>
-                <S.Message>
+            <S.ChatBox>
+                <S.Chat>
                     {
-                        /// array
+                        messages
+                        && messages
+                            .map(({ _id, username, text, createdAt, updatedAt }) => {
+                                const createdDate = new Date(createdAt).getTime();
+                                const updatedDate = new Date(updatedAt).getTime();
+
+                                const messageCreatedTime = new Date(createdAt).toLocaleTimeString();
+
+                                return (
+                                    <S.Message key = { _id }>
+                                        <S.UserName>{username}</S.UserName>
+                                        <S.UserMessage>{text}</S.UserMessage>
+                                        <S.MessageFlexColumn>
+                                            <S.DispatchTime dateTime = { createdAt }>
+                                                {messageCreatedTime}
+                                            </S.DispatchTime>
+                                            {
+                                                createdDate !== updatedDate ? <S.EditedText>edited</S.EditedText> : null
+                                            }
+                                        </S.MessageFlexColumn>
+                                    </S.Message>
+                                );
+                            })
+                            .reverse()
                     }
-                    <S.UserName>Ninja San</S.UserName>
-                    <S.UserMessage>skqpskqpskpqksp</S.UserMessage>
-                    <S.DispatchTime dateTime = ''></S.DispatchTime>
-                </S.Message>
-            </S.Chat>
+                    <S.Form onSubmit = { (event) => {
+                        event.preventDefault();
+                       // createMessage(); 
+                    }  }>
+                        <S.Input type = 'text' />
+                        <S.SubmitBtn type = 'submit'>send</S.SubmitBtn>
+                    </S.Form>
+                </S.Chat>
+            </S.ChatBox>
             <S.DecorImg src = { ninjaImg } />
         </S.Container>
     );
