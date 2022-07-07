@@ -28,7 +28,7 @@ const getMessages = () => makeRequest<Messages>({
         }),
     },
     succes: function* (result) {
-        yield put(messageActions.setMessage(result));
+        yield put(messageActions.setMessages(result));
     },
 });
 

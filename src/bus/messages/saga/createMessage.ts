@@ -10,15 +10,14 @@ import { messageActions, sliceName } from '../slice';
 import { makeRequest } from '../../../tools/utils';
 import { API_URL } from '../../../init/constants';
 
-// Action
-export const fetchMessageAction = createAction<number>(`${sliceName}/FETCH_MESSAGES_ASYNC`);
-
 // Types
-import { Message } from '../types';
+import { Message, MessagePayload } from '../types';
+
+// Action
+export const createMessageAction = createAction<MessagePayload>(`${sliceName}/CREATE_MESSAGES_ASYNC`);
 
 // Saga
-const fetchMessage = (callAction: ReturnType<typeof fetchMessageAction>) => makeRequest<Message>({
-    callAction,
+const createMessage = (callAction: ReturnType<typeof createMessageAction>) => makeRequest<Message>({
     fetchOptions: {
         successStatusCode: 201,
         fetch:             () => fetch(`${API_URL}/messages`, {
@@ -26,15 +25,16 @@ const fetchMessage = (callAction: ReturnType<typeof fetchMessageAction>) => make
             headers: {
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify(callAction.payload),
         }),
     },
     succes: function* (result) {
         yield console.log(result);
-        yield put(messageActions.setMessage(result));
+        yield put(messageActions.createMessage(result));
     },
 });
 
 // Watcher
-export function* watchFetchMessage(): SagaIterator {
-    yield takeLatest(fetchMessageAction.type, fetchMessage);
+export function* watchCreateMessage(): SagaIterator {
+    yield takeLatest(createMessageAction.type, createMessage);
 }

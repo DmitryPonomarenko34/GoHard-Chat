@@ -1,9 +1,9 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 // Bus
 import { useUser } from '../../../bus/user';
-import { useMessage } from '../../../bus/messages';
+import { useMessages } from '../../../bus/messages';
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -16,22 +16,25 @@ import ninjaImg from '../../../assets/images/ninjaImg.jpg';
 
 const Main: FC = () => {
     const { user, logoutUser } = useUser();
-    const { messages } = useMessage();
+    const { messages, createMessage, getMessages } = useMessages();
+    const [ messageText, setMessageText ] = useState('');
 
+    useEffect(() => {
+        getMessages();
+    }, []);
+
+    if (user === null || messages === null) {
+        return <div>Spinner</div>;
+    }
 
     return (
         <S.Container>
             <S.FlexWrap>
                 <S.Title>
                     Welcome to Chat:
-                    {
-                        user
-                            && (
-                                <S.AccentTitleWord>
-                                    {user.username}
-                                </S.AccentTitleWord>
-                            )
-                    }
+                    <S.AccentTitleWord>
+                        {user.username}
+                    </S.AccentTitleWord>
                 </S.Title>
                 <S.LogoutBtn onClick = { () => void logoutUser() }>
                     Logout
@@ -41,7 +44,6 @@ const Main: FC = () => {
                 <S.Chat>
                     {
                         messages
-                        && messages
                             .map(({ _id, username, text, createdAt, updatedAt }) => {
                                 const createdDate = new Date(createdAt).getTime();
                                 const updatedDate = new Date(updatedAt).getTime();
@@ -49,7 +51,7 @@ const Main: FC = () => {
                                 const messageCreatedTime = new Date(createdAt).toLocaleTimeString();
 
                                 return (
-                                    <S.Message key = { _id }>
+                                    <S.Message key = { _id } >
                                         <S.UserName>{username}</S.UserName>
                                         <S.UserMessage>{text}</S.UserMessage>
                                         <S.MessageFlexColumn>
@@ -67,9 +69,17 @@ const Main: FC = () => {
                     }
                     <S.Form onSubmit = { (event) => {
                         event.preventDefault();
-                       // createMessage(); 
+                        createMessage({
+                            text:     messageText,
+                            username: user.username,
+                        });
+                        setMessageText('');
                     }  }>
-                        <S.Input type = 'text' />
+                        <S.Input
+                            type = 'text'
+                            value = { messageText }
+                            onChange = { (event) => setMessageText(event.target.value) }
+                        />
                         <S.SubmitBtn type = 'submit'>send</S.SubmitBtn>
                     </S.Form>
                 </S.Chat>

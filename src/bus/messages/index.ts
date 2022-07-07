@@ -1,22 +1,16 @@
-// Core
-import { useEffect } from 'react';
-
 // Tools
 import { useSelector } from '../../tools/hooks';
 
 // Saga
-import { useMessageSaga } from './saga';
+import { useMessagesSaga } from './saga';
 
-export const useMessage = () => {
-    const { getMessages } = useMessageSaga();
+export const useMessages = () => {
+    const { getMessages, createMessage } = useMessagesSaga();
     const messages = useSelector((state) => state.messages);
-
-    useEffect(() => {
-        getMessages();
-    }, []);
 
     return {
         messages,
         getMessages,
+        createMessage,
     };
 };
