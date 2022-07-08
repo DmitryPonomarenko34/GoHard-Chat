@@ -1,18 +1,22 @@
 // Core
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
 // Tools
 import { useSelector } from '../../../tools/hooks';
 
-const initialState = {
-    isOnline:   navigator.onLine,
-    isLoggedIn: false,
+// Types
+// import { Message } from '../../messages/types';
+
+export const initialState = {
+    isOnline:    navigator.onLine,
+    isLoggedIn:  false,
+    isMessageId: '',
 };
 
 // Types
 export type TogglersKeys = keyof typeof initialState;
-type Options = { type: TogglersKeys, value: boolean };
+type Options = {type: TogglersKeys, value: boolean | string, };
 
 // Slice
 export const toggrersSlice = createSlice({
@@ -20,6 +24,10 @@ export const toggrersSlice = createSlice({
     initialState,
     reducers: {
         togglerCreatorAction: (state, action: PayloadAction<Options>) => ({
+            ...state,
+            [ action.payload.type ]: action.payload.value,
+        }),
+        togglerMessage: (state, action: PayloadAction<TogglersKeys>) => ({
             ...state,
             [ action.payload.type ]: action.payload.value,
         }),
@@ -38,6 +46,7 @@ export const useTogglersRedux = () => {
         togglersRedux:          useSelector(({ togglers }) => togglers),
         setTogglerAction:       (options: Options) => void dispatch(toggrersActions.togglerCreatorAction(options)),
         resetTogglersToInitial: () => void dispatch(toggrersActions.resetTogglersToInitialAction()),
+        changeMessage:          (_id: string) => void dispatch(toggrersActions.togglerMessage(_id)),
     };
 };
 

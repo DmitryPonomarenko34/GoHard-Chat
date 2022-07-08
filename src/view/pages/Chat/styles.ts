@@ -1,8 +1,14 @@
 // Core
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+// Type
+type UserTypes = {
+    messageAuthor: boolean | null;
+}
 
 //Asset
 import shurikenBgIcon from '../../../assets/icons/shuriken.svg';
+import userIcon from '../../../assets/icons/user-icon.svg';
 
 export const Container = styled.section`
     width: 100%;
@@ -70,12 +76,15 @@ export const Chat = styled.div`
     overflow-y: auto;
 `;
 
-export const Message = styled.div`
+export const Message = styled.div<UserTypes>`
     background: rgba(255, 255, 255, 0.43);
-    width: fit-content;
+    width: 50%;
     padding: 10px 6px;
     color: #0E0E0E;
     margin-bottom: 10px;
+   ${(props) => props.messageAuthor && css`
+        margin-left: auto;
+   `}
 `;
 
 export const MessageFlexColumn = styled.div`
@@ -85,11 +94,29 @@ export const MessageFlexColumn = styled.div`
     margin-bottom: 5px;
 `;
 
-export const UserName = styled.span`
+export const UserName = styled.span<UserTypes>`
     display: block;
     font-size: 14px;
     color: #fff;
     margin-bottom: 5px;
+
+    ${(props) => props.messageAuthor && css`
+        padding-left: 25px;
+        position: relative;
+        color: #E15A32;
+        &::before{
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-image: url(${userIcon});
+            width: 20px;
+            height: 15px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: top center;
+        }
+   `}
 `;
 
 export const UserMessage = styled.p`
@@ -134,7 +161,30 @@ export const Input = styled.input`
 export const SubmitBtn = styled(LogoutBtn)`
     text-transform: uppercase;
     width: 20%;
-    
+`;
+
+export const ActionBox = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+`;
+
+export const BtnsBox = styled(ActionBox)`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+`;
+
+export const BtnChangeMessage = styled(LogoutBtn)`
+  padding: 10px 5px;
+  margin-right: 5px;
+  width: auto;
+`;
+
+export const BtnRemoveMessage = styled(BtnChangeMessage)`
+    margin-right: 0;
 `;
 
 export const DecorImg = styled.img`

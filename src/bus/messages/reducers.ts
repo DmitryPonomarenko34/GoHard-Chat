@@ -12,3 +12,7 @@ export const createMessage: types.BaseContact<types.Message> = (state, action) =
 
     return [ action.payload, ...state ];
 };
+
+export const changeMessage: types.BaseContact<types.Message> = (__, action) => {
+    return [ action.payload ];
+};

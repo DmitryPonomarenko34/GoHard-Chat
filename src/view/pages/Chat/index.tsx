@@ -19,6 +19,8 @@ const Main: FC = () => {
     const { messages, createMessage, getMessages } = useMessages();
     const [ messageText, setMessageText ] = useState('');
 
+    const changeTogglerMessage = (_id: string) => _id;
+
     useEffect(() => {
         getMessages();
     }, []);
@@ -49,14 +51,35 @@ const Main: FC = () => {
                                 const updatedDate = new Date(updatedAt).getTime();
 
                                 const messageCreatedTime = new Date(createdAt).toLocaleTimeString();
+                                const messageAuthor = username === user.username ? true : null;
+
+                                const userId = '';
 
                                 return (
-                                    <S.Message key = { _id } >
-                                        <S.UserName>{username}</S.UserName>
-                                        <S.UserMessage>{text}</S.UserMessage>
+                                    <S.Message
+                                        key = { _id }
+                                        messageAuthor = { messageAuthor }>
+                                        <S.ActionBox>
+                                            <S.UserName messageAuthor = { messageAuthor }>{username}</S.UserName>
+                                            {
+                                                messageAuthor && (
+                                                    <S.BtnsBox>
+                                                        <S.BtnChangeMessage onClick = { () => {
+                                                            userId + _id;
+                                                        }  }>
+                                                            change
+                                                        </S.BtnChangeMessage>
+                                                        <S.BtnRemoveMessage>remove</S.BtnRemoveMessage>
+                                                    </S.BtnsBox>
+                                                )
+                                            }
+                                        </S.ActionBox>
+                                        {
+                                            userId === _id && messageAuthor ? 'asasasa' : <S.UserMessage>{text}</S.UserMessage>
+                                        }
                                         <S.MessageFlexColumn>
                                             <S.DispatchTime dateTime = { createdAt }>
-                                                {messageCreatedTime}
+                                                { messageCreatedTime }
                                             </S.DispatchTime>
                                             {
                                                 createdDate !== updatedDate ? <S.EditedText>edited</S.EditedText> : null
