@@ -15,16 +15,16 @@ export const createMessage: types.BaseContact<types.Message> = (state, action) =
 
 export const changeMessage: types.BaseContact<types.Message> = (state, action) => {
     if (state === null) {
-        return [ action.payload ];
+        return state;
     }
 
-    return state.map((elem) => elem._id === action.payload._id ? action.payload : elem);
+    return state.map((message) => message._id === action.payload._id ? action.payload : message);
 };
 
 export const deleteMessage: types.BaseContact<types.Message> = (state, action) => {
     if (state === null) {
-        return [ action.payload ];
+        return state;
     }
 
-    return state.filter((elem) => elem === action.payload ? action.payload : elem);
+    return state.filter((message) => message._id !== action.payload._id);
 };

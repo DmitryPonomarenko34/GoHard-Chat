@@ -9,18 +9,23 @@ import { useClientMessage } from '../../../bus/client/clientMessage';
 // Components
 import { ErrorBoundary } from '../../components';
 
+// Asset
+import ninjaImg from '../../../assets/images/ninjaImg.jpg';
+
 // Styles
 import * as S from './styles';
 
-// Asset
-import ninjaImg from '../../../assets/images/ninjaImg.jpg';
+// Types
+import { Message } from '../../../bus/messages/types';
+
 
 const Main: FC = () => {
     const { user, logoutUser } = useUser();
     const { messages, createMessage, getMessages, changeMessage, deleteMessage } = useMessages();
+    const { clientMessage, changeClientMessage, closeClientMessage } = useClientMessage();
+
     const [ messageText, setMessageText ] = useState('');
     const [ clientMessageText, setClientMessageText ] = useState('');
-    const { clientMessage, changeClientMessage, closeClientMessage } = useClientMessage();
 
     useEffect(() => {
         getMessages();
@@ -29,6 +34,14 @@ const Main: FC = () => {
     if (user === null || messages === null) {
         return <div>Spinner</div>;
     }
+
+    const messageTransformator = (message: Message) => ({
+        createdDate:        new Date(message.createdAt).getTime(),
+        updatedDate:        new Date(message.updatedAt).getTime(),
+        messageCreatedTime: new Date(message.createdAt).toLocaleTimeString(),
+        messageAuthor:      message.username === user.username ? true : null,
+        isClientMessage:    clientMessage?._id === message._id,
+    });
 
     return (
         <S.Container>
@@ -46,101 +59,98 @@ const Main: FC = () => {
             <S.ChatBox>
                 <S.Chat>
                     {
-                        messages
-                            .map((elem) => {
-                                const createdDate = new Date(elem.createdAt).getTime();
-                                const updatedDate = new Date(elem.updatedAt).getTime();
+                        messages.map((message) => {
+                            const {
+                                createdDate, updatedDate,
+                                isClientMessage,
+                                messageAuthor, messageCreatedTime,
+                            } = messageTransformator(message);
 
-                                const messageCreatedTime = new Date(elem.createdAt).toLocaleTimeString();
-                                const messageAuthor = elem.username === user.username ? true : null;
-
-                                const isClientMessage = clientMessage?._id === elem._id;
-
-                                return (
-                                    <S.Message
-                                        key = { elem._id }
-                                        messageAuthor = { messageAuthor }>
-                                        <S.ActionBox>
-                                            <S.UserName messageAuthor = { messageAuthor }>{elem.username}</S.UserName>
-                                            {
-                                                messageAuthor && (
-                                                    <S.BtnsBox>
-                                                        {
-                                                            isClientMessage ? (
-                                                                <S.CloseBtn onClick = { () => {
-                                                                    closeClientMessage();
-                                                                }  }>
-                                                                    Close
-                                                                </S.CloseBtn>
-                                                            ) : (
-                                                                <S.BtnChangeMessage onClick = { () => {
-                                                                    changeClientMessage(elem);
-                                                                } }>
-                                                                    change
-                                                                </S.BtnChangeMessage>
-                                                            )
-                                                        }
-                                                        <S.BtnRemoveMessage onClick = { () => {
-                                                            deleteMessage(elem);
-                                                        }  }>
-                                                            remove
-                                                        </S.BtnRemoveMessage>
-                                                    </S.BtnsBox>
-                                                )
-                                            }
-                                        </S.ActionBox>
+                            return (
+                                <S.Message
+                                    key = { message._id }
+                                    messageAuthor = { messageAuthor }>
+                                    <S.ActionBox>
+                                        <S.UserName messageAuthor = { messageAuthor }>{message.username}</S.UserName>
                                         {
-                                            isClientMessage && messageAuthor ? (
-                                                <S.ChangeMessageForm
-                                                    onSubmit = {
-                                                        (event) => {
-                                                            event.preventDefault();
-                                                            changeMessage({ text: clientMessageText, _id: elem._id });
-                                                            closeClientMessage();
-                                                        }
-                                                    }>
-                                                    <S.ChangeMessageInput
-                                                        placeholder = 'enter a change message'
-                                                        type = 'text'
-                                                        value = { clientMessageText }
-                                                        onChange = { (event) => {
-                                                            setClientMessageText(event.target.value);
-                                                        } }
-                                                    />
-                                                    <S.ChangeMessageBtn>Submit</S.ChangeMessageBtn>
-                                                </S.ChangeMessageForm>
-                                            ) : <S.UserMessage>{elem.text}</S.UserMessage>
+                                            messageAuthor && (
+                                                <S.BtnsBox>
+                                                    {
+                                                        isClientMessage ? (
+                                                            <S.CloseBtn onClick = { () => void closeClientMessage() }>
+                                                                Close
+                                                            </S.CloseBtn>
+                                                        ) : (
+                                                            <S.BtnChangeMessage onClick = { () => {
+                                                                changeClientMessage(message);
+                                                            } }>
+                                                                change
+                                                            </S.BtnChangeMessage>
+                                                        )
+                                                    }
+                                                    <S.BtnRemoveMessage onClick = { () => void deleteMessage(message) }>
+                                                        remove
+                                                    </S.BtnRemoveMessage>
+                                                </S.BtnsBox>
+                                            )
                                         }
-                                        <S.MessageFlexColumn>
-                                            <S.DispatchTime dateTime = { elem.createdAt }>
-                                                { messageCreatedTime }
-                                            </S.DispatchTime>
-                                            {
-                                                createdDate !== updatedDate ? <S.EditedText>edited</S.EditedText> : null
-                                            }
-                                        </S.MessageFlexColumn>
-                                    </S.Message>
-                                );
-                            })
+                                    </S.ActionBox>
+                                    {
+                                        isClientMessage && messageAuthor ? (
+                                            <S.ChangeMessageForm
+                                                onSubmit = { (event) => {
+                                                    event.preventDefault();
+                                                    changeMessage({ text: clientMessageText, _id: message._id });
+                                                    closeClientMessage();
+                                                } }>
+                                                <S.ChangeMessageInput
+                                                    placeholder = 'enter a change message'
+                                                    type = 'text'
+                                                    value = { clientMessageText }
+                                                    onChange = { (event) => {
+                                                        setClientMessageText(event.target.value);
+                                                    } }
+                                                />
+                                                <S.ChangeMessageBtn>Submit</S.ChangeMessageBtn>
+                                            </S.ChangeMessageForm>
+                                        ) : (
+                                            <S.UserMessage>
+                                                {message.text}
+                                            </S.UserMessage>
+                                        )
+                                    }
+                                    <S.MessageFlexColumn>
+                                        <S.DispatchTime dateTime = { message.createdAt }>
+                                            { messageCreatedTime }
+                                        </S.DispatchTime>
+                                        {
+                                            createdDate !== updatedDate ? (
+                                                <S.EditedText>edited</S.EditedText>
+                                            ) : null
+                                        }
+                                    </S.MessageFlexColumn>
+                                </S.Message>
+                            );
+                        })
                             .reverse()
                     }
-                    <S.Form onSubmit = { (event) => {
-                        event.preventDefault();
-                        createMessage({
-                            text:     messageText,
-                            username: user.username,
-                        });
-                        setMessageText('');
-                    }  }>
-                        <S.Input
-                            type = 'text'
-                            value = { messageText }
-                            onChange = { (event) => setMessageText(event.target.value) }
-                        />
-                        <S.SubmitBtn type = 'submit'>send</S.SubmitBtn>
-                    </S.Form>
                 </S.Chat>
             </S.ChatBox>
+            <S.Form onSubmit = { (event) => {
+                event.preventDefault();
+                createMessage({
+                    text:     messageText,
+                    username: user.username,
+                });
+                setMessageText('');
+            }  }>
+                <S.Input
+                    type = 'text'
+                    value = { messageText }
+                    onChange = { (event) => void setMessageText(event.target.value) }
+                />
+                <S.SubmitBtn type = 'submit'>send</S.SubmitBtn>
+            </S.Form>
             <S.DecorImg src = { ninjaImg } />
         </S.Container>
     );

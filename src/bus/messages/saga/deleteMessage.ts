@@ -17,7 +17,7 @@ import { Message } from '../types';
 export const deleteMessageAction = createAction<Message>(`${sliceName}/DELETE_MESSAGE_ASYNC`);
 
 // Saga
-const deleteMessage = (callAction: ReturnType<typeof deleteMessageAction>) => makeRequest<Message>({
+const deleteMessage = (callAction: ReturnType<typeof deleteMessageAction>) => makeRequest<boolean>({
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => fetch(`${API_URL}/messages/${callAction.payload._id}`, {
@@ -28,8 +28,9 @@ const deleteMessage = (callAction: ReturnType<typeof deleteMessageAction>) => ma
         }),
     },
     succes: function* (result) {
-        console.log(result);
-        yield put(messageActions.deleteMessage(result));
+        if (result) {
+            yield put(messageActions.deleteMessage(callAction.payload));
+        }
     },
 });
 
