@@ -25,7 +25,7 @@ const changeMessage = (callAction: ReturnType<typeof changeMessageAction>) => ma
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(callAction.payload.text),
+            body: JSON.stringify({ text: callAction.payload.text }),
         }),
     },
     succes: function* (result) {

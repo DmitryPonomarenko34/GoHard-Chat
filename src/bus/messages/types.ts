@@ -3,7 +3,6 @@ import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
 // State
 export type Message = {
-    payload: any;
     _id: string,
     username: string,
     text: string,
@@ -20,7 +19,7 @@ export type BaseContact<T = any> = CaseReducer<MessagesState, PayloadAction<T>>
 
 // Payloads
 export type MessagePayload = {
-    username: string;
+    username?: string;
     text: string;
     _id?: string
 }

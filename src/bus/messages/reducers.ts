@@ -13,6 +13,10 @@ export const createMessage: types.BaseContact<types.Message> = (state, action) =
     return [ action.payload, ...state ];
 };
 
-export const changeMessage: types.BaseContact<types.Message> = (__, action) => {
-    return [ action.payload ];
+export const changeMessage: types.BaseContact<types.Message> = (state, action) => {
+    if (state === null) {
+        return [ action.payload ];
+    }
+
+    return [ action.payload, ...state.filter((elem) => elem._id !== action.payload._id) ];
 };

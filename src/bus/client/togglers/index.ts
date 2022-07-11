@@ -1,5 +1,5 @@
 // Core
-import { createAction, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
 // Tools
@@ -27,10 +27,6 @@ export const toggrersSlice = createSlice({
             ...state,
             [ action.payload.type ]: action.payload.value,
         }),
-        togglerMessage: (state, action: PayloadAction<TogglersKeys>) => ({
-            ...state,
-            [ action.payload.type ]: action.payload.value,
-        }),
         resetTogglersToInitialAction: () => initialState,
     },
 });
@@ -46,7 +42,6 @@ export const useTogglersRedux = () => {
         togglersRedux:          useSelector(({ togglers }) => togglers),
         setTogglerAction:       (options: Options) => void dispatch(toggrersActions.togglerCreatorAction(options)),
         resetTogglersToInitial: () => void dispatch(toggrersActions.resetTogglersToInitialAction()),
-        changeMessage:          (_id: string) => void dispatch(toggrersActions.togglerMessage(_id)),
     };
 };
 

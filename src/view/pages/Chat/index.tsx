@@ -4,6 +4,7 @@ import React, { FC, useEffect, useState } from 'react';
 // Bus
 import { useUser } from '../../../bus/user';
 import { useMessages } from '../../../bus/messages';
+import { useClientMessage } from '../../../bus/client/clientMessage';
 
 // Components
 import { ErrorBoundary } from '../../components';
@@ -16,11 +17,10 @@ import ninjaImg from '../../../assets/images/ninjaImg.jpg';
 
 const Main: FC = () => {
     const { user, logoutUser } = useUser();
-    const { messages, createMessage, getMessages } = useMessages();
+    const { messages, createMessage, getMessages, changeMessage } = useMessages();
     const [ messageText, setMessageText ] = useState('');
-
-    const changeTogglerMessage = (_id: string) => _id;
-
+    const [ clientMessageText, setClientMessageText ] = useState('');
+    const { clientMessage, changeClientMessage, closeClientMessage } = useClientMessage();
     useEffect(() => {
         getMessages();
     }, []);
@@ -46,39 +46,69 @@ const Main: FC = () => {
                 <S.Chat>
                     {
                         messages
-                            .map(({ _id, username, text, createdAt, updatedAt }) => {
-                                const createdDate = new Date(createdAt).getTime();
-                                const updatedDate = new Date(updatedAt).getTime();
+                            .map((elem) => {
+                                const createdDate = new Date(elem.createdAt).getTime();
+                                const updatedDate = new Date(elem.updatedAt).getTime();
 
-                                const messageCreatedTime = new Date(createdAt).toLocaleTimeString();
-                                const messageAuthor = username === user.username ? true : null;
+                                const messageCreatedTime = new Date(elem.createdAt).toLocaleTimeString();
+                                const messageAuthor = elem.username === user.username ? true : null;
 
-                                const userId = '';
+                                const isClientMessage = clientMessage?._id === elem._id;
 
                                 return (
                                     <S.Message
-                                        key = { _id }
+                                        key = { elem._id }
                                         messageAuthor = { messageAuthor }>
                                         <S.ActionBox>
-                                            <S.UserName messageAuthor = { messageAuthor }>{username}</S.UserName>
+                                            <S.UserName messageAuthor = { messageAuthor }>{elem.username}</S.UserName>
                                             {
                                                 messageAuthor && (
                                                     <S.BtnsBox>
-                                                        <S.BtnChangeMessage onClick = { () => {
-                                                            userId + _id;
-                                                        }  }>
-                                                            change
-                                                        </S.BtnChangeMessage>
+                                                        {
+                                                            isClientMessage ? (
+                                                                <S.CloseBtn onClick = { () => {
+                                                                    closeClientMessage();
+                                                                }  }>
+                                                                    Close
+                                                                </S.CloseBtn>
+                                                            ) : (
+                                                                <S.BtnChangeMessage onClick = { () => {
+                                                                    changeClientMessage(elem);
+                                                                } }>
+                                                                    change
+                                                                </S.BtnChangeMessage>
+                                                            )
+                                                        }
+
                                                         <S.BtnRemoveMessage>remove</S.BtnRemoveMessage>
                                                     </S.BtnsBox>
                                                 )
                                             }
                                         </S.ActionBox>
                                         {
-                                            userId === _id && messageAuthor ? 'asasasa' : <S.UserMessage>{text}</S.UserMessage>
+                                            isClientMessage && messageAuthor ? (
+                                                <S.ChangeMessageForm
+                                                    onSubmit = {
+                                                        (event) => {
+                                                            event.preventDefault();
+                                                            changeMessage({ text: clientMessageText, _id: elem._id });
+                                                            closeClientMessage();
+                                                        }
+                                                    }>
+                                                    <S.ChangeMessageInput
+                                                        placeholder = 'enter a change message'
+                                                        type = 'text'
+                                                        value = { clientMessageText }
+                                                        onChange = { (event) => {
+                                                            setClientMessageText(event.target.value);
+                                                        } }
+                                                    />
+                                                    <S.ChangeMessageBtn>Submit</S.ChangeMessageBtn>
+                                                </S.ChangeMessageForm>
+                                            ) : <S.UserMessage>{elem.text}</S.UserMessage>
                                         }
                                         <S.MessageFlexColumn>
-                                            <S.DispatchTime dateTime = { createdAt }>
+                                            <S.DispatchTime dateTime = { elem.createdAt }>
                                                 { messageCreatedTime }
                                             </S.DispatchTime>
                                             {
