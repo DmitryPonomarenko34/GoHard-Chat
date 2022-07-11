@@ -18,5 +18,5 @@ export const changeMessage: types.BaseContact<types.Message> = (state, action) =
         return [ action.payload ];
     }
 
-    return [ action.payload, ...state.filter((elem) => elem._id !== action.payload._id) ];
+    return state.map((elem) => elem._id === action.payload._id ? action.payload : elem);
 };

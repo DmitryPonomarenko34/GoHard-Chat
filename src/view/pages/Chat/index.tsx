@@ -21,6 +21,7 @@ const Main: FC = () => {
     const [ messageText, setMessageText ] = useState('');
     const [ clientMessageText, setClientMessageText ] = useState('');
     const { clientMessage, changeClientMessage, closeClientMessage } = useClientMessage();
+
     useEffect(() => {
         getMessages();
     }, []);
@@ -93,6 +94,7 @@ const Main: FC = () => {
                                                             event.preventDefault();
                                                             changeMessage({ text: clientMessageText, _id: elem._id });
                                                             closeClientMessage();
+                                                            setClientMessageText('');
                                                         }
                                                     }>
                                                     <S.ChangeMessageInput
