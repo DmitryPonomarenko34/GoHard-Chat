@@ -7,9 +7,10 @@ import { all, call } from 'redux-saga/effects';
 import { getMessagesAction, watchGetMessages } from './getMessages';
 import { createMessageAction, watchCreateMessage } from './createMessage';
 import { changeMessageAction, watchchangeMessage } from './changeMessage';
+import { deleteMessageAction, watchDeleteMessage } from './deleteMessage';
 
 // Types
-import { MessagePayload } from '../types';
+import { Message, MessagePayload } from '../types';
 
 export const useMessagesSaga = () => {
     const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export const useMessagesSaga = () => {
         getMessages:   () => void dispatch(getMessagesAction()),
         createMessage: (message: MessagePayload) => void dispatch(createMessageAction(message)),
         changeMessage: (editMessage: MessagePayload) => dispatch(changeMessageAction(editMessage)),
+        deleteMessage: (message: Message) => dispatch(deleteMessageAction(message)),
     };
 };
 
@@ -26,5 +28,6 @@ export function* watchMessages(): SagaIterator {
         call(watchGetMessages),
         call(watchCreateMessage),
         call(watchchangeMessage),
+        call(watchDeleteMessage),
     ]);
 }

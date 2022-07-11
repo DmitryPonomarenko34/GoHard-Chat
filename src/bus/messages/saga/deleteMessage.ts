@@ -11,30 +11,29 @@ import { makeRequest } from '../../../tools/utils';
 import { API_URL } from '../../../init/constants';
 
 // Types
-import { MessagePayload, Message } from '../types';
+import { Message } from '../types';
 
 // Action
-export const changeMessageAction = createAction<MessagePayload>(`${sliceName}/CHANGE_MESSAGE_ASYNC`);
+export const deleteMessageAction = createAction<Message>(`${sliceName}/DELETE_MESSAGE_ASYNC`);
 
 // Saga
-const changeMessage = (callAction: ReturnType<typeof changeMessageAction>) => makeRequest<Message>({
+const deleteMessage = (callAction: ReturnType<typeof deleteMessageAction>) => makeRequest<Message>({
     fetchOptions: {
         successStatusCode: 200,
         fetch:             () => fetch(`${API_URL}/messages/${callAction.payload._id}`, {
-            method:  'PUT',
+            method:  'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ text: callAction.payload.text }),
         }),
     },
     succes: function* (result) {
-        yield console.log(result);
-        yield put(messageActions.changeMessage(result));
+        console.log(result);
+        yield put(messageActions.deleteMessage(result));
     },
 });
 
 // Watcher
-export function* watchchangeMessage(): SagaIterator {
-    yield takeLatest(changeMessageAction.type, changeMessage);
+export function* watchDeleteMessage(): SagaIterator {
+    yield takeLatest(deleteMessageAction.type, deleteMessage);
 }

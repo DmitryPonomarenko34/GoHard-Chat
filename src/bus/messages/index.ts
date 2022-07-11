@@ -5,7 +5,7 @@ import { useSelector } from '../../tools/hooks';
 import { useMessagesSaga } from './saga';
 
 export const useMessages = () => {
-    const { getMessages, createMessage, changeMessage } = useMessagesSaga();
+    const { getMessages, createMessage, changeMessage, deleteMessage } = useMessagesSaga();
     const messages = useSelector((state) => state.messages);
 
     return {
@@ -13,5 +13,6 @@ export const useMessages = () => {
         getMessages,
         createMessage,
         changeMessage,
+        deleteMessage,
     };
 };

@@ -9,9 +9,8 @@ import { useSelector } from '../../../tools/hooks';
 // import { Message } from '../../messages/types';
 
 export const initialState = {
-    isOnline:    navigator.onLine,
-    isLoggedIn:  false,
-    isMessageId: '',
+    isOnline:   navigator.onLine,
+    isLoggedIn: false,
 };
 
 // Types

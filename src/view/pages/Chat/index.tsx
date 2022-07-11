@@ -17,7 +17,7 @@ import ninjaImg from '../../../assets/images/ninjaImg.jpg';
 
 const Main: FC = () => {
     const { user, logoutUser } = useUser();
-    const { messages, createMessage, getMessages, changeMessage } = useMessages();
+    const { messages, createMessage, getMessages, changeMessage, deleteMessage } = useMessages();
     const [ messageText, setMessageText ] = useState('');
     const [ clientMessageText, setClientMessageText ] = useState('');
     const { clientMessage, changeClientMessage, closeClientMessage } = useClientMessage();
@@ -80,8 +80,11 @@ const Main: FC = () => {
                                                                 </S.BtnChangeMessage>
                                                             )
                                                         }
-
-                                                        <S.BtnRemoveMessage>remove</S.BtnRemoveMessage>
+                                                        <S.BtnRemoveMessage onClick = { () => {
+                                                            deleteMessage(elem);
+                                                        }  }>
+                                                            remove
+                                                        </S.BtnRemoveMessage>
                                                     </S.BtnsBox>
                                                 )
                                             }
@@ -94,7 +97,6 @@ const Main: FC = () => {
                                                             event.preventDefault();
                                                             changeMessage({ text: clientMessageText, _id: elem._id });
                                                             closeClientMessage();
-                                                            setClientMessageText('');
                                                         }
                                                     }>
                                                     <S.ChangeMessageInput

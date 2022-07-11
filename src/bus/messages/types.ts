@@ -20,6 +20,6 @@ export type BaseContact<T = any> = CaseReducer<MessagesState, PayloadAction<T>>
 // Payloads
 export type MessagePayload = {
     username?: string;
-    text: string;
+    text?: string;
     _id?: string
 }
