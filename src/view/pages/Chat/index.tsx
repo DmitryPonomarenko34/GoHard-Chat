@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 
 // Bus
 import { useUser } from '../../../bus/user';
@@ -7,29 +7,50 @@ import { useMessages } from '../../../bus/messages';
 import { useClientMessage } from '../../../bus/client/clientMessage';
 
 // Components
-import { ErrorBoundary } from '../../components';
+import { ErrorBoundary, UserInfo, SubmitForm } from '../../components';
 
-// Asset
-import ninjaImg from '../../../assets/images/ninjaImg.jpg';
-
-// Styles
+// Style
 import * as S from './styles';
+
+// Hook
+import { useHandlerForm } from '../../../tools/hooks/customHandlerHook';
 
 // Types
 import { Message } from '../../../bus/messages/types';
 
+const ChatPage: FC = () => {
+    const scrollLastMessage = useRef<null | HTMLDivElement>(null);
 
-const Main: FC = () => {
-    const { user, logoutUser } = useUser();
-    const { messages, createMessage, getMessages, changeMessage, deleteMessage } = useMessages();
-    const { clientMessage, changeClientMessage, closeClientMessage } = useClientMessage();
+    const {
+        user,
+        logoutUser,
+    } = useUser();
 
-    const [ messageText, setMessageText ] = useState('');
-    const [ clientMessageText, setClientMessageText ] = useState('');
+    const {
+        messages,
+        getMessages, deleteMessage,
+    } = useMessages();
+
+    const {
+        clientMessage,
+        changeClientMessage, closeClientMessage,
+    } = useClientMessage();
+
+    const {
+        messageState,
+        handleChangeMessage, handleClientTextInput,
+        handleCreateMessage, handleTextInput,
+    } = useHandlerForm();
 
     useEffect(() => {
         getMessages();
     }, []);
+
+    useEffect(() => {
+        if (scrollLastMessage.current) {
+            scrollLastMessage.current.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'nearest' });
+        }
+    }, [ messages ]);
 
     if (user === null || messages === null) {
         return <div>Spinner</div>;
@@ -45,19 +66,12 @@ const Main: FC = () => {
 
     return (
         <S.Container>
-            <S.FlexWrap>
-                <S.Title>
-                    Welcome to Chat:
-                    <S.AccentTitleWord>
-                        {user.username}
-                    </S.AccentTitleWord>
-                </S.Title>
-                <S.LogoutBtn onClick = { () => void logoutUser() }>
-                    Logout
-                </S.LogoutBtn>
-            </S.FlexWrap>
+            <UserInfo
+                username = { user.username }
+                onClickLogout = { logoutUser }
+            />
             <S.ChatBox>
-                <S.Chat>
+                <S.Chat ref = { scrollLastMessage }>
                     {
                         messages.map((message) => {
                             const {
@@ -97,22 +111,11 @@ const Main: FC = () => {
                                     </S.ActionBox>
                                     {
                                         isClientMessage && messageAuthor ? (
-                                            <S.ChangeMessageForm
-                                                onSubmit = { (event) => {
-                                                    event.preventDefault();
-                                                    changeMessage({ text: clientMessageText, _id: message._id });
-                                                    closeClientMessage();
-                                                } }>
-                                                <S.ChangeMessageInput
-                                                    placeholder = 'enter a change message'
-                                                    type = 'text'
-                                                    value = { clientMessageText }
-                                                    onChange = { (event) => {
-                                                        setClientMessageText(event.target.value);
-                                                    } }
-                                                />
-                                                <S.ChangeMessageBtn>Submit</S.ChangeMessageBtn>
-                                            </S.ChangeMessageForm>
+                                            <SubmitForm
+                                                inputValue = { messageState.tempEditedMessageText }
+                                                onChangeInput = { handleClientTextInput }
+                                                onSubmitForm = { (event) => handleChangeMessage(event, message) }
+                                            />
                                         ) : (
                                             <S.UserMessage>
                                                 {message.text}
@@ -132,32 +135,22 @@ const Main: FC = () => {
                                 </S.Message>
                             );
                         })
-                            .reverse()
                     }
                 </S.Chat>
             </S.ChatBox>
-            <S.Form onSubmit = { (event) => {
-                event.preventDefault();
-                createMessage({
-                    text:     messageText,
-                    username: user.username,
-                });
-                setMessageText('');
-            }  }>
-                <S.Input
-                    type = 'text'
-                    value = { messageText }
-                    onChange = { (event) => void setMessageText(event.target.value) }
+            <S.FormBox>
+                <SubmitForm
+                    inputValue = { messageState.messageText }
+                    onChangeInput = { handleTextInput }
+                    onSubmitForm = { handleCreateMessage }
                 />
-                <S.SubmitBtn type = 'submit'>send</S.SubmitBtn>
-            </S.Form>
-            <S.DecorImg src = { ninjaImg } />
+            </S.FormBox>
         </S.Container>
     );
 };
 
 export default () => (
     <ErrorBoundary>
-        <Main />
+        <ChatPage />
     </ErrorBoundary>
 );

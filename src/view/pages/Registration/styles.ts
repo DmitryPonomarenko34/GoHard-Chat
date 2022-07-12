@@ -86,4 +86,11 @@ export const SubmitBtn = styled.button`
         color: var(--text);
         transition: ease-in-out 0.1s background-color, ease-in-out 0.2s color;
     }
+
+    &:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+        cursor: default;
+        border-color: transparent;
+    }
 `;

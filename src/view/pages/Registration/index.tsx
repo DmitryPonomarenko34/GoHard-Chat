@@ -55,6 +55,7 @@ const Registration: FC<PropTypes> = () => {
                     />
                 </S.Label>
                 <S.SubmitBtn
+                    disabled = { !username }
                     type = 'submit'>
                     Submit
                 </S.SubmitBtn>
