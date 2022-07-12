@@ -5,14 +5,17 @@ import { useDispatch } from 'react-redux';
 // Tools
 import { useSelector } from '../../../tools/hooks';
 
-const initialState = {
+// Types
+// import { Message } from '../../messages/types';
+
+export const initialState = {
     isOnline:   navigator.onLine,
     isLoggedIn: false,
 };
 
 // Types
 export type TogglersKeys = keyof typeof initialState;
-type Options = { type: TogglersKeys, value: boolean };
+type Options = {type: TogglersKeys, value: boolean | string, };
 
 // Slice
 export const toggrersSlice = createSlice({
