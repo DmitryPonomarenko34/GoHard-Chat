@@ -10,20 +10,22 @@ import { useClientMessage } from '../../bus/client/clientMessage';
 import { Message } from '../../bus/messages/types';
 import { FormChangeEvent, FormSubmitEvent } from '../../view/components/ChatForm';
 
-// Tools
-const initialMessageState = {
-    messageText:           '',
-    tempEditedMessageText: '',
-};
+type initialMessage = {
+    messageText: string,
+    tempEditedMessageText: string,
+}
 
 export const useHandlerForm = () => {
     const { user } = useUser();
     const { createMessage, changeMessage } = useMessages();
-    const { closeClientMessage } = useClientMessage();
+    const { clientMessage, closeClientMessage } = useClientMessage();
 
-    const [ messageState, setMessageState ] = useState(initialMessageState);
+    const [ messageState, setMessageState ] = useState({
+        messageText:           '',
+        tempEditedMessageText: clientMessage ? clientMessage.text : `${clientMessage}`,
+    });
 
-    const messageStateHandler = (key: keyof typeof initialMessageState, value: string) => {
+    const messageStateHandler = (key: keyof initialMessage, value: string) => {
         setMessageState({
             ...messageState,
             [ key ]: value,

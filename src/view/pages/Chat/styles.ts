@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 // Style
 import { LogoutBtn } from '../../components/UserInfo/styles';
-import { Form, Input } from '../Registration/styles';
+import { Form, Input } from '../../components/RegistrationForm/styles';
 
 // Asset
 import userIcon from '../../../assets/icons/user-icon.svg';
