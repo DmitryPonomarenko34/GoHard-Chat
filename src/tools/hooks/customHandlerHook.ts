@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useUser } from '../../bus/user';
 import { useMessages } from '../../bus/messages';
 import { useClientMessage } from '../../bus/client/clientMessage';
+// import { useKeyboard } from '../../bus/client/keyboard';
 
 // Types
 import { Message } from '../../bus/messages/types';
@@ -19,7 +20,7 @@ export const useHandlerForm = () => {
     const { user } = useUser();
     const { createMessage, changeMessage } = useMessages();
     const { clientMessage, closeClientMessage } = useClientMessage();
-
+    // const { keyboard } = useKeyboard();
     const [ messageState, setMessageState ] = useState({
         messageText:           '',
         tempEditedMessageText: clientMessage ? clientMessage.text : `${clientMessage}`,

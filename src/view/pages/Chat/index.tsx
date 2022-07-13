@@ -7,7 +7,7 @@ import { useMessages } from '../../../bus/messages';
 import { useClientMessage } from '../../../bus/client/clientMessage';
 
 // Components
-import { ErrorBoundary, UserInfo, SubmitForm } from '../../components';
+import { ErrorBoundary, UserInfo, SubmitForm, Keyboard } from '../../components';
 
 // Style
 import * as S from './styles';
@@ -42,6 +42,8 @@ const ChatPage: FC = () => {
         handleCreateMessage, handleTextInput,
     } = useHandlerForm();
 
+    // const { keyboard } = useKeyboard();
+
     useEffect(() => {
         getMessages();
     }, []);
@@ -63,6 +65,7 @@ const ChatPage: FC = () => {
         messageAuthor:      message.username === user.username ? true : null,
         isClientMessage:    clientMessage?._id === message._id,
     });
+
 
     return (
         <S.Container>
@@ -145,6 +148,7 @@ const ChatPage: FC = () => {
                     onSubmitForm = { handleCreateMessage }
                 />
             </S.FormBox>
+            <Keyboard/>
         </S.Container>
     );
 };

@@ -7,6 +7,7 @@ import user from '../../bus/user/slice';
 import messages from '../../bus/messages/slice';
 import message from '../../bus/messages/slice';
 import clientMessage from '../../bus/client/clientMessage/slice';
+import keyboard from '../../bus/client/keyboard/slice';
 // import __entityName__ from '../../bus/__entityName__/slice';
 
 // Middleware
@@ -22,6 +23,7 @@ export const store = configureStore({
         messages,
         message,
         clientMessage,
+        keyboard,
         // __entityName__,
     },
     middleware,
