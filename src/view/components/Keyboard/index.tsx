@@ -11,7 +11,7 @@ import { ErrorBoundary } from '../ErrorBoundary';
 import * as S from './styles';
 
 export const Keyboard: FC = () => {
-    const { keyboard, getKeyboardWord } = useKeyboard();
+    const { getKeyboardWord } = useKeyboard();
 
     const arrayElemsNumber: Array<string> = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' ];
     const arrayElemsWord: Array<string> = [ 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p' ];
@@ -26,7 +26,6 @@ export const Keyboard: FC = () => {
                 return (
                     <S.KeyboardElem
                         small
-                        id = { elem }
                         key = { elem }
                         value = { elem }>
                         {elem}
@@ -36,7 +35,6 @@ export const Keyboard: FC = () => {
 
             return (
                 <S.KeyboardElem
-                    id = { elem }
                     key = { elem }
                     value = { elem }>
                     {elem}
@@ -47,12 +45,13 @@ export const Keyboard: FC = () => {
         return newArray;
     };
 
+
     const handlerClick = (event: React.MouseEvent<HTMLElement>) => {
         const button = event.target as HTMLButtonElement;
-        getKeyboardWord(button.value);
-    };
+        const buttonValue = button.value;
 
-    console.log(keyboard);
+        getKeyboardWord(buttonValue);
+    };
 
     return (
         <S.Container>
@@ -60,14 +59,29 @@ export const Keyboard: FC = () => {
                 {getArray(arrayElemsNumber)}
                 {getArray(arrayElemsWord)}
                 {getArray(arrayWordGrid, true)}
-                <S.KeyboardElem smallEnd>l</S.KeyboardElem>
+                <S.KeyboardElem
+                    smallEnd
+                    value = 'l'>l
+                </S.KeyboardElem>
                 {getArray(arrayElemsWordTwo)}
-                <S.KeyboardElem small>b</S.KeyboardElem>
-                <S.KeyboardElem >n</S.KeyboardElem>
-                <S.KeyboardElem small>m</S.KeyboardElem>
-                <S.KeyboardElem backspace>Backspace</S.KeyboardElem>
+                <S.KeyboardElem
+                    small
+                    value = 'b'>b
+                </S.KeyboardElem>
+                <S.KeyboardElem value = '' >n</S.KeyboardElem>
+                <S.KeyboardElem
+                    small
+                    value = 'm'>m
+                </S.KeyboardElem>
+                <S.KeyboardElem
+                    backspace
+                    value = 'Backspace'>Backspace
+                </S.KeyboardElem>
                 {getArray(arrayElemsWordThree)}
-                <S.KeyboardElem long >Space</S.KeyboardElem>
+                <S.KeyboardElem
+                    long
+                    value = 'Space' >Space
+                </S.KeyboardElem>
                 {getArray(arrayElemsWordFour)}
             </S.KeyboardWrapper>
         </S.Container>

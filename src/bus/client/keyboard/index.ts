@@ -6,13 +6,13 @@ import { useSelector } from '../../../tools/hooks';
 import { keyboardActions } from './slice';
 
 // Types
-import { KeybordWord } from './types';
+import { KeybordWords } from './types';
 
 export const useKeyboard = () => {
     const dispatch = useDispatch();
     const keyboard = useSelector((state) => state.keyboard); // Add keyboard to ./src/init/redux/index.ts
 
-    const getKeyboardWord = (word: KeybordWord) => void dispatch(keyboardActions.setKeyboard(word));
+    const getKeyboardWord = (word: KeybordWords) => void dispatch(keyboardActions.setKeyboard(word));
 
     return {
         keyboard,

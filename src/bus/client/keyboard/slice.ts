@@ -9,7 +9,7 @@ import * as reducers from './reducers';
 
 const initialState = null;
 
-export const keyboardSlice = createSlice<types.KeybordWordState, typeof reducers>({
+export const keyboardSlice = createSlice<types.KeybordWordsState, typeof reducers>({
     name: 'keyboard',
     initialState,
     reducers,

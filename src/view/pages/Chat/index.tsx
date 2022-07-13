@@ -5,6 +5,7 @@ import React, { FC, useEffect, useRef } from 'react';
 import { useUser } from '../../../bus/user';
 import { useMessages } from '../../../bus/messages';
 import { useClientMessage } from '../../../bus/client/clientMessage';
+import { useKeyboard } from '../../../bus/client/keyboard';
 
 // Components
 import { ErrorBoundary, UserInfo, SubmitForm, Keyboard } from '../../components';
@@ -42,7 +43,7 @@ const ChatPage: FC = () => {
         handleCreateMessage, handleTextInput,
     } = useHandlerForm();
 
-    // const { keyboard } = useKeyboard();
+    const { keyboard } = useKeyboard();
 
     useEffect(() => {
         getMessages();
