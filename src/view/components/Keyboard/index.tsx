@@ -46,7 +46,7 @@ export const Keyboard: FC = () => {
     };
 
 
-    const handlerClick = (event: React.MouseEvent<HTMLElement>) => {
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         const button = event.target as HTMLButtonElement;
         const buttonValue = button.value;
 
@@ -55,7 +55,7 @@ export const Keyboard: FC = () => {
 
     return (
         <S.Container>
-            <S.KeyboardWrapper onClick = { (event) => void handlerClick(event) }>
+            <S.KeyboardWrapper onClick = { (event) => void handleClick(event) }>
                 {getArray(arrayElemsNumber)}
                 {getArray(arrayElemsWord)}
                 {getArray(arrayWordGrid, true)}

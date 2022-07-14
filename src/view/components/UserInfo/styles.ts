@@ -1,49 +1,27 @@
 // Core
 import styled from 'styled-components';
 
-export const Container = styled.section``;
+export const Container = styled.section`
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+`;
+
+export const DecorIcon = styled.img`
+`;
 
 export const Title = styled.h1`
-    display: flex;
-    align-items: center;
     font-family: 'Inter-Black';
     font-weight: 900;
-    font-size: 32px;
-    line-height: 34px;
-    color: #55BBF8;
-    margin-right: 20px;
+    margin-bottom: 50px;
+    text-align: center;
+    font-size: 64px;
+    line-height: 67px;
 `;
 
-export const AccentTitleWord = styled.span`
-    color: #E15A32;
-    margin-left: 10px;
-`;
-
-export const FlexWrap = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 0;
-    width: 500px;
-`;
-
-export const LogoutBtn = styled.button`
+export const TitleAccentWord = styled.span`
     display: block;
-    font-family: 'Inter-Black';
-    font-weight: 900;
-    width: 50%;
-    padding: 15px 10px;
-    margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: inset 0px -5px 0px rgba(0, 0, 0, 0.3);
-    border-radius: 6px; 
-    color: #000;
-    transition: ease-in-out 0.1s background-color, ease-in-out 0.2s color;
-    cursor: pointer;
-
-    &:hover {
-        background-color: #E15A32;
-        color: var(--text);
-        transition: ease-in-out 0.1s background-color, ease-in-out 0.2s color;
-    }
+    color: #55BBF8;
 `;

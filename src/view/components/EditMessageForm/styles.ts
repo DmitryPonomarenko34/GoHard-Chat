@@ -1,7 +1,8 @@
 // Core
 import styled from 'styled-components';
+
 // Style
-import { LogoutBtn } from '../UserInfo/styles';
+import { LogoutBtn } from '../OwnerInfo/styles';
 
 export const Container = styled.section`
 `;
