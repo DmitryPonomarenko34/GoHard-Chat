@@ -10,6 +10,9 @@ export const Container = styled.section`
 `;
 
 export const DecorIcon = styled.img`
+    @media (max-width: 510px) {
+       max-width: 750%;
+    }
 `;
 
 export const Title = styled.h1`
@@ -19,6 +22,11 @@ export const Title = styled.h1`
     text-align: center;
     font-size: 64px;
     line-height: 67px;
+
+     @media (max-width: 510px) {
+       font-size: 44px;
+       line-height: 47px;
+    }
 `;
 
 export const TitleAccentWord = styled.span`

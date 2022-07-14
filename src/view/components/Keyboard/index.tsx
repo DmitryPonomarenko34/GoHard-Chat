@@ -1,5 +1,5 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 
 // Bus
 import { useKeyboard } from '../../../bus/client/keyboard';
@@ -11,7 +11,9 @@ import { ErrorBoundary } from '../ErrorBoundary';
 import * as S from './styles';
 
 export const Keyboard: FC = () => {
-    const { getKeyboardWord } = useKeyboard();
+    const { keyboard, getKeyboardWord } = useKeyboard();
+
+    const divRef = useRef<HTMLButtonElement | null>(null);
 
     const arrayElemsNumber: Array<string> = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' ];
     const arrayElemsWord: Array<string> = [ 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p' ];
@@ -36,6 +38,7 @@ export const Keyboard: FC = () => {
             return (
                 <S.KeyboardElem
                     key = { elem }
+                    ref = { divRef }
                     value = { elem }>
                     {elem}
                 </S.KeyboardElem>
@@ -45,25 +48,30 @@ export const Keyboard: FC = () => {
         return newArray;
     };
 
-
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         const button = event.target as HTMLButtonElement;
         const buttonValue = button.value;
 
+        if (divRef.current) {
+            divRef.current.style.backgroundColor = 'orange';
+        }
+
         getKeyboardWord(buttonValue);
     };
+
+    console.log(keyboard);
 
     return (
         <S.Container>
             <S.KeyboardWrapper onClick = { (event) => void handleClick(event) }>
-                {getArray(arrayElemsNumber)}
-                {getArray(arrayElemsWord)}
-                {getArray(arrayWordGrid, true)}
+                { getArray(arrayElemsNumber) }
+                { getArray(arrayElemsWord) }
+                { getArray(arrayWordGrid, true) }
                 <S.KeyboardElem
                     smallEnd
                     value = 'l'>l
                 </S.KeyboardElem>
-                {getArray(arrayElemsWordTwo)}
+                { getArray(arrayElemsWordTwo) }
                 <S.KeyboardElem
                     small
                     value = 'b'>b
@@ -77,12 +85,12 @@ export const Keyboard: FC = () => {
                     backspace
                     value = 'Backspace'>Backspace
                 </S.KeyboardElem>
-                {getArray(arrayElemsWordThree)}
+                { getArray(arrayElemsWordThree) }
                 <S.KeyboardElem
                     long
-                    value = 'Space' >Space
+                    value = ' ' >Space
                 </S.KeyboardElem>
-                {getArray(arrayElemsWordFour)}
+                { getArray(arrayElemsWordFour) }
             </S.KeyboardWrapper>
         </S.Container>
     );
