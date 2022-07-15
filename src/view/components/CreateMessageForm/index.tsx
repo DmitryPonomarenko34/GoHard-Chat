@@ -9,7 +9,13 @@ import { useKeyboard } from '../../../bus/client/keyboard';
 // Styles
 import * as S from './styles';
 
-export const CreateMessageForm: FC = () => {
+// Types
+type PropTypes = {
+    keybortRef: React.MutableRefObject<HTMLDivElement | null>
+}
+
+
+export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
     const { keyboard, getKeyboardWord, resetKeybordWords } = useKeyboard();
     const { user } = useUser();
 
@@ -24,7 +30,6 @@ export const CreateMessageForm: FC = () => {
         createMessage({ username: user?.username, text: ownerTypeText });
         resetKeybordWords();
     };
-
 
     return (
         <S.Container>
@@ -43,8 +48,17 @@ export const CreateMessageForm: FC = () => {
                         const lastValueWord = value[ value.length - 1 ];
                         getKeyboardWord(lastValueWord);
                     }  }
-                    onKeyUp = { (event) => {
-                        console.log(event.keyCode);
+                    onKeyUp = { () => {
+                        if (keybortRef.current) {
+                            const keyboard = keybortRef.current;
+                            for (const [ key, value ] of Object.entries(keyboard)) {
+                                console.log('key ', key);
+                                console.log('val ', value);
+                            }
+                            // const getKeyboardBtn = keybord.
+                            // const sa = .setAttribute('key', event.nativeEvent.key);
+                            // console.log(sa);
+                        }
                     } }
                 />
                 <S.SubmitBtn

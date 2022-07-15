@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useRef } from 'react';
+import React, { FC } from 'react';
 
 // Bus
 import { useKeyboard } from '../../../bus/client/keyboard';
@@ -10,10 +10,13 @@ import { ErrorBoundary } from '../ErrorBoundary';
 // Style
 import * as S from './styles';
 
-export const Keyboard: FC = () => {
-    const { keyboard, getKeyboardWord } = useKeyboard();
+// Types
+type PropTypes = {
+    keybortRef?: React.MutableRefObject<HTMLDivElement | null>
+}
 
-    const divRef = useRef<HTMLButtonElement | null>(null);
+export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
+    const { getKeyboardWord } = useKeyboard();
 
     const arrayElemsNumber: Array<string> = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' ];
     const arrayElemsWord: Array<string> = [ 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p' ];
@@ -38,7 +41,6 @@ export const Keyboard: FC = () => {
             return (
                 <S.KeyboardElem
                     key = { elem }
-                    ref = { divRef }
                     value = { elem }>
                     {elem}
                 </S.KeyboardElem>
@@ -52,18 +54,16 @@ export const Keyboard: FC = () => {
         const button = event.target as HTMLButtonElement;
         const buttonValue = button.value;
 
-        if (divRef.current) {
-            divRef.current.style.backgroundColor = 'orange';
-        }
+        console.log(event.target);
 
         getKeyboardWord(buttonValue);
     };
 
-    console.log(keyboard);
-
     return (
         <S.Container>
-            <S.KeyboardWrapper onClick = { (event) => void handleClick(event) }>
+            <S.KeyboardWrapper
+                ref = { keybortRef }
+                onClick = { (event) => void handleClick(event) }>
                 { getArray(arrayElemsNumber) }
                 { getArray(arrayElemsWord) }
                 { getArray(arrayWordGrid, true) }

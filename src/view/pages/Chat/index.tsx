@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 
 // Bus
 import { useMessages } from '../../../bus/messages';
@@ -14,6 +14,7 @@ import * as S from './styles';
 const ChatPage: FC = () => {
     const { user } = useUser();
     const { messages, getMessages } = useMessages();
+    const keyboardRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         getMessages();
@@ -26,9 +27,9 @@ const ChatPage: FC = () => {
     return (
         <S.Container>
             <UserInfo/>
-            <Chat/>
-            <CreateMessageForm />
-            <Keyboard/>
+            <Chat />
+            <CreateMessageForm keybortRef = { keyboardRef }/>
+            <Keyboard keybortRef = { keyboardRef }/>
         </S.Container>
     );
 };
