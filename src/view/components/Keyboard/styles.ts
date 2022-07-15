@@ -25,7 +25,6 @@ export const KeyboardElem = styled.button<booleanProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
   padding: 5px 10px;
   font-size: 14px;
   background-color: #ccc;

@@ -22,7 +22,6 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
     const { createMessage } = useMessages();
 
     const ownerTypeText = keyboard?.filter((elem) => typeof elem === 'string').join('');
-    // const divRef = useRef<HTMLButtonElement | null>(null);
 
     const handleCreateMessage = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -39,25 +38,30 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
                     value = { ownerTypeText ? ownerTypeText : '' }
                     onChange = { (event) => {
                         const value = event.target.value;
-                        // event.target.setAttribute('ref', `${divRef}`);
-                        // console.log(event.target);
-
-                        // if (divRef.current) {
-                        //     divRef.current.style.backgroundColor = '#384e4';
-                        // }
                         const lastValueWord = value[ value.length - 1 ];
+
                         getKeyboardWord(lastValueWord);
                     }  }
-                    onKeyUp = { () => {
+
+                    onKeyDown = { (event) => {
                         if (keybortRef.current) {
                             const keyboard = keybortRef.current;
-                            for (const [ key, value ] of Object.entries(keyboard)) {
-                                console.log('key ', key);
-                                console.log('val ', value);
+                            const keybordBtn = keyboard.querySelector(`button[value = '${event.nativeEvent.key}']`);
+                            if (keybordBtn) {
+                                keybordBtn.setAttribute('style', 'background-color:#E15A32; border-color: #fff');
                             }
-                            // const getKeyboardBtn = keybord.
-                            // const sa = .setAttribute('key', event.nativeEvent.key);
-                            // console.log(sa);
+                        }
+                    } }
+
+                    onKeyUp = { (event) => {
+                        if (keybortRef.current) {
+                            const keyboard = keybortRef.current;
+                            const clickBtnValue = event.nativeEvent.key;
+                            const keybordBtn = keyboard.querySelector(`button[value = '${clickBtnValue}']`);
+
+                            if (keybordBtn) {
+                                keybordBtn.setAttribute('style', 'background-color:#ccc; border-color: #none');
+                            }
                         }
                     } }
                 />

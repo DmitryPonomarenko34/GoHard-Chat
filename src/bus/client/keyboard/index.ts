@@ -14,10 +14,14 @@ export const useKeyboard = () => {
 
     const getKeyboardWord = (word: KeybordWords) => void dispatch(keyboardActions.setKeyboard(word));
     const resetKeybordWords = () => void dispatch(keyboardActions.resetKeyboard(null));
+    const deleteLastWord = (keyboard: string[]) => void dispatch(keyboardActions.deleteLastWord(keyboard));
+    const toUppercaseWords = (keyboard: string[]) => void dispatch(keyboardActions.toUppercaseWords(keyboard));
 
     return {
         keyboard,
         getKeyboardWord,
         resetKeybordWords,
+        deleteLastWord,
+        toUppercaseWords,
     };
 };

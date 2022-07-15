@@ -16,7 +16,7 @@ type PropTypes = {
 }
 
 export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
-    const { getKeyboardWord } = useKeyboard();
+    const { keyboard, deleteLastWord, getKeyboardWord, toUppercaseWords } = useKeyboard();
 
     const arrayElemsNumber: Array<string> = [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' ];
     const arrayElemsWord: Array<string> = [ 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p' ];
@@ -54,16 +54,48 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
         const button = event.target as HTMLButtonElement;
         const buttonValue = button.value;
 
-        console.log(event.target);
+
+        if (button.getAttribute('value') === 'Backspace') {
+            if (keyboard) {
+                deleteLastWord(keyboard);
+
+                return;
+            }
+        }
+
+        if (button.getAttribute('value') === 'Shift') {
+            if (keyboard) {
+                toUppercaseWords(keyboard);
+
+                return;
+            }
+        }
 
         getKeyboardWord(buttonValue);
+    };
+
+    const handleonMouseUp = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        const button = event.target as HTMLButtonElement;
+
+        if (button) {
+            button.setAttribute('style', 'background-color:#ccc;');
+        }
+    };
+
+    const handleonMouseDown = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        const button = event.target as HTMLButtonElement;
+        if (button) {
+            button.setAttribute('style', 'background-color:#E15A32;');
+        }
     };
 
     return (
         <S.Container>
             <S.KeyboardWrapper
                 ref = { keybortRef }
-                onClick = { (event) => void handleClick(event) }>
+                onClick = { (event) => void handleClick(event) }
+                onMouseDown = { (event) => void handleonMouseDown(event) }
+                onMouseUp = { (event) => void handleonMouseUp(event) }>
                 { getArray(arrayElemsNumber) }
                 { getArray(arrayElemsWord) }
                 { getArray(arrayWordGrid, true) }

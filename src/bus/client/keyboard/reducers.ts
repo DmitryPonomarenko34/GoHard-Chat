@@ -12,3 +12,19 @@ export const setKeyboard: types.BaseContact<types.KeybordWords> = (state, action
 export const resetKeyboard: types.BaseContact<types.KeybordWordsState> = (__, action) => {
     return action.payload;
 };
+
+export const deleteLastWord: types.BaseContact<types.KeybordWordsState> = (state) => {
+    if (state === null) {
+        return state;
+    }
+
+    return state.filter((word, index) => index !== state.length - 1 ? word : false);
+};
+
+export const toUppercaseWords: types.BaseContact<types.KeybordWordsState> = (state) => {
+    if (state === null) {
+        return state;
+    }
+
+    return state.map((word) => word.toUpperCase());
+};
