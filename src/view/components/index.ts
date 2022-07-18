@@ -8,3 +8,5 @@ export * from './Chat';
 export * from './MessageInfoActions';
 export * from './MessageDateInfo';
 export * from './Keyboard';
+export * from './KeyboardRussian';
+export * from './MainKeyboard';

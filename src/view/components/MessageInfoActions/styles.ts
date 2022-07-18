@@ -51,6 +51,7 @@ export const BtnsBox = styled.div`
 export const BtnChangeMessage = styled(LogoutBtn)`
   padding: 10px 5px;
   margin-right: 5px;
+  min-width: 70px;
   width: auto;
   margin: 0;
   &:first-child {
@@ -90,6 +91,7 @@ export const ChangeMessageBtn = styled(LogoutBtn)`
 
 export const CloseBtn = styled(ChangeMessageBtn)`
    padding: 10px 5px;
+   min-width: 70px;
    width: auto;
    margin: 0;
    margin-right: 10px;

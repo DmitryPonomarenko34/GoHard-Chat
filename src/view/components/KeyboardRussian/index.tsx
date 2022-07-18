@@ -18,13 +18,13 @@ type PropTypes = {
     keybortRef?: React.MutableRefObject<HTMLDivElement | null>
 }
 
-export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
+export const KeyboardRussian: FC<PropTypes> = ({ keybortRef }) => {
     const { keyboard, deleteLastWord, getKeyboardWord, resetKeybordWords } = useKeyboard();
     const { togglersRedux, setTogglerAction } = useTogglersRedux();
     const { createMessage } = useMessages();
     const { user } = useUser();
 
-    const EnLayout = {
+    const RuLayout = {
         arrayElemsNumber: [
             { value: '1', keycode: 49 },
             { value: '2', keycode: 50 },
@@ -39,52 +39,57 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
         ],
 
         arrayElemsWord: [
-            { value: 'q', keycode: 81 },
-            { value: 'w', keycode: 87 },
-            { value: 'e', keycode: 69 },
-            { value: 'r', keycode: 82 },
-            { value: 't', keycode: 84 },
-            { value: 'y', keycode: 89 },
-            { value: 'u', keycode: 85 },
-            { value: 'i', keycode: 73 },
-            { value: 'o', keycode: 79 },
-            { value: 'p', keycode: 80 },
+            { value: 'й', keycode: 81 },
+            { value: 'ц', keycode: 87 },
+            { value: 'у', keycode: 69 },
+            { value: 'к', keycode: 82 },
+            { value: 'е', keycode: 84 },
+            { value: 'н', keycode: 89 },
+            { value: 'г', keycode: 85 },
+            { value: 'ш', keycode: 73 },
+            { value: 'щ', keycode: 79 },
+            { value: 'з', keycode: 80 },
+            { value: 'х', keycode: 219 },
         ],
 
         arrayWordGrid: [
-            { value: 'a', keycode: 65 },
-            { value: 's', keycode: 83 },
-            { value: 'd', keycode: 68 },
-            { value: 'f', keycode: 70 },
-            { value: 'g', keycode: 71 },
-            { value: 'h', keycode: 72 },
-            { value: 'j', keycode: 74 },
-            { value: 'k', keycode: 75 },
-            { value: 'l', keycode: 76 },
+            { value: 'ф', keycode: 65 },
+            { value: 'ы', keycode: 83 },
+            { value: 'в', keycode: 68 },
+            { value: 'а', keycode: 70 },
+            { value: 'п', keycode: 71 },
+            { value: 'р', keycode: 72 },
+            { value: 'о', keycode: 74 },
+            { value: 'л', keycode: 75 },
+            { value: 'д', keycode: 76 },
+            { value: 'ж', keycode: 186 },
+            { value: 'э', keycode: 222 },
         ],
 
         arrayElemsWordTwo: [
             { value: 'Shift', keycode: 16 },
-            { value: 'z', keycode: 90 },
-            { value: 'x', keycode: 88 },
-            { value: 'c', keycode: 67 },
-            { value: 'v', keycode: 86 },
-            { value: 'b', keycode: 66 },
-            { value: 'n', keycode: 78 },
-            { value: 'm', keycode: 77 },
+            { value: 'я', keycode: 90 },
+            { value: 'ч', keycode: 88 },
+            { value: 'с', keycode: 67 },
+            { value: 'м', keycode: 86 },
+            { value: 'и', keycode: 66 },
+            { value: 'т', keycode: 78 },
+            { value: 'ь', keycode: 77 },
+            { value: 'б', keycode: 188 },
+            { value: 'ю', keycode: 190 },
             { value: 'Backspace', keycode: 8 },
         ],
 
         arrayElemsWordThree: [
             { value: ',', keycode: 188 },
-            { value: 'En', keycode: 19 },
-            { value: 'Space', keycode: 32 },
+            { value: 'Ru', keycode: 19 },
+            { value: 'Пробел', keycode: 32 },
             { value: '.', keycode: 190 },
             { value: 'Enter', keycode: 13 },
         ],
     };
 
-    const getArray = (array: Array<{value: string; keycode: number}>, tuUpperCase?: boolean) => {
+    const getArray = (array: Array<{ value: string; keycode: number }>, tuUpperCase?: boolean) => {
         const newArray = array.map((elem) => {
             if (tuUpperCase === true) {
                 return (
@@ -93,10 +98,10 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
                         value = { elem.keycode }>
                         {
                             elem.keycode === 19
-                                || elem.keycode === 32
-                                || elem.keycode === 13
-                                || elem.keycode === 8
-                                || elem.keycode === 16
+                            || elem.keycode === 32
+                            || elem.keycode === 13
+                            || elem.keycode === 8
+                            || elem.keycode === 16
                                 ? elem.value
                                 : elem.value.toUpperCase()
                         }
@@ -175,7 +180,6 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
 
     const handleonMouseDown = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const button = event.target as HTMLButtonElement;
-
         if (button) {
             button.setAttribute('style', 'background-color:#E15A32;');
         }
@@ -188,39 +192,39 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
             onMouseUp = { (event) => {
                 handleonMouseUp(event);
                 handleClick(event);
-            }  }>
+            } }>
             <S.KeyboardWrapper>
-                {getArray(EnLayout.arrayElemsNumber) }
+                {getArray(RuLayout.arrayElemsNumber)}
             </S.KeyboardWrapper>
-            <S.KeyboardWrapper>
+            <S.KeyboardWrapperSmall>
                 {
                     togglersRedux.isUpperWord
-                        ? getArray(EnLayout.arrayElemsWord, true)
-                        : getArray(EnLayout.arrayElemsWord)
+                        ? getArray(RuLayout.arrayElemsWord, true)
+                        : getArray(RuLayout.arrayElemsWord)
 
                 }
-            </S.KeyboardWrapper>
+            </S.KeyboardWrapperSmall>
             <S.KeyboardWrapperSmall >
                 {
                     togglersRedux.isUpperWord
-                        ? getArray(EnLayout.arrayWordGrid, true)
-                        : getArray(EnLayout.arrayWordGrid)
+                        ? getArray(RuLayout.arrayWordGrid, true)
+                        : getArray(RuLayout.arrayWordGrid)
 
                 }
             </S.KeyboardWrapperSmall>
             <S.KeyboardWrapperSmall>
                 {
                     togglersRedux.isUpperWord
-                        ? getArray(EnLayout.arrayElemsWordTwo, true)
-                        : getArray(EnLayout.arrayElemsWordTwo)
+                        ? getArray(RuLayout.arrayElemsWordTwo, true)
+                        : getArray(RuLayout.arrayElemsWordTwo)
 
                 }
             </S.KeyboardWrapperSmall>
             <S.KeyboardWrapperLast>
                 {
                     togglersRedux.isUpperWord
-                        ? getArray(EnLayout.arrayElemsWordThree, true)
-                        : getArray(EnLayout.arrayElemsWordThree)
+                        ? getArray(RuLayout.arrayElemsWordThree)
+                        : getArray(RuLayout.arrayElemsWordThree)
 
                 }
             </S.KeyboardWrapperLast>
@@ -230,6 +234,6 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
 
 export default () => (
     <ErrorBoundary>
-        <Keyboard />
+        <KeyboardRussian />
     </ErrorBoundary>
 );

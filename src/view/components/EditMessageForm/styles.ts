@@ -16,7 +16,7 @@ export const Input = styled.input`
     font-family: 'Inter-Regular';
     padding: 5px 10px 5px 0;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 17px;
     color: var(--bg);
     height: 100%;
     width: 70%;
@@ -31,6 +31,7 @@ export const Input = styled.input`
 export const SubmitBtn = styled(LogoutBtn)`
     text-transform: uppercase;
     width: 30%;
+    padding: 9px 10px;
     &:disabled {
         opacity: 0.5;
         pointer-events: none;

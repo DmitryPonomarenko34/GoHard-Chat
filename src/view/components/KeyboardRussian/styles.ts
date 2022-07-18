@@ -19,7 +19,7 @@ export const KeyboardWrapper = styled.div`
 
 export const KeyboardWrapperSmall = styled.div`
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(11, 1fr);
 `;
 
 export const KeyboardWrapperLast = styled.div`

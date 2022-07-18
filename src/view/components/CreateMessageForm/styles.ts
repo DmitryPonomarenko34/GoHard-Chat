@@ -14,6 +14,7 @@ export const Container = styled.section`
     background: #6C6C6C;
     overflow-y: hidden;
     height: auto;
+    box-sizing: border-box;
 `;
 
 export const Form = styled.form`

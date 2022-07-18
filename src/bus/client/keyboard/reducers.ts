@@ -20,11 +20,3 @@ export const deleteLastWord: types.BaseContact<types.KeybordWordsState> = (state
 
     return state.filter((word, index) => index !== state.length - 1 ? word : false);
 };
-
-export const toUppercaseWords: types.BaseContact<types.KeybordWordsState> = (state) => {
-    if (state === null) {
-        return state;
-    }
-
-    return state.map((word) => word.toUpperCase());
-};

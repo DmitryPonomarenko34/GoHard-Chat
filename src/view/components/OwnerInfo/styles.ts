@@ -1,7 +1,10 @@
 // Core
 import styled from 'styled-components';
 
-export const Container = styled.section``;
+export const Container = styled.section`
+    width: 100%;
+    padding: 10px 0;
+`;
 
 export const Title = styled.h1`
     display: flex;
@@ -11,7 +14,14 @@ export const Title = styled.h1`
     font-size: 32px;
     line-height: 34px;
     color: #55BBF8;
-    margin-right: 20px;
+    word-break: break-word;
+    margin-right: 15px;
+    img {
+        max-width: 17%;
+    }
+    @media (max-width: 510px) {
+        font-size: 20px;
+    }
 `;
 
 export const AccentTitleWord = styled.span`
@@ -23,17 +33,14 @@ export const FlexWrap = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0;
-    width: 500px;
 `;
 
 export const LogoutBtn = styled.button`
     display: block;
     font-family: 'Inter-Black';
     font-weight: 900;
-    width: 50%;
+    width: 30%;
     padding: 15px 10px;
-    margin: 0 auto;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: inset 0px -5px 0px rgba(0, 0, 0, 0.3);
     border-radius: 6px; 

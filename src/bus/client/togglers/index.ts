@@ -9,8 +9,11 @@ import { useSelector } from '../../../tools/hooks';
 // import { Message } from '../../messages/types';
 
 export const initialState = {
-    isOnline:   navigator.onLine,
-    isLoggedIn: false,
+    isOnline:        navigator.onLine,
+    isLoggedIn:      false,
+    isUpperWord:     false,
+    isRussianLayout: false,
+    isKeyboardOpen:  true,
 };
 
 // Types

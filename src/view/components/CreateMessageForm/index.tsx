@@ -1,5 +1,5 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 
 // Bus
 import { useMessages } from '../../../bus/messages';
@@ -16,11 +16,10 @@ type PropTypes = {
 
 
 export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
-    const { keyboard, getKeyboardWord, resetKeybordWords } = useKeyboard();
+    const { keyboard, getKeyboardWord, resetKeybordWords, deleteLastWord } = useKeyboard();
     const { user } = useUser();
-
     const { createMessage } = useMessages();
-
+    const [ keyCode, setKeyCode ] = useState<null | number>(null);
     const ownerTypeText = keyboard?.filter((elem) => typeof elem === 'string').join('');
 
     const handleCreateMessage = (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,26 +37,38 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
                     value = { ownerTypeText ? ownerTypeText : '' }
                     onChange = { (event) => {
                         const value = event.target.value;
-                        const lastValueWord = value[ value.length - 1 ];
+                        const lastWord = value[ value.length - 1 ];
 
-                        getKeyboardWord(lastValueWord);
+                        if (keyCode === 8) {
+                            if (keyboard) {
+                                deleteLastWord(keyboard);
+
+                                return;
+                            }
+                        }
+
+                        getKeyboardWord(lastWord);
                     }  }
 
                     onKeyDown = { (event) => {
                         if (keybortRef.current) {
-                            const keyboard = keybortRef.current;
-                            const keybordBtn = keyboard.querySelector(`button[value = '${event.nativeEvent.key}']`);
+                            const keyboardReff = keybortRef.current;
+                            const clickBtnValue = event.keyCode;
+                            const keybordBtn = keyboardReff.querySelector(`button[value = '${clickBtnValue}']`);
+
                             if (keybordBtn) {
                                 keybordBtn.setAttribute('style', 'background-color:#E15A32; border-color: #fff');
                             }
                         }
+
+                        setKeyCode(event.keyCode);
                     } }
 
                     onKeyUp = { (event) => {
                         if (keybortRef.current) {
-                            const keyboard = keybortRef.current;
-                            const clickBtnValue = event.nativeEvent.key;
-                            const keybordBtn = keyboard.querySelector(`button[value = '${clickBtnValue}']`);
+                            const keyboardReff = keybortRef.current;
+                            const clickBtnValue = event.keyCode;
+                            const keybordBtn = keyboardReff.querySelector(`button[value = '${clickBtnValue}']`);
 
                             if (keybordBtn) {
                                 keybordBtn.setAttribute('style', 'background-color:#ccc; border-color: #none');
