@@ -6,7 +6,7 @@ import { useSelector } from '../../../tools/hooks';
 import { keyboardActions } from './slice';
 
 // Types
-import { KeybordWords } from './types';
+import { KeybordWords, KeybordWordsState } from './types';
 
 export const useKeyboard = () => {
     const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export const useKeyboard = () => {
 
     const getKeyboardWord = (word: KeybordWords) => void dispatch(keyboardActions.setKeyboard(word));
     const resetKeybordWords = () => void dispatch(keyboardActions.resetKeyboard(null));
-    const deleteLastWord = (keyboard: string[]) => void dispatch(keyboardActions.deleteLastWord(keyboard));
+    const deleteLastWord = (keyboard: KeybordWordsState) => void dispatch(keyboardActions.deleteLastWord(keyboard));
 
     return {
         keyboard,

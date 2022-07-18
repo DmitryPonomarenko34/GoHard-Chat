@@ -3,10 +3,10 @@ import * as types from './types';
 
 export const setKeyboard: types.BaseContact<types.KeybordWords> = (state, action) => {
     if (state === null) {
-        return [ action.payload ];
+        return action.payload;
     }
 
-    return [ ...state, action.payload ];
+    return action.payload;
 };
 
 export const resetKeyboard: types.BaseContact<types.KeybordWordsState> = (__, action) => {
@@ -18,5 +18,5 @@ export const deleteLastWord: types.BaseContact<types.KeybordWordsState> = (state
         return state;
     }
 
-    return state.filter((word, index) => index !== state.length - 1 ? word : false);
+    return state[ state.length - 1 ];
 };

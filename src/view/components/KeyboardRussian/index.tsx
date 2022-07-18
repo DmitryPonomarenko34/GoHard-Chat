@@ -146,8 +146,8 @@ export const KeyboardRussian: FC<PropTypes> = ({ keybortRef }) => {
         }
 
         if (button.getAttribute('value') === '13') {
-            if (keyboard?.length !== 0) {
-                createMessage({ username: user?.username, text: keyboard?.join('') });
+            if (keyboard && keyboard.length !== 0) {
+                createMessage({ username: user?.username, text: keyboard });
                 resetKeybordWords();
             }
 
