@@ -56,7 +56,7 @@ export const Message = styled.div<UserTypes>`
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        min-height: 125px;
+        min-height: 145px;
    `}
 `;
 

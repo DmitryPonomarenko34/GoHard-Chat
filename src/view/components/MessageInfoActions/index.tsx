@@ -53,7 +53,14 @@ export const MessageInfoActions: FC<PropTypes> = ({ message }) => {
                                 </S.BtnChangeMessage>
                             )
                         }
-                        <S.BtnRemoveMessage onClick = { () => void deleteMessage(message) }>
+                        <S.BtnRemoveMessage onClick = { () => {
+                            // eslint-disable-next-line no-alert
+                            const isDelete = confirm('do you really want to delete messages');
+
+                            if (isDelete) {
+                                deleteMessage(message);
+                            }
+                        }  }>
                             remove
                         </S.BtnRemoveMessage>
                     </S.BtnsBox>

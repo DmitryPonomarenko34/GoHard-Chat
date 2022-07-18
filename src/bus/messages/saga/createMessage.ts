@@ -29,7 +29,6 @@ const createMessage = (callAction: ReturnType<typeof createMessageAction>) => ma
         }),
     },
     succes: function* (result) {
-        yield console.log(result);
         yield put(messageActions.createMessage(result));
     },
 });
