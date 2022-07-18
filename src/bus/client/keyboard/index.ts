@@ -13,7 +13,7 @@ export const useKeyboard = () => {
     const keyboard = useSelector((state) => state.keyboard);
 
     const getKeyboardWord = (word: KeybordWords) => void dispatch(keyboardActions.setKeyboard(word));
-    const resetKeybordWords = () => void dispatch(keyboardActions.resetKeyboard(null));
+    const resetKeybordWords = () => void dispatch(keyboardActions.resetKeyboard(''));
     const deleteLastWord = (keyboard: KeybordWordsState) => void dispatch(keyboardActions.deleteLastWord(keyboard));
 
     return {

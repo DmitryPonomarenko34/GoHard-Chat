@@ -19,11 +19,12 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
     const { user } = useUser();
     const { createMessage } = useMessages();
 
+
     const handleCreateMessage = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         if (keyboard) {
-            createMessage({ username: user?.username, text: keyboard });
+            createMessage({ username: user?.username, text: keyboard.text });
             resetKeybordWords();
         }
     };
@@ -33,10 +34,10 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
             <S.Form onSubmit = { handleCreateMessage }>
                 <S.Input
                     type = 'text'
-                    value = { keyboard ? keyboard : '' }
+                    value = { keyboard.text }
                     onChange = { (event) => {
                         const value = event.target.value;
-                        // setInputText(value);
+                        resetKeybordWords();
                         getKeyboardWord(value);
                     }  }
 
@@ -65,7 +66,7 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
                     } }
                 />
                 <S.SubmitBtn
-                    disabled = { !keyboard }
+                    disabled = { !keyboard.text }
                     type = 'submit'>
                     send
                 </S.SubmitBtn>

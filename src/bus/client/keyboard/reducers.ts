@@ -2,21 +2,13 @@
 import * as types from './types';
 
 export const setKeyboard: types.BaseContact<types.KeybordWords> = (state, action) => {
-    if (state === null) {
-        return action.payload;
-    }
-
-    return action.payload;
+    state.text += action.payload;
 };
 
-export const resetKeyboard: types.BaseContact<types.KeybordWordsState> = (__, action) => {
-    return action.payload;
+export const resetKeyboard: types.BaseContact<string> = (state, action) => {
+    state.text = action.payload;
 };
 
 export const deleteLastWord: types.BaseContact<types.KeybordWordsState> = (state) => {
-    if (state === null) {
-        return state;
-    }
-
-    return state[ state.length - 1 ];
+    state.text = state.text.substring(0, state.text.length - 1);
 };
