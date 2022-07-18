@@ -48,6 +48,10 @@ export const Input = styled.input`
         box-shadow: inset 3px 5px 4px rgba(0, 0, 0, 0.3);
         transition: ease-in-out 0.2s box-shadow;
     }
+
+    @media (max-width: 510px) {
+        width: auto;
+    }
 `;
 
 export const SubmitBtn = styled.button`

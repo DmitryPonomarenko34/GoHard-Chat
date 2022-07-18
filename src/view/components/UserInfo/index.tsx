@@ -1,35 +1,26 @@
 // Core
 import React, { FC } from 'react';
 
-// Bus
-// import {} from '../../../bus/'
 
 // Styles
 import * as S from './styles';
 
-// Icon
-import iconNinja from '../../../assets/icons/userIcon.svg';
+//Asset
+import NinjaIcon from '../../../assets/icons/ninja-mask.svg';
 
-// Types
-type PropTypes = {
-    username: string;
-    onClickLogout: () => void;
-}
-
-export const UserInfo: FC<PropTypes> = ({ username, onClickLogout }) => {
+export const RegistrationUserInfo: FC = () => {
     return (
         <S.Container>
-            <S.FlexWrap>
-                <S.Title>
-                    <img src = { iconNinja } />
-                    <S.AccentTitleWord>
-                        { username }
-                    </S.AccentTitleWord>
-                </S.Title>
-                <S.LogoutBtn onClick = { onClickLogout }>
-                    Logout
-                </S.LogoutBtn>
-            </S.FlexWrap>
+            <S.DecorIcon
+                alt = 'decor ninja icon'
+                src = { NinjaIcon }
+            />
+            <S.Title>
+                <S.TitleAccentWord>
+                    Ninja
+                </S.TitleAccentWord>
+                Registration
+            </S.Title>
         </S.Container>
     );
 };

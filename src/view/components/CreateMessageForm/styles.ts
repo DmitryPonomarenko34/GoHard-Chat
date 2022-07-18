@@ -1,9 +1,20 @@
 // Core
 import styled from 'styled-components';
+
 // Style
-import { LogoutBtn } from '../UserInfo/styles';
+import { LogoutBtn } from '../OwnerInfo/styles';
 
 export const Container = styled.section`
+    padding: 10px 20px;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+    height: 65vh;
+    overflow-y: auto;
+    background: #6C6C6C;
+    overflow-y: hidden;
+    height: auto;
+    box-sizing: border-box;
 `;
 
 export const Form = styled.form`

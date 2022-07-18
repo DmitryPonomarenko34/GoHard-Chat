@@ -29,7 +29,6 @@ const changeMessage = (callAction: ReturnType<typeof changeMessageAction>) => ma
         }),
     },
     succes: function* (result) {
-        yield console.log(result);
         yield put(messageActions.changeMessage(result));
     },
 });
