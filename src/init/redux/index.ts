@@ -24,7 +24,6 @@ export const store = configureStore({
         message,
         selectedMessage,
         keyboard,
-        // __entityName__,
     },
     middleware,
     devTools: process.env.NODE_ENV !== 'production',

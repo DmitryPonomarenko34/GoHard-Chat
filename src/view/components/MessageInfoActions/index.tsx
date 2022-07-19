@@ -4,13 +4,13 @@ import React, { FC } from 'react';
 // Bus
 import { useSelectedMessage } from '../../../bus/client/selectedMessage';
 import { useMessages } from '../../../bus/messages';
+import { useUser } from '../../../bus/user';
 
 // Styles
 import * as S from './styles';
 
 // Types
 import { Message } from '../../../bus/messages/types';
-import { useUser } from '../../../bus/user';
 
 type PropTypes = {
     message: Message

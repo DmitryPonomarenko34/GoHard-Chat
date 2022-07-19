@@ -12,6 +12,7 @@ export const Container = styled.section`
 export const KeyboardWrapper = styled.div<styleProps>`
   display: grid;
   grid-template-columns: repeat(10, 1fr);
+
   ${(props) => props.isRuLayout && css`
       grid-template-columns: repeat(11, 1fr);
     `

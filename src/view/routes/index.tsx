@@ -9,7 +9,6 @@ import { Private } from './Private';
 import { useTogglersRedux } from '../../bus/client/togglers';
 
 // Elements
-
 import { ShurikenSpinner } from '../elements';
 
 export const Routes: FC = () => {

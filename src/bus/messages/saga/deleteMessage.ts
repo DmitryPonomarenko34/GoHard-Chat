@@ -8,10 +8,12 @@ import { messageActions, sliceName } from '../slice';
 
 // Tools
 import { makeRequest } from '../../../tools/utils';
-import { API_URL } from '../../../init/constants';
 
 // Types
 import { Message } from '../types';
+
+// Constant
+import { API_URL } from '../../../init/constants';
 
 // Action
 export const deleteMessageAction = createAction<Message>(`${sliceName}/DELETE_MESSAGE_ASYNC`);

@@ -5,9 +5,6 @@ import { useDispatch } from 'react-redux';
 // Tools
 import { useSelector } from '../../../tools/hooks';
 
-// Types
-// import { Message } from '../../messages/types';
-
 export const initialState = {
     isOnline:       navigator.onLine,
     isLoggedIn:     false,
@@ -47,6 +44,5 @@ export const useTogglersRedux = () => {
     };
 };
 
-// Used ./src/tools/helpers/makeRequest
 export const togglerCreatorAction = toggrersActions.togglerCreatorAction;
 

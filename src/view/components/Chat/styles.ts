@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 type UserTypes = {
     messageAuthor: boolean | null;
 }
+
 export const Container = styled.section`
     padding: 10px 20px;
     width: 100%;
@@ -25,6 +26,7 @@ export const Container = styled.section`
 
     @media (max-height: 600px) {
         max-height: 215px;
+        min-height: 200px;
     }
 `;
 

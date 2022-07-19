@@ -32,6 +32,7 @@ export const SubmitBtn = styled(LogoutBtn)`
     text-transform: uppercase;
     width: 30%;
     padding: 9px 10px;
+
     &:disabled {
         opacity: 0.5;
         pointer-events: none;

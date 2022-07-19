@@ -1,7 +1,6 @@
 // Core
 import React, { FC } from 'react';
 
-
 // Bus
 import { useTogglersRedux } from '../../../bus/client/togglers';
 

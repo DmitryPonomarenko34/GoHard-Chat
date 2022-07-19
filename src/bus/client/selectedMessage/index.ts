@@ -12,10 +12,9 @@ import { Message } from '../../messages/types';
 
 export const useSelectedMessage = () => {
     const dispatch = useDispatch();
-    const selectedMessage = useSelector((state) => state.selectedMessage); // Add SelectedMessage to ./src/init/redux/index.ts
+    const selectedMessage = useSelector((state) => state.selectedMessage);
 
     const closeSelectedMessage = () => void dispatch(SelectedMessageActions.closeSelectedMessage());
-
 
     const changeSelectedMessage = (message: Message) => {
         dispatch(SelectedMessageActions.setSelectedMessage(message));

@@ -2,18 +2,18 @@
 import React, { FC, useEffect, useRef } from 'react';
 
 // Component
-import { EditMessageForm } from '../EditMessageForm';
+import { EditMessageForm, MessageInfoActions, MessageDateInfo } from '../';
 
 // Bus
 import { useSelectedMessage } from '../../../bus/client/selectedMessage';
 import { useMessages } from '../../../bus/messages';
-import { Message } from '../../../bus/messages/types';
 import { useUser } from '../../../bus/user';
 
 // Styles
 import * as S from './styles';
-import { MessageInfoActions } from '../MessageInfoActions';
-import { MessageDateInfo } from '../MessageDateInfo';
+
+// Types
+import { Message } from '../../../bus/messages/types';
 
 export const Chat: FC = () => {
     const scrollLastMessage = useRef<null | HTMLDivElement>(null);

@@ -18,7 +18,9 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
     const { keyboard, getKeyboardWord, resetKeybordWords } = useKeyboard();
     const { user } = useUser();
     const { createMessage } = useMessages();
+
     const keybordBtns = keybortRef.current?.querySelectorAll('button');
+
     const handleCreateMessage = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
