@@ -170,27 +170,30 @@ export const KeyboardRussian: FC<PropTypes> = ({ keybortRef }) => {
         getKeyboardWord(buttonValue);
     };
 
-    const handleonMouseUp = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-        const button = event.target as HTMLButtonElement;
-
-        if (button) {
-            button.setAttribute('style', 'background-color:#ccc;');
-        }
-    };
 
     const handleonMouseDown = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const button = event.target as HTMLButtonElement;
-        if (button) {
+
+        if (!button.hasAttribute('style')) {
             button.setAttribute('style', 'background-color:#E15A32;');
+        }
+    };
+
+    const handleonMouse = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        const button = event.target as HTMLButtonElement;
+
+        if (button.hasAttribute('style')) {
+            button.removeAttribute('style');
         }
     };
 
     return (
         <S.Container
             ref = { keybortRef }
-            onMouseDown = { (event) => void handleonMouseDown(event) }
+            onMouseDown = { handleonMouseDown }
+            onMouseOut = { handleonMouse }
             onMouseUp = { (event) => {
-                handleonMouseUp(event);
+                handleonMouse(event);
                 handleClick(event);
             } }>
             <S.KeyboardWrapper>

@@ -16,7 +16,7 @@ export const Container = styled.section`
 
 
     @media (max-height: 900px) {
-        max-height: 450px;
+        max-height: 320px;
     }
 
     @media (max-height: 700px) {

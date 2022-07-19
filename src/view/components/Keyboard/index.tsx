@@ -64,7 +64,7 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
         ],
 
         arrayElemsWordTwo: [
-            { value: 'Shift', keycode: 16 },
+            { value: 'Shift', keycode: 16 && 20 },
             { value: 'z', keycode: 90 },
             { value: 'x', keycode: 88 },
             { value: 'c', keycode: 67 },
@@ -97,6 +97,7 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
                                 || elem.keycode === 13
                                 || elem.keycode === 8
                                 || elem.keycode === 16
+                                || elem.keycode === 20
                                 ? elem.value
                                 : elem.value.toUpperCase()
                         }
@@ -134,7 +135,7 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
             }
         }
 
-        if (button.getAttribute('value') === '16') {
+        if (button.getAttribute('value') === '16' || button.getAttribute('value') === '20') {
             setTogglerAction({ type: 'isUpperWord', value: !togglersRedux.isUpperWord });
 
             return;
@@ -165,28 +166,30 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
         getKeyboardWord(buttonValue);
     };
 
-    const handleonMouseUp = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-        const button = event.target as HTMLButtonElement;
-
-        if (button) {
-            button.setAttribute('style', 'background-color:#ccc;');
-        }
-    };
 
     const handleonMouseDown = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const button = event.target as HTMLButtonElement;
 
-        if (button) {
+        if (!button.hasAttribute('style')) {
             button.setAttribute('style', 'background-color:#E15A32;');
+        }
+    };
+
+    const handleonMouse = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        const button = event.target as HTMLButtonElement;
+
+        if (button.hasAttribute('style')) {
+            button.removeAttribute('style');
         }
     };
 
     return (
         <S.Container
             ref = { keybortRef }
-            onMouseDown = { (event) => void handleonMouseDown(event) }
+            onMouseDown = { handleonMouseDown }
+            onMouseOut = { handleonMouse }
             onMouseUp = { (event) => {
-                handleonMouseUp(event);
+                handleonMouse(event);
                 handleClick(event);
             }  }>
             <S.KeyboardWrapper>
