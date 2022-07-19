@@ -19,7 +19,6 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
     const { user } = useUser();
     const { createMessage } = useMessages();
     const keybordBtns = keybortRef.current?.querySelectorAll('button');
-
     const handleCreateMessage = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -39,6 +38,7 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
                 <S.Input
                     type = 'text'
                     value = { keyboard.text }
+
                     onChange = { (event) => {
                         const value = event.target.value;
                         resetKeybordWords();
@@ -64,7 +64,7 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
                             const keybordBtn = keyboardReff.querySelector(`button[value = '${clickBtnValue}']`);
 
                             if (keybordBtn) {
-                                keybordBtn.setAttribute('style', 'background-color:#ccc; border-color: #fff');
+                                keybordBtn.setAttribute('style', 'background-color:#ccc; border-color: none');
                             }
                         }
                     } }
