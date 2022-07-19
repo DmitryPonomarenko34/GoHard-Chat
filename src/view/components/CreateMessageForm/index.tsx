@@ -18,7 +18,7 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
     const { keyboard, getKeyboardWord, resetKeybordWords } = useKeyboard();
     const { user } = useUser();
     const { createMessage } = useMessages();
-
+    const keybordBtns = keybortRef.current?.querySelectorAll('button');
 
     const handleCreateMessage = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -26,6 +26,10 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
         if (keyboard) {
             createMessage({ username: user?.username, text: keyboard.text });
             resetKeybordWords();
+        }
+
+        if (keybordBtns) {
+            keybordBtns.forEach((el) => el.removeAttribute('style'));
         }
     };
 
@@ -60,7 +64,7 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
                             const keybordBtn = keyboardReff.querySelector(`button[value = '${clickBtnValue}']`);
 
                             if (keybordBtn) {
-                                keybordBtn.setAttribute('style', 'background-color:#ccc; border-color: #none');
+                                keybordBtn.setAttribute('style', 'background-color:#ccc; border-color: #fff');
                             }
                         }
                     } }
