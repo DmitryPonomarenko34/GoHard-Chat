@@ -10,7 +10,7 @@ import * as reducers from './reducers';
 const initialState = null;
 
 export const SelectedMessageSlice = createSlice<types.SelectedMessageState, typeof reducers>({
-    name: 'SelectedMessage',
+    name: 'selectedMessage',
     initialState,
     reducers,
 });

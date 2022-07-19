@@ -39,7 +39,7 @@ export const Chat: FC = () => {
         updatedDate:        new Date(message.updatedAt).getTime(),
         messageCreatedTime: new Date(message.createdAt).toLocaleTimeString(),
         messageAuthor:      message.username === user?.username ? true : null,
-        isClientMessage:    selectedMessage?._id === message._id,
+        isEditingMessage:   selectedMessage?._id === message._id,
     });
 
     return (
@@ -49,7 +49,7 @@ export const Chat: FC = () => {
                     messages?.map((message) => {
                         const {
                             createdDate, updatedDate,
-                            isClientMessage,
+                            isEditingMessage,
                             messageAuthor, messageCreatedTime,
                         } = messageTransformator(message);
 
@@ -57,9 +57,15 @@ export const Chat: FC = () => {
                             <S.Message
                                 key = { message._id }
                                 messageAuthor = { messageAuthor }>
-                                <MessageInfoActions message = { message }/>
+                                <S.UserName messageAuthor = { messageAuthor }>{message.username}</S.UserName>
                                 {
-                                    isClientMessage && messageAuthor
+                                    messageAuthor
+                                    && (
+                                        <MessageInfoActions message = { message } />
+                                    )
+                                }
+                                {
+                                    isEditingMessage && messageAuthor
                                         ? (
                                             <EditMessageForm message = { message } />
                                         )
