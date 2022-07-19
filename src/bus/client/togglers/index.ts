@@ -5,15 +5,12 @@ import { useDispatch } from 'react-redux';
 // Tools
 import { useSelector } from '../../../tools/hooks';
 
-// Types
-// import { Message } from '../../messages/types';
-
 export const initialState = {
-    isOnline:        navigator.onLine,
-    isLoggedIn:      false,
-    isUpperWord:     false,
-    isRussianLayout: false,
-    isKeyboardOpen:  true,
+    isOnline:       navigator.onLine,
+    isLoggedIn:     false,
+    isUpperWord:    false,
+    isRuLayout:     false,
+    isKeyboardOpen: true,
 };
 
 // Types
@@ -47,6 +44,5 @@ export const useTogglersRedux = () => {
     };
 };
 
-// Used ./src/tools/helpers/makeRequest
 export const togglerCreatorAction = toggrersActions.togglerCreatorAction;
 

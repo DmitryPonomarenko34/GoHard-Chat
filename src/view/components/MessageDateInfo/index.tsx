@@ -1,13 +1,12 @@
 // Core
 import React, { FC } from 'react';
 
-// Bus
-import { Message } from '../../../bus/messages/types';
-
 // Styles
 import * as S from './styles';
 
 // Types
+import { Message } from '../../../bus/messages/types';
+
 type PropTypes = {
     message: Message
     createdDate: number

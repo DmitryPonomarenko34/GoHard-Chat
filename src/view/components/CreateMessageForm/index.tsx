@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 
 // Bus
 import { useMessages } from '../../../bus/messages';
@@ -14,19 +14,24 @@ type PropTypes = {
     keybortRef: React.MutableRefObject<HTMLDivElement | null>
 }
 
-
 export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
-    const { keyboard, getKeyboardWord, resetKeybordWords, deleteLastWord } = useKeyboard();
+    const { keyboard, getKeyboardWord, resetKeybordWords } = useKeyboard();
     const { user } = useUser();
     const { createMessage } = useMessages();
-    const [ keyCode, setKeyCode ] = useState<null | number>(null);
-    const ownerTypeText = keyboard?.filter((elem) => typeof elem === 'string').join('');
+
+    const keybordBtns = keybortRef.current?.querySelectorAll('button');
 
     const handleCreateMessage = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        createMessage({ username: user?.username, text: ownerTypeText });
-        resetKeybordWords();
+        if (keyboard) {
+            createMessage({ username: user?.username, text: keyboard.text });
+            resetKeybordWords();
+        }
+
+        if (keybordBtns) {
+            keybordBtns.forEach((el) => el.removeAttribute('style'));
+        }
     };
 
     return (
@@ -34,20 +39,12 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
             <S.Form onSubmit = { handleCreateMessage }>
                 <S.Input
                     type = 'text'
-                    value = { ownerTypeText ? ownerTypeText : '' }
+                    value = { keyboard.text }
+
                     onChange = { (event) => {
                         const value = event.target.value;
-                        const lastWord = value[ value.length - 1 ];
-
-                        if (keyCode === 8) {
-                            if (keyboard) {
-                                deleteLastWord(keyboard);
-
-                                return;
-                            }
-                        }
-
-                        getKeyboardWord(lastWord);
+                        resetKeybordWords();
+                        getKeyboardWord(value);
                     }  }
 
                     onKeyDown = { (event) => {
@@ -60,8 +57,6 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
                                 keybordBtn.setAttribute('style', 'background-color:#E15A32; border-color: #fff');
                             }
                         }
-
-                        setKeyCode(event.keyCode);
                     } }
 
                     onKeyUp = { (event) => {
@@ -71,13 +66,13 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
                             const keybordBtn = keyboardReff.querySelector(`button[value = '${clickBtnValue}']`);
 
                             if (keybordBtn) {
-                                keybordBtn.setAttribute('style', 'background-color:#ccc; border-color: #none');
+                                keybordBtn.setAttribute('style', 'background-color:#ccc; border-color: none');
                             }
                         }
                     } }
                 />
                 <S.SubmitBtn
-                    disabled = { !ownerTypeText }
+                    disabled = { !keyboard.text }
                     type = 'submit'>
                     send
                 </S.SubmitBtn>

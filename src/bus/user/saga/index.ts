@@ -6,9 +6,8 @@ import { all, call } from 'redux-saga/effects';
 // Watchers & Actions
 import { refreshUserAction, watchRefreshUser } from './refreshUser';
 import { registerUserAction, watchRegisterUser } from './registerUser';
-import { logutUserAction, watchLogutUser } from './logoutUser';
 
-// Tools
+// Constant
 import { USER_ID } from '../../../init/constants';
 
 export const useUserSaga = () => {
@@ -22,14 +21,9 @@ export const useUserSaga = () => {
             }
         },
         registerUser: (userName: string) => void dispatch(registerUserAction(userName)),
-        logoutUser:   () => {
-            if (userId) {
-                dispatch(logutUserAction(userId));
-            }
-        },
     };
 };
 
 export function* watchUser(): SagaIterator {
-    yield all([ call(watchRefreshUser), call(watchRegisterUser), call(watchLogutUser) ]);
+    yield all([ call(watchRefreshUser), call(watchRegisterUser) ]);
 }

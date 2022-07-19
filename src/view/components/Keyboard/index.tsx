@@ -16,73 +16,20 @@ import * as S from './styles';
 // Types
 type PropTypes = {
     keybortRef?: React.MutableRefObject<HTMLDivElement | null>
+    arrayKeyboardWords?: {
+        arrayElemsNumber: Array<{ value: string; keycode: number }>
+        arrayElemsWord: Array<{ value: string; keycode: number }>
+        arrayWordGrid: Array<{ value: string; keycode: number }>
+        arrayElemsWordTwo: Array<{ value: string; keycode: number }>
+        arrayElemsWordThree: Array<{ value: string; keycode: number }>
+    }
 }
 
-export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
+export const Keyboard: FC<PropTypes> = ({ keybortRef, arrayKeyboardWords }) => {
     const { keyboard, deleteLastWord, getKeyboardWord, resetKeybordWords } = useKeyboard();
     const { togglersRedux, setTogglerAction } = useTogglersRedux();
     const { createMessage } = useMessages();
     const { user } = useUser();
-
-    const EnLayout = {
-        arrayElemsNumber: [
-            { value: '1', keycode: 49 },
-            { value: '2', keycode: 50 },
-            { value: '3', keycode: 51 },
-            { value: '4', keycode: 52 },
-            { value: '5', keycode: 53 },
-            { value: '6', keycode: 54 },
-            { value: '7', keycode: 55 },
-            { value: '8', keycode: 56 },
-            { value: '9', keycode: 57 },
-            { value: '0', keycode: 48 },
-        ],
-
-        arrayElemsWord: [
-            { value: 'q', keycode: 81 },
-            { value: 'w', keycode: 87 },
-            { value: 'e', keycode: 69 },
-            { value: 'r', keycode: 82 },
-            { value: 't', keycode: 84 },
-            { value: 'y', keycode: 89 },
-            { value: 'u', keycode: 85 },
-            { value: 'i', keycode: 73 },
-            { value: 'o', keycode: 79 },
-            { value: 'p', keycode: 80 },
-        ],
-
-        arrayWordGrid: [
-            { value: 'a', keycode: 65 },
-            { value: 's', keycode: 83 },
-            { value: 'd', keycode: 68 },
-            { value: 'f', keycode: 70 },
-            { value: 'g', keycode: 71 },
-            { value: 'h', keycode: 72 },
-            { value: 'j', keycode: 74 },
-            { value: 'k', keycode: 75 },
-            { value: 'l', keycode: 76 },
-        ],
-
-        arrayElemsWordTwo: [
-            { value: 'Shift', keycode: 16 },
-            { value: 'z', keycode: 90 },
-            { value: 'x', keycode: 88 },
-            { value: 'c', keycode: 67 },
-            { value: 'v', keycode: 86 },
-            { value: 'b', keycode: 66 },
-            { value: 'n', keycode: 78 },
-            { value: 'm', keycode: 77 },
-            { value: 'Backspace', keycode: 8 },
-        ],
-
-        arrayElemsWordThree: [
-            { value: ',', keycode: 188 },
-            { value: 'En', keycode: 19 },
-            { value: 'Space', keycode: 32 },
-            { value: '.', keycode: 190 },
-            { value: 'Enter', keycode: 13 },
-        ],
-    };
 
     const getArray = (array: Array<{value: string; keycode: number}>, tuUpperCase?: boolean) => {
         const newArray = array.map((elem) => {
@@ -97,6 +44,7 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
                                 || elem.keycode === 13
                                 || elem.keycode === 8
                                 || elem.keycode === 16
+                                || elem.keycode === 20
                                 ? elem.value
                                 : elem.value.toUpperCase()
                         }
@@ -141,8 +89,8 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
         }
 
         if (button.getAttribute('value') === '13') {
-            if (keyboard?.length !== 0) {
-                createMessage({ username: user?.username, text: keyboard?.join('') });
+            if (keyboard && keyboard.text.length !== 0) {
+                createMessage({ username: user?.username, text: keyboard.text });
                 resetKeybordWords();
             }
 
@@ -150,7 +98,7 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
         }
 
         if (button.getAttribute('value') === '19') {
-            setTogglerAction({ type: 'isRussianLayout', value: !togglersRedux.isRussianLayout });
+            setTogglerAction({ type: 'isRuLayout', value: !togglersRedux.isRuLayout });
 
             return;
         }
@@ -165,63 +113,61 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef }) => {
         getKeyboardWord(buttonValue);
     };
 
-    const handleonMouseUp = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-        const button = event.target as HTMLButtonElement;
-
-        if (button) {
-            button.setAttribute('style', 'background-color:#ccc;');
-        }
-    };
 
     const handleonMouseDown = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         const button = event.target as HTMLButtonElement;
 
-        if (button) {
+        if (!button.hasAttribute('style')) {
             button.setAttribute('style', 'background-color:#E15A32;');
+        }
+    };
+
+    const handleonMouse = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+        const button = event.target as HTMLButtonElement;
+
+        if (button.hasAttribute('style')) {
+            button.removeAttribute('style');
         }
     };
 
     return (
         <S.Container
             ref = { keybortRef }
-            onMouseDown = { (event) => void handleonMouseDown(event) }
+            onMouseDown = { handleonMouseDown }
+            onMouseOut = { handleonMouse }
             onMouseUp = { (event) => {
-                handleonMouseUp(event);
+                handleonMouse(event);
                 handleClick(event);
             }  }>
             <S.KeyboardWrapper>
-                {getArray(EnLayout.arrayElemsNumber) }
+                {getArray(arrayKeyboardWords!.arrayElemsNumber) }
             </S.KeyboardWrapper>
-            <S.KeyboardWrapper>
+            <S.KeyboardWrapper isRuLayout = { togglersRedux.isRuLayout }>
                 {
                     togglersRedux.isUpperWord
-                        ? getArray(EnLayout.arrayElemsWord, true)
-                        : getArray(EnLayout.arrayElemsWord)
-
+                        ? getArray(arrayKeyboardWords!.arrayElemsWord, true)
+                        : getArray(arrayKeyboardWords!.arrayElemsWord)
                 }
             </S.KeyboardWrapper>
-            <S.KeyboardWrapperSmall >
+            <S.KeyboardWrapperSmall isRuLayout = { togglersRedux.isRuLayout }>
                 {
                     togglersRedux.isUpperWord
-                        ? getArray(EnLayout.arrayWordGrid, true)
-                        : getArray(EnLayout.arrayWordGrid)
-
+                        ? getArray(arrayKeyboardWords!.arrayWordGrid, true)
+                        : getArray(arrayKeyboardWords!.arrayWordGrid)
                 }
             </S.KeyboardWrapperSmall>
-            <S.KeyboardWrapperSmall>
+            <S.KeyboardWrapperSmall isRuLayout = { togglersRedux.isRuLayout }>
                 {
                     togglersRedux.isUpperWord
-                        ? getArray(EnLayout.arrayElemsWordTwo, true)
-                        : getArray(EnLayout.arrayElemsWordTwo)
-
+                        ? getArray(arrayKeyboardWords!.arrayElemsWordTwo, true)
+                        : getArray(arrayKeyboardWords!.arrayElemsWordTwo)
                 }
             </S.KeyboardWrapperSmall>
             <S.KeyboardWrapperLast>
                 {
                     togglersRedux.isUpperWord
-                        ? getArray(EnLayout.arrayElemsWordThree, true)
-                        : getArray(EnLayout.arrayElemsWordThree)
-
+                        ? getArray(arrayKeyboardWords!.arrayElemsWordThree, true)
+                        : getArray(arrayKeyboardWords!.arrayElemsWordThree)
                 }
             </S.KeyboardWrapperLast>
         </S.Container>

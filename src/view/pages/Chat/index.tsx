@@ -9,6 +9,9 @@ import { useTogglersRedux } from '../../../bus/client/togglers';
 // Components
 import { ErrorBoundary, UserInfo, CreateMessageForm, MainKeyboard, Chat } from '../../components';
 
+// Elements
+import { ShurikenSpinner } from '../../elements';
+
 // Style
 import * as S from './styles';
 
@@ -27,7 +30,9 @@ const ChatPage: FC = () => {
     };
 
     if (user === null || messages === null) {
-        return <div>Spinner</div>;
+        return (
+            <ShurikenSpinner />
+        );
     }
 
     return (

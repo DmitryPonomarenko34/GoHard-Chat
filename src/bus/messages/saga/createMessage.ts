@@ -8,10 +8,12 @@ import { messageActions, sliceName } from '../slice';
 
 // Tools
 import { makeRequest } from '../../../tools/utils';
-import { API_URL } from '../../../init/constants';
 
 // Types
 import { Message, MessagePayload } from '../types';
+
+// Constant
+import { API_URL } from '../../../init/constants';
 
 // Action
 export const createMessageAction = createAction<MessagePayload>(`${sliceName}/CREATE_MESSAGES_ASYNC`);

@@ -8,6 +8,8 @@ import { messageActions, sliceName } from '../slice';
 
 // Tools
 import { makeRequest } from '../../../tools/utils';
+
+// Constant
 import { API_URL } from '../../../init/constants';
 
 // Action

@@ -1,7 +1,6 @@
 // Core
 import React, { FC } from 'react';
 
-
 // Styles
 import * as S from './styles';
 

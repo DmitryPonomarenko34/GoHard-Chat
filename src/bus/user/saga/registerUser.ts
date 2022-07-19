@@ -9,6 +9,8 @@ import { togglerCreatorAction } from '../../client/togglers';
 
 // Tools
 import { makeRequest } from '../../../tools/utils';
+
+// Constant
 import { API_URL, USER_ID } from '../../../init/constants';
 
 // Action
