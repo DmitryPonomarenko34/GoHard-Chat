@@ -40,7 +40,7 @@ export const LogoutBtn = styled.button`
     font-family: 'Inter-Black';
     font-weight: 900;
     width: 30%;
-    padding: 15px 10px;
+    padding: 5px 10px 7px;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: inset 0px -5px 0px rgba(0, 0, 0, 0.3);
     border-radius: 6px; 

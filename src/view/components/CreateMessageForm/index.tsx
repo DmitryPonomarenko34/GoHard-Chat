@@ -5,7 +5,7 @@ import React, { FC } from 'react';
 import { useMessages } from '../../../bus/messages';
 import { useUser } from '../../../bus/user';
 import { useKeyboard } from '../../../bus/client/keyboard';
-
+import { useTogglersRedux } from '../../../bus/client/togglers';
 // Styles
 import * as S from './styles';
 
@@ -14,12 +14,20 @@ type PropTypes = {
     keybortRef: React.MutableRefObject<HTMLDivElement | null>
 }
 
+// Asset
+import keyboardIcon from '../../../assets/icons/keyboard.png';
+
 export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
     const { keyboard, getKeyboardWord, resetKeybordWords } = useKeyboard();
     const { user } = useUser();
+    const { togglersRedux, setTogglerAction } = useTogglersRedux();
     const { createMessage } = useMessages();
 
     const keybordBtns = keybortRef.current?.querySelectorAll('button');
+
+    const handleKeyboard = () => {
+        setTogglerAction({ type: 'isKeyboardOpen', value: !togglersRedux.isKeyboardOpen });
+    };
 
     const handleCreateMessage = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -36,6 +44,9 @@ export const CreateMessageForm: FC<PropTypes> = ({ keybortRef }) => {
 
     return (
         <S.Container>
+            <S.Btn onClick = { handleKeyboard }>
+                <img src = { keyboardIcon } />
+            </S.Btn>
             <S.Form onSubmit = { handleCreateMessage }>
                 <S.Input
                     type = 'text'

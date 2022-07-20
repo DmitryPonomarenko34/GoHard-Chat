@@ -12,25 +12,10 @@ type UserTypes = {
 export const Container = styled.section`
     padding: 10px 20px;
     width: 100%;
-    height: 65vh;
-    max-height: 520px;
+    height: 100%;
     overflow-y: auto;
     box-sizing: border-box;
     background: #6C6C6C;
-
-
-    @media (max-height: 900px) {
-        max-height: 320px;
-    }
-
-    @media (max-height: 700px) {
-        max-height: 275px;
-    }
-
-    @media (max-height: 600px) {
-        max-height: 215px;
-        min-height: 200px;
-    }
 `;
 
 export const FormBox = styled(Container)`

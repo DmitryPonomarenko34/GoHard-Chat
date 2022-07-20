@@ -18,16 +18,12 @@ import * as S from './styles';
 const ChatPage: FC = () => {
     const { user } = useUser();
     const { messages, getMessages } = useMessages();
-    const { togglersRedux, setTogglerAction } = useTogglersRedux();
+    const { togglersRedux } = useTogglersRedux();
     const keyboardRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         getMessages();
     }, []);
-
-    const handleKeyboard = () => {
-        setTogglerAction({ type: 'isKeyboardOpen', value: !togglersRedux.isKeyboardOpen });
-    };
 
     if (user === null || messages === null) {
         return (
@@ -40,18 +36,10 @@ const ChatPage: FC = () => {
             <UserInfo/>
             <Chat />
             <CreateMessageForm keybortRef = { keyboardRef }/>
-            <S.Btn onClick = { handleKeyboard }>
-                {
-                    togglersRedux.isKeyboardOpen
-                        ? 'Close'
-                        : 'Open'
-                }
-            </S.Btn>
             {
                 togglersRedux.isKeyboardOpen
-                    ? (
-                        <MainKeyboard keyboardRef = { keyboardRef }/>
-                    ) : null
+                    ? <MainKeyboard keyboardRef = { keyboardRef }/>
+                    : null
             }
         </S.Container>
     );
