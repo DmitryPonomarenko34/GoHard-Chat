@@ -4,7 +4,7 @@ export * from './CreateMessageForm';
 export * from './UserInfo';
 export * from './RegistrationForm';
 export * from './EditMessageForm';
-export * from './Chat';
+export * from '../containers/Chat';
 export * from './MessageInfoActions';
 export * from './MessageDateInfo';
 export * from './Keyboard';

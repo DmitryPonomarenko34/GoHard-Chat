@@ -2,7 +2,7 @@
 import React, { FC, useEffect, useRef } from 'react';
 
 // Component
-import { EditMessageForm, MessageInfoActions, MessageDateInfo } from '../';
+import { EditMessageForm, MessageInfoActions, MessageDateInfo } from '../../components';
 
 // Bus
 import { useSelectedMessage } from '../../../bus/client/selectedMessage';
