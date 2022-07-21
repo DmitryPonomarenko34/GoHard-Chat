@@ -18,12 +18,12 @@ export const MessageDateInfo: FC<PropTypes> = ({ message, createdDate, updatedDa
     return (
         <S.Container>
             <S.DispatchTime dateTime = { message.createdAt }>
-                {messageCreatedTime}
+                { messageCreatedTime }
             </S.DispatchTime>
             {
-                createdDate !== updatedDate ? (
-                    <S.EditedText>edited</S.EditedText>
-                ) : null
+                createdDate !== updatedDate
+                    ? <S.EditedText>edited</S.EditedText>
+                    : null
             }
         </S.Container>
     );

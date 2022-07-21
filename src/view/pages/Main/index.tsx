@@ -1,3 +1,6 @@
+//Init
+import { RuLayout, EnLayout } from './data';
+
 // Core
 import React, { FC, useEffect, useRef } from 'react';
 
@@ -8,10 +11,10 @@ import { useTogglersRedux } from '../../../bus/client/togglers';
 import { useKeyboard } from '../../../bus/client/keyboard';
 
 // Container
-import { Chat } from '../../containers/Chat/styles';
+import { Chat } from '../../containers/Chat';
 
 // Components
-import { ErrorBoundary, UserInfo, CreateMessageForm, MainKeyboard } from '../../components';
+import { ErrorBoundary, UserInfo, CreateMessageForm, Keyboard } from '../../components';
 
 // Elements
 import { ShurikenSpinner } from '../../elements';
@@ -38,6 +41,7 @@ const Main: FC = () => {
             const keyboardReff = keyboardRef.current;
             const clickBtnValue = event.keyCode;
             const keybordBtn = keyboardReff.querySelector(`button[value = '${clickBtnValue}']`);
+            console.log('qsqs');
 
             if (keybordBtn) {
                 keybordBtn.setAttribute('style', `background-color:${bgColor}; border-color: ${borderColor}`);
@@ -85,16 +89,22 @@ const Main: FC = () => {
                 handleChangeInput = { handleChangeInput }
                 handleCreateMessage = { handleCreateMessage }
                 handleKeyboard = { handleKeyboard }
-                handleOnKeyDown = {
-                    (event) => handleOnKey(event, bgColor: '#E15A32', borderColor: '#fff')
-                }
-                handleOnKeyUp = {handleOnKey(bgColor: '#ccc', borderColor: 'none') }
+                handleOnKeyDown = { (event) => {
+                    handleOnKey(event, '#E15A32', '#fff');
+                } }
+                handleOnKeyUp = { (event) => {
+                    handleOnKey(event, '#ccc', 'none');
+                }  }
                 keyboardText = { keyboard.text }
             />
             {
                 togglersRedux.isKeyboardOpen
-                    ? <MainKeyboard keyboardRef = { keyboardRef } />
-                    : null
+                    && (
+                        <Keyboard
+                            arrayKeyboardWords = { togglersRedux.isRuLayout ? RuLayout : EnLayout }
+                            keybortRef = { keyboardRef }
+                        />
+                    )
             }
         </S.Container>
     );

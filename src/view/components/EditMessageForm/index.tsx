@@ -1,41 +1,28 @@
 // Core
-import React, { FC, useState } from 'react';
-
-// Bus
-import { useMessages } from '../../../bus/messages';
-import { useSelectedMessage } from '../../../bus/client/selectedMessage';
+import React, { FC } from 'react';
 
 // Styles
 import * as S from './styles';
 
 // Types
-import { Message } from '../../../bus/messages/types';
-
-export type PropTypes = {
-    message: Message;
+type PropTypes = {
+    messageText: string
+    inputValue: string
+    handleChangeInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleSubmitMessage: (event: React.FormEvent<HTMLFormElement>) => void
 }
 
-export const EditMessageForm: FC<PropTypes> = ({ message }) => {
-    const [ inputValue, setinputValue ] = useState(message.text);
-    const { changeMessage } = useMessages();
-    const { closeSelectedMessage } = useSelectedMessage();
-
-    const handleChangeMessage = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        changeMessage({ text: inputValue, _id: message._id });
-        closeSelectedMessage();
-    };
-
+export const EditMessageForm: FC<PropTypes> = ({ messageText, inputValue, handleChangeInput, handleSubmitMessage }) => {
     return (
         <S.Container>
-            <S.Form onSubmit = { handleChangeMessage }>
+            <S.Form onSubmit = { (event) => handleSubmitMessage(event) }>
                 <S.Input
                     type = 'text'
                     value = { inputValue }
-                    onChange = { (event) => setinputValue(event.target.value) }
+                    onChange = { handleChangeInput }
                 />
                 <S.SubmitBtn
-                    disabled = { !inputValue || message.text === inputValue }
+                    disabled = { !inputValue || messageText === inputValue }
                     type = 'submit'>
                     send
                 </S.SubmitBtn>

@@ -8,4 +8,3 @@ export * from '../containers/Chat';
 export * from './MessageInfoActions';
 export * from './MessageDateInfo';
 export * from './Keyboard';
-export * from './MainKeyboard';

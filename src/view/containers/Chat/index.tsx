@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 
 // Component
 import { EditMessageForm, MessageInfoActions, MessageDateInfo } from '../../components';
@@ -22,11 +22,16 @@ export const Chat: FC = () => {
 
     const {
         messages,
+        changeMessage,
+        deleteMessage,
     } = useMessages();
 
     const {
-        selectedMessage,
+        selectedMessage, closeSelectedMessage,
+        changeSelectedMessage,
     } = useSelectedMessage();
+
+    const [ inputValue, setinputValue ] = useState(() => selectedMessage?.text);
 
     useEffect(() => {
         if (scrollLastMessage.current) {
@@ -41,6 +46,29 @@ export const Chat: FC = () => {
         messageAuthor:      message.username === user?.username ? true : null,
         isEditingMessage:   selectedMessage?._id === message._id,
     });
+
+    const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setinputValue(event.target.value);
+    };
+
+    const handleSubmitMessage = (event: React.FormEvent<HTMLFormElement>, messageId?: string) => {
+        event.preventDefault();
+        changeMessage({ text: inputValue, _id: messageId });
+        closeSelectedMessage();
+    };
+
+    const handleRemoveMessage = (message: Message) => {
+        // eslint-disable-next-line no-alert
+        const isDelete = confirm('do you really want to delete messages');
+
+        if (isDelete) {
+            deleteMessage(message);
+        }
+    };
+
+    const handleChangeMessage = (message: Message) => {
+        changeSelectedMessage(message);
+    };
 
     return (
         <S.Container>
@@ -61,13 +89,26 @@ export const Chat: FC = () => {
                                 {
                                     messageAuthor
                                     && (
-                                        <MessageInfoActions message = { message } />
+                                        <MessageInfoActions
+                                            changeSelectedMessage = { handleChangeMessage }
+                                            closeSelectedMessage = { closeSelectedMessage }
+                                            handleRemoveMessage = { handleRemoveMessage }
+                                            isEditingMessage = { isEditingMessage }
+                                            message = { message }
+                                        />
                                     )
                                 }
                                 {
                                     isEditingMessage && messageAuthor
                                         ? (
-                                            <EditMessageForm message = { message } />
+                                            <EditMessageForm
+                                                handleChangeInput = { handleChangeInput }
+                                                handleSubmitMessage = { (event) => {
+                                                    handleSubmitMessage(event, message._id);
+                                                }  }
+                                                inputValue = { inputValue ? inputValue : message.text }
+                                                messageText = { message.text }
+                                            />
                                         )
                                         : (
                                             <S.UserMessage>
