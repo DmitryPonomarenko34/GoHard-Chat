@@ -16,6 +16,7 @@ import { MessagePayload, Message } from '../types';
 import { API_URL } from '../../../init/constants';
 
 // Action
+import { togglerCreatorAction } from '../../client/togglers';
 export const changeMessageAction = createAction<MessagePayload>(`${sliceName}/CHANGE_MESSAGE_ASYNC`);
 
 // Saga
@@ -32,6 +33,7 @@ const changeMessage = (callAction: ReturnType<typeof changeMessageAction>) => ma
     },
     succes: function* (result) {
         yield put(messageActions.changeMessage(result));
+        yield put(togglerCreatorAction({ type: 'isSending', value: true }));
     },
 });
 

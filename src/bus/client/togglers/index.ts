@@ -7,6 +7,7 @@ import { useSelector } from '../../../tools/hooks';
 
 export const initialState = {
     isOnline:       navigator.onLine,
+    isSending:      false,
     isLoggedIn:     false,
     isUpperWord:    false,
     isRuLayout:     false,

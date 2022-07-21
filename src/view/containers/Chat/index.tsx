@@ -8,6 +8,7 @@ import { EditMessageForm, MessageInfoActions, MessageDateInfo } from '../../comp
 import { useSelectedMessage } from '../../../bus/client/selectedMessage';
 import { useMessages } from '../../../bus/messages';
 import { useUser } from '../../../bus/user';
+import { useTogglersRedux } from '../../../bus/client/togglers';
 
 // Styles
 import * as S from './styles';
@@ -22,7 +23,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
     const scrollLastMessage = useRef<null | HTMLDivElement>(null);
 
     const { user } = useUser();
-
+    const { togglersRedux } = useTogglersRedux();
     const {
         messages, changeMessage,
         deleteMessage,
@@ -98,6 +99,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
                                             closeSelectedMessage = { closeSelectedMessage }
                                             handleRemoveMessage = { handleRemoveMessage }
                                             isEditingMessage = { isEditingMessage }
+                                            isSending = { togglersRedux.isSending }
                                             message = { message }
                                         />
                                     )
