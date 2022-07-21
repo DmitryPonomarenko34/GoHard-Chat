@@ -2,10 +2,14 @@
 import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
 // State
-export type KeybordWords = string
+export type KeybordWords = {
+    text: string
+    mouseClickText: string
+}
 
 export type KeybordWordsState = {
-    text: KeybordWords
+    text: string
+    mouseClickText: string
 }
 
 // Contractss

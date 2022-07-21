@@ -12,6 +12,7 @@ type PropTypes = {
     handleChangeInput: (event: React.ChangeEvent<HTMLInputElement>) => void
     handleOnKeyUp: (event: React.KeyboardEvent<HTMLInputElement>, bgColor?: string, borderColor?: string) => void
     handleOnKeyDown: (event: React.KeyboardEvent<HTMLInputElement>, bgColor?: string, borderColor?: string) => void
+    inputRef: React.RefObject<HTMLInputElement>
 }
 
 // Asset
@@ -21,6 +22,7 @@ export const CreateMessageForm: FC<PropTypes>
     = ({
         keyboardText, handleKeyboard, handleCreateMessage,
         handleChangeInput, handleOnKeyUp, handleOnKeyDown,
+        inputRef,
     }) => {
         return (
             <S.Container>
@@ -30,6 +32,7 @@ export const CreateMessageForm: FC<PropTypes>
                 <S.Form
                     onSubmit = { handleCreateMessage }>
                     <S.Input
+                        ref = { inputRef }
                         type = 'text'
                         value = { keyboardText }
                         onChange = { (event) => handleChangeInput(event) }

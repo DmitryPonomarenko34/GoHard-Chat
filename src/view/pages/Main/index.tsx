@@ -29,19 +29,20 @@ const Main: FC = () => {
     const { keyboard, getKeyboardWord, resetKeybordWords } = useKeyboard();
 
     const keyboardRef = useRef<HTMLDivElement | null>(null);
-
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    const editInputRef = useRef<HTMLInputElement | null>(null);
     const keybordBtns = keyboardRef.current?.querySelectorAll('button');
 
     const handleKeyboard = () => {
         setTogglerAction({ type: 'isKeyboardOpen', value: !togglersRedux.isKeyboardOpen });
     };
 
-    const handleOnKey = (event: React.KeyboardEvent<HTMLInputElement>, bgColor: string, borderColor: string) => {
+    const handleOnKey
+    = (event: React.KeyboardEvent<HTMLInputElement> | KeyboardEvent, bgColor: string, borderColor: string) => {
         if (keyboardRef.current) {
             const keyboardReff = keyboardRef.current;
             const clickBtnValue = event.keyCode;
             const keybordBtn = keyboardReff.querySelector(`button[value = '${clickBtnValue}']`);
-            console.log('qsqs');
 
             if (keybordBtn) {
                 keybordBtn.setAttribute('style', `background-color:${bgColor}; border-color: ${borderColor}`);
@@ -51,8 +52,7 @@ const Main: FC = () => {
 
     const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        resetKeybordWords();
-        getKeyboardWord(value);
+        getKeyboardWord({ text: value, mouseClickText: keyboard.mouseClickText });
     };
 
     const handleCreateMessage = (event: React.FormEvent<HTMLFormElement>) => {
@@ -70,6 +70,16 @@ const Main: FC = () => {
 
     useEffect(() => {
         getMessages();
+        window.addEventListener('keydown', (event) => {
+            handleOnKey(event, '#E15A32', '#fff');
+
+            if (editInputRef.current) {
+                return;
+            }
+
+            inputRef.current?.focus();
+        });
+        window.addEventListener('keyup', (event) => handleOnKey(event, '#ccc', 'none'));
     }, []);
 
     if (user === null || messages === null) {
@@ -84,7 +94,7 @@ const Main: FC = () => {
                 handleLogoutUser = { logoutUser }
                 username = { user.username }
             />
-            <Chat />
+            <Chat editInputRef = { editInputRef }/>
             <CreateMessageForm
                 handleChangeInput = { handleChangeInput }
                 handleCreateMessage = { handleCreateMessage }
@@ -95,6 +105,7 @@ const Main: FC = () => {
                 handleOnKeyUp = { (event) => {
                     handleOnKey(event, '#ccc', 'none');
                 }  }
+                inputRef = { inputRef }
                 keyboardText = { keyboard.text }
             />
             {

@@ -8,7 +8,8 @@ import * as types from './types';
 import * as reducers from './reducers';
 
 const initialState = {
-    text: '',
+    text:           '',
+    mouseClickText: '',
 };
 
 export const keyboardSlice = createSlice<types.KeybordWordsState, typeof reducers>({

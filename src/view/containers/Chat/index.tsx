@@ -14,15 +14,17 @@ import * as S from './styles';
 
 // Types
 import { Message } from '../../../bus/messages/types';
+type PropTypes = {
+    editInputRef: React.RefObject<HTMLInputElement>
+}
 
-export const Chat: FC = () => {
+export const Chat: FC<PropTypes> = ({ editInputRef }) => {
     const scrollLastMessage = useRef<null | HTMLDivElement>(null);
 
     const { user } = useUser();
 
     const {
-        messages,
-        changeMessage,
+        messages, changeMessage,
         deleteMessage,
     } = useMessages();
 
@@ -85,7 +87,9 @@ export const Chat: FC = () => {
                             <S.Message
                                 key = { message._id }
                                 messageAuthor = { messageAuthor }>
-                                <S.UserName messageAuthor = { messageAuthor }>{message.username}</S.UserName>
+                                <S.UserName messageAuthor = { messageAuthor }>
+                                    {message.username}
+                                </S.UserName>
                                 {
                                     messageAuthor
                                     && (
@@ -102,6 +106,7 @@ export const Chat: FC = () => {
                                     isEditingMessage && messageAuthor
                                         ? (
                                             <EditMessageForm
+                                                editInputRef = { editInputRef }
                                                 handleChangeInput = { handleChangeInput }
                                                 handleSubmitMessage = { (event) => {
                                                     handleSubmitMessage(event, message._id);
