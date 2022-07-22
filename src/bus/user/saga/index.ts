@@ -12,10 +12,11 @@ import { USER_ID } from '../../../init/constants';
 
 export const useUserSaga = () => {
     const dispatch = useDispatch();
-    const userId = localStorage.getItem(USER_ID);
 
     return {
         refreshUser: () => {
+            const userId = localStorage.getItem(USER_ID);
+
             if (userId) {
                 dispatch(refreshUserAction(userId));
             }

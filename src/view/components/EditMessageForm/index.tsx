@@ -1,5 +1,9 @@
 // Core
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
+
+// Bus
+import { useMessages } from '../../../bus';
+import { useSelectedMessage } from '../../../bus/client/selectedMessage';
 
 // Styles
 import * as S from './styles';
@@ -8,30 +12,40 @@ import * as S from './styles';
 type PropTypes = {
     editInputRef: React.RefObject<HTMLInputElement>
     messageText: string
-    inputValue: string
-    handleChangeInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    handleSubmitMessage: (event: React.FormEvent<HTMLFormElement>) => void
+    messageId: string
 }
 
 export const EditMessageForm: FC<PropTypes>
-= ({ messageText, inputValue, handleChangeInput, handleSubmitMessage, editInputRef }) => {
-    return (
-        <S.Container>
-            {
-                <S.Form onSubmit = { (event) => handleSubmitMessage(event) }>
-                    <S.Input
-                        ref = { editInputRef }
-                        type = 'text'
-                        value = { inputValue }
-                        onChange = { handleChangeInput }
-                    />
-                    <S.SubmitBtn
-                        disabled = { !inputValue || messageText === inputValue }
-                        type = 'submit'>
-                        send
-                    </S.SubmitBtn>
-                </S.Form>
-            }
-        </S.Container>
-    );
-};
+    = (
+        { messageText, messageId, editInputRef },
+    ) => {
+        const [ inputValue, setinputValue ] = useState(messageText);
+        const { changeMessage } = useMessages();
+        const { closeSelectedMessage } = useSelectedMessage();
+
+        const handleSubmitMessage = (event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            changeMessage({ text: inputValue ? inputValue : '', _id: messageId });
+            closeSelectedMessage();
+        };
+
+        return (
+            <S.Container>
+                {
+                    <S.Form onSubmit = { (event) => handleSubmitMessage(event) }>
+                        <S.Input
+                            ref = { editInputRef }
+                            type = 'text'
+                            value = { inputValue }
+                            onChange = { (event) => setinputValue(event.target.value) }
+                        />
+                        <S.SubmitBtn
+                            disabled = { !inputValue || messageText === inputValue }
+                            type = 'submit'>
+                            send
+                        </S.SubmitBtn>
+                    </S.Form>
+                }
+            </S.Container>
+        );
+    };

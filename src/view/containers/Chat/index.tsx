@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 
 // Component
 import { EditMessageForm, MessageInfoActions, MessageDateInfo } from '../../components';
@@ -21,29 +21,12 @@ type PropTypes = {
 }
 
 export const Chat: FC<PropTypes> = ({ editInputRef }) => {
-    const scrollLastMessage = useRef<null | HTMLDivElement>(null);
-
     const { user } = useUser();
-
     const { togglersRedux } = useTogglersRedux();
+    const { messages, deleteMessage } = useMessages();
+    const { selectedMessage, closeSelectedMessage, changeSelectedMessage } = useSelectedMessage();
 
-    const {
-        messages, changeMessage,
-        deleteMessage,
-    } = useMessages();
-
-    const {
-        selectedMessage, closeSelectedMessage,
-        changeSelectedMessage,
-    } = useSelectedMessage();
-
-    const [ inputValue, setinputValue ] = useState<string | null>(null);
-
-    useEffect(() => {
-        if (selectedMessage !== null) {
-            setinputValue(selectedMessage.text);
-        }
-    }, [ selectedMessage ]);
+    const scrollLastMessage = useRef<null | HTMLDivElement>(null);
 
     useEffect(() => {
         if (scrollLastMessage.current) {
@@ -58,16 +41,6 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
         messageAuthor:      message.username === user?.username ? true : null,
         isEditingMessage:   selectedMessage?._id === message._id,
     });
-
-    const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setinputValue(event.target.value);
-    };
-
-    const handleSubmitMessage = (event: React.FormEvent<HTMLFormElement>, messageId?: string) => {
-        event.preventDefault();
-        changeMessage({ text: inputValue ? inputValue : '', _id: messageId });
-        closeSelectedMessage();
-    };
 
     const handleRemoveMessage = (message: Message) => {
         // eslint-disable-next-line no-alert
@@ -118,11 +91,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
                                         ? (
                                             <EditMessageForm
                                                 editInputRef = { editInputRef }
-                                                handleChangeInput = { handleChangeInput }
-                                                handleSubmitMessage = { (event) => {
-                                                    handleSubmitMessage(event, message._id);
-                                                }  }
-                                                inputValue = { inputValue || '' }
+                                                messageId = { message._id }
                                                 messageText = { message.text }
                                             />
                                         )

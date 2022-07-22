@@ -5,13 +5,12 @@ import { RuLayout, EnLayout } from './data';
 import React, { FC, useEffect, useRef } from 'react';
 
 // Bus
-import { useMessages } from '../../../bus/messages';
-import { useUser } from '../../../bus/user';
+import { useMessages, useUser } from '../../../bus';
 import { useTogglersRedux } from '../../../bus/client/togglers';
 import { useKeyboard } from '../../../bus/client/keyboard';
 
 // Container
-import { Chat } from '../../containers/Chat';
+import { Chat } from '../../containers';
 
 // Components
 import { ErrorBoundary, UserInfo, CreateMessageForm, Keyboard } from '../../components';
@@ -24,7 +23,7 @@ import * as S from './styles';
 
 const Main: FC = () => {
     const { user, logoutUser } = useUser();
-    const { messages, getMessages, createMessage } = useMessages();
+    const { createMessage } = useMessages(true);
     const { togglersRedux, setTogglerAction } = useTogglersRedux();
     const { keyboard, getKeyboardWord, resetKeybordWords } = useKeyboard();
 
@@ -37,11 +36,15 @@ const Main: FC = () => {
         setTogglerAction({ type: 'isKeyboardOpen', value: !togglersRedux.isKeyboardOpen });
     };
 
-    const handleOnKey
-    = (event: React.KeyboardEvent<HTMLInputElement> | KeyboardEvent, bgColor: string, borderColor: string) => {
+    const handleOnKey = (
+        event: React.KeyboardEvent<HTMLInputElement> | KeyboardEvent,
+        bgColor: string,
+        borderColor: string,
+    ) => {
         if (keyboardRef.current) {
             const keyboardReff = keyboardRef.current;
             const clickBtnValue = event.keyCode;
+
             const keybordBtn = keyboardReff.querySelector(`button[value = '${clickBtnValue}']`);
 
             if (keybordBtn) {
@@ -69,12 +72,6 @@ const Main: FC = () => {
     };
 
     useEffect(() => {
-        getMessages();
-
-        setInterval(()=> {
-            getMessages();
-        }, 3000);
-
         window.addEventListener('keydown', (event) => {
             handleOnKey(event, '#E15A32', '#fff');
 
@@ -87,7 +84,7 @@ const Main: FC = () => {
         window.addEventListener('keyup', (event) => handleOnKey(event, '#ccc', 'none'));
     }, []);
 
-    if (user === null || messages === null) {
+    if (user === null) {
         return (
             <ShurikenSpinner />
         );
