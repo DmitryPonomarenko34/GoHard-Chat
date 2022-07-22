@@ -46,7 +46,6 @@
         "@types/styled-components": "^5.1.25",
         "@types/terser-webpack-plugin": "^5.2.0",
         "@types/ttf2woff2": "^2.0.0",
-        "@types/uuid": "^8.3.4",
         "@types/webpack-bundle-analyzer": "^4.4.1",
         "@types/webpack-dev-server": "^4.7.2",
         "@types/webpack-hot-middleware": "^2.25.6",
