@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useEffect, useCallback } from 'react';
+import React, { FC, useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 
 // Bus
@@ -10,7 +10,6 @@ import { Routes } from './routes';
 
 // Hooks
 import { useLocalStorage } from '../tools/hooks';
-import { useTogglersRedux } from '../bus/client/togglers';
 
 // Assets
 import { GlobalStyles, defaultTheme } from '../assets';
@@ -24,20 +23,11 @@ export const AppContainer = styled.div`
 `;
 
 export const App: FC = () => {
-    const { setTogglerAction } = useTogglersRedux();
     const [ isDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
     const { refreshUser } = useUser();
 
-    const setOnlineStatusHanlder = useCallback(() => void setTogglerAction({
-        type:  'isOnline',
-        value: navigator.onLine,
-    }), [ setTogglerAction ]);
-
     useEffect(() => {
         refreshUser();
-        setOnlineStatusHanlder();
-        window.addEventListener('online', setOnlineStatusHanlder);
-        window.addEventListener('offline', setOnlineStatusHanlder);
     }, []);
 
     return (
