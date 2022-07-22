@@ -1,33 +1,23 @@
 // Core
-import React, { FC, useState } from 'react';
-
-// Bus
-import { useUser } from '../../../bus/user';
+import React, { FC } from 'react';
 
 // Styles
 import * as S from './styles';
 
-export const RegistrationForm: FC = () => {
-    const { registerUser } = useUser();
+// Types
+type PropTypes = {
+    username: string
+    isLoading: boolean
+    handleSubmitForm: (event: React.FormEvent<HTMLFormElement>, username: string) => void
+    handleChangeInput: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
 
-    const randomNumbers = () => Math.floor(1000 + (Math.random() * 9000));
-    const [ username, setUsername ] = useState(`NINJA:${randomNumbers()}`);
-
-    const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        return setUsername(event.target.value);
-    };
-
-    const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>, username: string) => {
-        event.preventDefault();
-
-        registerUser(username);
-    };
-
+export const RegistrationForm: FC<PropTypes> = ({ username, handleSubmitForm, handleChangeInput, isLoading }) => {
     return (
         <S.Container>
             <S.Form
                 action = '#'
-                onSubmit = { (event) => void handleSubmitForm(event, username) }>
+                onSubmit = { (event) => handleSubmitForm(event, username) }>
                 <S.Label htmlFor = 'text'>
                     <S.LabelText>
                         Enter your NinjaName:
@@ -41,7 +31,7 @@ export const RegistrationForm: FC = () => {
                     />
                 </S.Label>
                 <S.SubmitBtn
-                    disabled = { !username }
+                    disabled = { !username || isLoading }
                     type = 'submit'>
                     Submit
                 </S.SubmitBtn>

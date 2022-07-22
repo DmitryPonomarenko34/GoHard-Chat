@@ -2,7 +2,7 @@
 import * as types from './types';
 
 export const setKeyboard: types.BaseContact<types.KeybordWords> = (state, action) => {
-    state.text += action.payload;
+    state.text = action.payload.text + action.payload.mouseClickText;
 };
 
 export const resetKeyboard: types.BaseContact<string> = (state, action) => {

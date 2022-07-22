@@ -28,3 +28,7 @@ export const deleteMessage: types.BaseContact<types.Message> = (state, action) =
 
     return state.filter((message) => message._id !== action.payload._id);
 };
+
+export const clearMessages: types.BaseContact<null> = () => {
+    return null;
+};

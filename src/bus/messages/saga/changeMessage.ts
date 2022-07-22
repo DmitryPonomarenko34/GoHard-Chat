@@ -30,9 +30,12 @@ const changeMessage = (callAction: ReturnType<typeof changeMessageAction>) => ma
             body: JSON.stringify({ text: callAction.payload.text }),
         }),
     },
+
     succes: function* (result) {
         yield put(messageActions.changeMessage(result));
     },
+
+    togglerType: 'isLoading',
 });
 
 // Watcher

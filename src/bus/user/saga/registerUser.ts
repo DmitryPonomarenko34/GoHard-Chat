@@ -37,6 +37,7 @@ function* registerUser(callAction: ReturnType<typeof registerUserAction>) {
             yield put(userActions.setUser(result));
             yield put(togglerCreatorAction({ type: 'isLoggedIn', value: true }));
         },
+        togglerType: 'isLoading',
     });
 }
 

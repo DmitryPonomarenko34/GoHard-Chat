@@ -1,31 +1,29 @@
 // Core
 import React, { FC } from 'react';
 
-// Bus
-import { useUser } from '../../../bus/user';
-
 // Styles
 import * as S from './styles';
 
 // Icon
 import iconNinja from '../../../assets/icons/userIcon.svg';
 
-export const UserInfo: FC = () => {
-    const {
-        user,
-        logoutUser,
-    } = useUser();
+// Types
+type PropTypes = {
+    username: string
+    handleLogoutUser: () => void;
+}
 
+export const UserInfo: FC<PropTypes> = ({ username, handleLogoutUser }) => {
     return (
         <S.Container>
             <S.FlexWrap>
                 <S.Title>
                     <img src = { iconNinja } />
                     <S.AccentTitleWord>
-                        {user?.username }
+                        {username }
                     </S.AccentTitleWord>
                 </S.Title>
-                <S.LogoutBtn onClick = { logoutUser }>
+                <S.LogoutBtn onClick = { handleLogoutUser }>
                     Logout
                 </S.LogoutBtn>
             </S.FlexWrap>

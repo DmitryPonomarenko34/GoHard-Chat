@@ -5,13 +5,16 @@ import styled from 'styled-components';
 import { LogoutBtn } from '../OwnerInfo/styles';
 
 export const Container = styled.section`
-    padding: 10px 20px;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px 15px 10px;
     max-width: 500px;
     width: 100%;
     margin: 0 auto;
     height: 65vh;
     overflow-y: auto;
-    background: #6C6C6C;
+    border-top: 1px solid #fff;
+    background: #6c6c6c;
     overflow-y: hidden;
     height: auto;
     box-sizing: border-box;
@@ -20,6 +23,7 @@ export const Container = styled.section`
 export const Form = styled.form`
     display: flex;
     align-items: center;
+    width: 100%;
 `;
 
 export const Input = styled.input`
@@ -46,5 +50,19 @@ export const SubmitBtn = styled(LogoutBtn)`
         pointer-events: none;
         cursor: default;
         border-color: transparent;
+    }
+`;
+
+export const Btn = styled.button`
+    display: block;
+    background-color: transparent;
+    padding: 0;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+    img {
+        max-width: 35px;
+        width: 100%;
     }
 `;

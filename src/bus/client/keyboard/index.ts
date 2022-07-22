@@ -1,9 +1,11 @@
 // Core
 import { useDispatch } from 'react-redux';
 
+// Action
+import { keyboardActions } from './slice';
+
 // Tools
 import { useSelector } from '../../../tools/hooks';
-import { keyboardActions } from './slice';
 
 // Types
 import { KeybordWords, KeybordWordsState } from './types';

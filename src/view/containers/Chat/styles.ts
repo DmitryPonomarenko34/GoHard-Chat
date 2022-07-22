@@ -1,6 +1,9 @@
 // Core
 import styled, { css } from 'styled-components';
 
+// Asset
+import userIcon from '../../../assets/icons/user-icon.svg';
+
 // Types
 type UserTypes = {
     messageAuthor: boolean | null;
@@ -9,25 +12,10 @@ type UserTypes = {
 export const Container = styled.section`
     padding: 10px 20px;
     width: 100%;
-    height: 65vh;
-    max-height: 520px;
+    height: 100%;
     overflow-y: auto;
     box-sizing: border-box;
     background: #6C6C6C;
-
-
-    @media (max-height: 900px) {
-        max-height: 320px;
-    }
-
-    @media (max-height: 700px) {
-        max-height: 275px;
-    }
-
-    @media (max-height: 600px) {
-        max-height: 215px;
-        min-height: 200px;
-    }
 `;
 
 export const FormBox = styled(Container)`
@@ -69,3 +57,27 @@ export const UserMessage = styled.p`
     margin-top: auto;
 `;
 
+export const UserName = styled.span<UserTypes>`
+    display: block;
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 5px;
+
+    ${(props) => props.messageAuthor && css`
+        padding-left: 25px;
+        position: relative;
+        color: #E15A32;
+        &::before{
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-image: url(${userIcon});
+            width: 20px;
+            height: 15px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: top center;
+        }
+   `}
+`;

@@ -8,7 +8,7 @@ import { useMessages } from '../../../bus/messages';
 import { useUser } from '../../../bus/user';
 
 // Component
-import { ErrorBoundary } from '../ErrorBoundary';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 
 // Style
 import * as S from './styles';
@@ -69,7 +69,7 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef, arrayKeyboardWords }) => {
         const buttonValue = button.innerText;
 
         if (button.getAttribute('value') === '32') {
-            getKeyboardWord(' ');
+            getKeyboardWord({ mouseClickText: ' ', text: keyboard.text });
 
             return;
         }
@@ -105,12 +105,12 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef, arrayKeyboardWords }) => {
 
         if (togglersRedux.isUpperWord && button.getAttribute('value') !== '16') {
             const upperWord = buttonValue.toUpperCase();
-            getKeyboardWord(upperWord);
+            getKeyboardWord({ mouseClickText: upperWord, text: keyboard.text });
 
             return;
         }
 
-        getKeyboardWord(buttonValue);
+        getKeyboardWord({ mouseClickText: buttonValue, text: keyboard.text });
     };
 
 
