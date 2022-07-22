@@ -34,6 +34,7 @@ const deleteMessage = (callAction: ReturnType<typeof deleteMessageAction>) => ma
             yield put(messageActions.deleteMessage(callAction.payload));
         }
     },
+    togglerType: 'isLoading',
 });
 
 // Watcher

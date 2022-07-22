@@ -27,6 +27,8 @@ export const BtnChangeMessage = styled(LogoutBtn)`
 
   &:disabled {
    opacity: 0.6;
+   pointer-events: none;
+   cursor: default;
   }
 `;
 
@@ -59,7 +61,9 @@ export const ChangeMessageInput = styled(Input)`
 export const ChangeMessageBtn = styled(LogoutBtn)`
    padding: 10px 5px;
     &:disabled {
-      opacity: 0.6;
+       opacity: 0.6;
+      pointer-events: none;
+      cursor: default;
    }
 `;
 
@@ -71,5 +75,7 @@ export const CloseBtn = styled(ChangeMessageBtn)`
    margin-right: 10px;
    &:disabled {
       opacity: 0.6;
+      pointer-events: none;
+      cursor: default;
    }
 `;

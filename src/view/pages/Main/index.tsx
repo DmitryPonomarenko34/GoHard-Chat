@@ -66,8 +66,6 @@ const Main: FC = () => {
         if (keybordBtns) {
             keybordBtns.forEach((el) => el.removeAttribute('style'));
         }
-
-        console.log(togglersRedux.isSending);
     };
 
     useEffect(() => {

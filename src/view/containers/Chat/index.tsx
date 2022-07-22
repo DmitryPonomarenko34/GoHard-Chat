@@ -15,6 +15,7 @@ import * as S from './styles';
 
 // Types
 import { Message } from '../../../bus/messages/types';
+
 type PropTypes = {
     editInputRef: React.RefObject<HTMLInputElement>
 }
@@ -23,7 +24,9 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
     const scrollLastMessage = useRef<null | HTMLDivElement>(null);
 
     const { user } = useUser();
+
     const { togglersRedux } = useTogglersRedux();
+
     const {
         messages, changeMessage,
         deleteMessage,
@@ -99,7 +102,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
                                             closeSelectedMessage = { closeSelectedMessage }
                                             handleRemoveMessage = { handleRemoveMessage }
                                             isEditingMessage = { isEditingMessage }
-                                            isSending = { togglersRedux.isSending }
+                                            isSending = { togglersRedux.isLoading }
                                             message = { message }
                                         />
                                     )

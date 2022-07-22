@@ -6,12 +6,13 @@ import * as S from './styles';
 
 // Types
 type PropTypes = {
-    username: string;
-    handleSubmitForm: (event: React.FormEvent<HTMLFormElement>, username: string) => void;
-    handleChangeInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    username: string
+    isLoading: boolean
+    handleSubmitForm: (event: React.FormEvent<HTMLFormElement>, username: string) => void
+    handleChangeInput: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const RegistrationForm: FC<PropTypes> = ({ username, handleSubmitForm, handleChangeInput }) => {
+export const RegistrationForm: FC<PropTypes> = ({ username, handleSubmitForm, handleChangeInput, isLoading }) => {
     return (
         <S.Container>
             <S.Form
@@ -30,7 +31,7 @@ export const RegistrationForm: FC<PropTypes> = ({ username, handleSubmitForm, ha
                     />
                 </S.Label>
                 <S.SubmitBtn
-                    disabled = { !username }
+                    disabled = { !username || isLoading }
                     type = 'submit'>
                     Submit
                 </S.SubmitBtn>
