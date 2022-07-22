@@ -70,6 +70,11 @@ const Main: FC = () => {
 
     useEffect(() => {
         getMessages();
+
+        setInterval(()=> {
+            getMessages();
+        }, 3000);
+
         window.addEventListener('keydown', (event) => {
             handleOnKey(event, '#E15A32', '#fff');
 

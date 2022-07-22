@@ -8,7 +8,7 @@ import { useMessages } from '../../../bus/messages';
 import { useUser } from '../../../bus/user';
 
 // Component
-import { ErrorBoundary } from '../ErrorBoundary';
+import { ErrorBoundary } from '../../components/ErrorBoundary';
 
 // Style
 import * as S from './styles';

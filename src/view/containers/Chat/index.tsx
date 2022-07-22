@@ -37,13 +37,19 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
         changeSelectedMessage,
     } = useSelectedMessage();
 
-    const [ inputValue, setinputValue ] = useState(() => selectedMessage?.text);
+    const [ inputValue, setinputValue ] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (selectedMessage !== null) {
+            setinputValue(selectedMessage.text);
+        }
+    }, [ selectedMessage ]);
 
     useEffect(() => {
         if (scrollLastMessage.current) {
             scrollLastMessage.current.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'nearest' });
         }
-    }, [ messages ]);
+    }, []);
 
     const messageTransformator = (message: Message) => ({
         createdDate:        new Date(message.createdAt).getTime(),
@@ -59,7 +65,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
 
     const handleSubmitMessage = (event: React.FormEvent<HTMLFormElement>, messageId?: string) => {
         event.preventDefault();
-        changeMessage({ text: inputValue, _id: messageId });
+        changeMessage({ text: inputValue ? inputValue : '', _id: messageId });
         closeSelectedMessage();
     };
 
@@ -116,7 +122,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
                                                 handleSubmitMessage = { (event) => {
                                                     handleSubmitMessage(event, message._id);
                                                 }  }
-                                                inputValue = { inputValue ? inputValue : message.text }
+                                                inputValue = { inputValue || '' }
                                                 messageText = { message.text }
                                             />
                                         )
