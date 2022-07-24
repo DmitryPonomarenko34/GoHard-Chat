@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 // Style
-import { LogoutBtn } from '../OwnerInfo/styles';
+import { LogoutBtn } from '../../components/OwnerInfo/styles';
 
 export const Container = styled.section`
 `;

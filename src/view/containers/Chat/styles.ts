@@ -16,6 +16,8 @@ export const Container = styled.section`
     overflow-y: auto;
     box-sizing: border-box;
     background: #6C6C6C;
+    display: flex;
+    flex-direction: column-reverse;
 `;
 
 export const FormBox = styled(Container)`
@@ -24,7 +26,6 @@ export const FormBox = styled(Container)`
 `;
 
 export const Chat = styled.div`
-    overflow-y: auto;
     display: flex;
     flex-direction: column-reverse;
 `;

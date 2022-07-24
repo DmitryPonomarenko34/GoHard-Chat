@@ -1,5 +1,5 @@
 // Core
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC } from 'react';
 
 // Component
 import { EditMessageForm, MessageInfoActions, MessageDateInfo } from '../../components';
@@ -23,16 +23,8 @@ type PropTypes = {
 export const Chat: FC<PropTypes> = ({ editInputRef }) => {
     const { user } = useUser();
     const { togglersRedux } = useTogglersRedux();
-    const { messages, deleteMessage } = useMessages();
+    const { messages, deleteMessage  } = useMessages();
     const { selectedMessage, closeSelectedMessage, changeSelectedMessage } = useSelectedMessage();
-
-    const scrollLastMessage = useRef<null | HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (scrollLastMessage.current) {
-            scrollLastMessage.current.scrollIntoView({ behavior: 'auto', block: 'end', inline: 'nearest' });
-        }
-    }, []);
 
     const messageTransformator = (message: Message) => ({
         createdDate:        new Date(message.createdAt).getTime(),
@@ -57,7 +49,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
 
     return (
         <S.Container>
-            <S.Chat ref = { scrollLastMessage }>
+            <S.Chat>
                 {
                     messages?.map((message) => {
                         const {
@@ -75,16 +67,16 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
                                 </S.UserName>
                                 {
                                     messageAuthor
-                                    && (
-                                        <MessageInfoActions
-                                            changeSelectedMessage = { handleChangeMessage }
-                                            closeSelectedMessage = { closeSelectedMessage }
-                                            handleRemoveMessage = { handleRemoveMessage }
-                                            isEditingMessage = { isEditingMessage }
-                                            isSending = { togglersRedux.isLoading }
-                                            message = { message }
-                                        />
-                                    )
+                                        && (
+                                            <MessageInfoActions
+                                                changeSelectedMessage = { handleChangeMessage }
+                                                closeSelectedMessage = { closeSelectedMessage }
+                                                handleRemoveMessage = { handleRemoveMessage }
+                                                isEditingMessage = { isEditingMessage }
+                                                isSending = { togglersRedux.isLoading }
+                                                message = { message }
+                                            />
+                                        )
                                 }
                                 {
                                     isEditingMessage && messageAuthor

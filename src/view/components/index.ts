@@ -3,7 +3,7 @@ export * from './OwnerInfo';
 export * from './CreateMessageForm';
 export * from './UserInfo';
 export * from './RegistrationForm';
-export * from './EditMessageForm';
+export * from '../containers/EditMessageForm';
 export * from '../containers/Chat';
 export * from './MessageInfoActions';
 export * from './MessageDateInfo';

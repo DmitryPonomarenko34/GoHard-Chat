@@ -28,7 +28,6 @@ export const useUser = () => {
         clearMessages();
         dispatch(userActions.clearUser(null));
         dispatch(togglerCreatorAction({ type: 'isLoggedIn', value: false }));
-        dispatch(togglerCreatorAction({ type: 'isKeyboardOpen', value: false }));
     };
 
     return {

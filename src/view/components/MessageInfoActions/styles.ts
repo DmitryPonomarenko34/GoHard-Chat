@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 //Components
 import { LogoutBtn } from '../OwnerInfo/styles';
-import { Form, Input } from '../EditMessageForm/styles';
+import { Form, Input } from '../../containers/EditMessageForm/styles';
 
 export const Container = styled.section`
 `;

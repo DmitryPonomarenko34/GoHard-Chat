@@ -30,6 +30,7 @@ const Main: FC = () => {
     const keyboardRef = useRef<HTMLDivElement | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
     const editInputRef = useRef<HTMLInputElement | null>(null);
+
     const keybordBtns = keyboardRef.current?.querySelectorAll('button');
 
     const handleKeyboard = () => {
@@ -81,8 +82,10 @@ const Main: FC = () => {
 
             inputRef.current?.focus();
         });
+
         window.addEventListener('keyup', (event) => handleOnKey(event, '#ccc', 'none'));
     }, []);
+
 
     if (user === null) {
         return (
@@ -96,7 +99,9 @@ const Main: FC = () => {
                 handleLogoutUser = { logoutUser }
                 username = { user.username }
             />
-            <Chat editInputRef = { editInputRef }/>
+            <Chat
+                editInputRef = { editInputRef }
+            />
             <CreateMessageForm
                 handleChangeInput = { handleChangeInput }
                 handleCreateMessage = { handleCreateMessage }
