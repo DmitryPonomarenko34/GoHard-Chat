@@ -3,62 +3,39 @@ import React, { FC, useState } from 'react';
 
 // Bus
 import { useUser } from '../../../bus/user';
+import { useTogglersRedux } from '../../../bus/client/togglers';
 
 // Components
-import { ErrorBoundary } from '../../components';
+import { ErrorBoundary, RegistrationUserInfo, RegistrationForm } from '../../components';
 
 // Styles
 import * as S from './styles';
 
-// Types
-type PropTypes = {
-    /* type props here */
-}
-
-//Asset
-import NinjaIcon from '../../../assets/icons/ninja-mask.svg';
-
-const Registration: FC<PropTypes> = () => {
+const Registration: FC = () => {
     const { registerUser } = useUser();
+    const { togglersRedux } = useTogglersRedux();
+    const randomNumbers = () => Math.floor(1000 + (Math.random() * 9000));
+    const [ username, setUsername ] = useState(`NINJA:${randomNumbers()}`);
 
-    const random = () => Math.floor(1000 + (Math.random() * 9000));
-    const [ username, setUsername ] = useState(`NINJA:${random()}`);
+    const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        return setUsername(event.target.value);
+    };
+
+    const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>, username: string) => {
+        event.preventDefault();
+
+        registerUser(username);
+    };
 
     return (
         <S.Container>
-            <S.DecorIcon
-                alt = 'decor ninja icon'
-                src = { NinjaIcon }
+            <RegistrationUserInfo />
+            <RegistrationForm
+                handleChangeInput = { handleChangeInput }
+                handleSubmitForm = { handleSubmitForm }
+                isLoading = { togglersRedux.isLoading }
+                username = { username }
             />
-            <S.Title>
-                <S.TitleAccentWord>
-                    Ninja
-                </S.TitleAccentWord>
-                Registration
-            </S.Title>
-            <S.Form
-                action = '#'
-                onSubmit = { (event) => {
-                    event.preventDefault();
-                    registerUser(username);
-                }  }>
-                <S.Label htmlFor = 'text'>
-                    <S.LabelText>
-                        Enter your NinjaName:
-                    </S.LabelText>
-                    <S.Input
-                        name = 'text'
-                        placeholder = 'Write your ninja name'
-                        type = 'text'
-                        value = { username }
-                        onChange = { (event) => setUsername(event.target.value) }
-                    />
-                </S.Label>
-                <S.SubmitBtn
-                    type = 'submit'>
-                    Submit
-                </S.SubmitBtn>
-            </S.Form>
         </S.Container>
     );
 };

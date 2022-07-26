@@ -7,7 +7,6 @@ import { Provider as ReduxProvider } from 'react-redux';
 // Init
 import {
     store as reduxStore,
-    registerServiceWorker,
 } from './init';
 
 // View
@@ -30,6 +29,3 @@ if (container) {
     root.render(<Root />);
 }
 
-if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-    registerServiceWorker();
-}

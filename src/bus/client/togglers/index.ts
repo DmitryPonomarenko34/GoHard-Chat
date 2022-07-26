@@ -5,14 +5,17 @@ import { useDispatch } from 'react-redux';
 // Tools
 import { useSelector } from '../../../tools/hooks';
 
-const initialState = {
-    isOnline:   navigator.onLine,
-    isLoggedIn: false,
+export const initialState = {
+    isLoading:      false,
+    isLoggedIn:     false,
+    isUpperWord:    false,
+    isRuLayout:     false,
+    isKeyboardOpen: true,
 };
 
 // Types
 export type TogglersKeys = keyof typeof initialState;
-type Options = { type: TogglersKeys, value: boolean };
+type Options = {type: TogglersKeys, value: boolean | string, };
 
 // Slice
 export const toggrersSlice = createSlice({
@@ -41,6 +44,5 @@ export const useTogglersRedux = () => {
     };
 };
 
-// Used ./src/tools/helpers/makeRequest
 export const togglerCreatorAction = toggrersActions.togglerCreatorAction;
 

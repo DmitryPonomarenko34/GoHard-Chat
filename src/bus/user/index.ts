@@ -1,15 +1,34 @@
 // Core
-// import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+// Bus
+import { togglerCreatorAction } from '../client/togglers';
+
+// Thunk
+import { useUserThunk } from './thunk';
+import { useMessages } from '../messages';
+
+// Action
+import { userActions } from './slice';
 
 // Tools
 import { useSelector } from '../../tools/hooks';
 
-// Saga
-import { useUserSaga } from './saga';
+// Constant
+import { USER_ID } from '../../init/constants';
 
 export const useUser = () => {
-    const { refreshUser, registerUser, logoutUser } = useUserSaga();
-    const user = useSelector((state) => state.user); // Add user to ./src/init/redux/index.ts
+    const dispatch = useDispatch();
+    const { refreshUser, registerUser } = useUserThunk();
+    const { clearMessages } = useMessages();
+    const user = useSelector((state) => state.user);
+
+    const logoutUser = () => {
+        localStorage.removeItem(USER_ID);
+        clearMessages();
+        dispatch(userActions.clearUser(null));
+        dispatch(togglerCreatorAction({ type: 'isLoggedIn', value: false }));
+    };
 
     return {
         user,
