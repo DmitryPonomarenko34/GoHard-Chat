@@ -63,7 +63,7 @@ const Main: FC = () => {
         event.preventDefault();
 
         if (keyboard) {
-            createMessage({ username: user?.username, text: keyboard.text });
+            createMessage({ username: user ? user.username : '', text: keyboard.text });
             resetKeybordWords();
         }
 

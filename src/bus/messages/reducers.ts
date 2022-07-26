@@ -21,12 +21,12 @@ export const changeMessage: types.BaseContact<types.Message> = (state, action) =
     return state.map((message) => message._id === action.payload._id ? action.payload : message);
 };
 
-export const deleteMessage: types.BaseContact<types.Message> = (state, action) => {
+export const deleteMessage: types.BaseContact<string> = (state, action) => {
     if (state === null) {
         return state;
     }
 
-    return state.filter((message) => message._id !== action.payload._id);
+    return state.filter((message) => message._id !== action.payload);
 };
 
 export const clearMessages: types.BaseContact<null> = () => {

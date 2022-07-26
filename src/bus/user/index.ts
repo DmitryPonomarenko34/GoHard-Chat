@@ -4,8 +4,8 @@ import { useDispatch } from 'react-redux';
 // Bus
 import { togglerCreatorAction } from '../client/togglers';
 
-// Saga
-import { useUserSaga } from './saga';
+// Thunk
+import { useUserThunk } from './thunk';
 import { useMessages } from '../messages';
 
 // Action
@@ -19,7 +19,7 @@ import { USER_ID } from '../../init/constants';
 
 export const useUser = () => {
     const dispatch = useDispatch();
-    const { refreshUser, registerUser } = useUserSaga();
+    const { refreshUser, registerUser } = useUserThunk();
     const { clearMessages } = useMessages();
     const user = useSelector((state) => state.user);
 

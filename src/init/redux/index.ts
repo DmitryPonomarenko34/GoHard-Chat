@@ -10,10 +10,8 @@ import keyboard from '../../bus/client/keyboard/slice';
 // import __entityName__ from '../../bus/__entityName__/slice';
 
 // Middleware
-import { middleware, sagaMiddleware } from './middleware';
+import { middleware } from './middleware';
 
-// Saga
-import { rootSaga } from './rootSaga';
 
 export const store = configureStore({
     reducer: {
@@ -28,5 +26,3 @@ export const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>
-
-sagaMiddleware.run(rootSaga);

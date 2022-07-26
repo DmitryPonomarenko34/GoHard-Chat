@@ -1,22 +1,21 @@
 // Core
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 
 // Saga
-import { useMessagesSaga } from './saga';
+import { useMessagesThunk } from './thunk';
 
 // Slice
 import { messageActions } from './slice';
 
 // Tools
-import { useSelector } from '../../tools/hooks';
+import { useAppDispatch, useSelector } from '../../tools/hooks';
 
 let timerId: NodeJS.Timer | undefined = void 0; // eslint-disable-line no-undef
 
 export const useMessages = (isFetching?: boolean) => {
-    const { getMessages, createMessage, changeMessage, deleteMessage } = useMessagesSaga();
+    const { getMessages, createMessage, changeMessage, deleteMessage } = useMessagesThunk();
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const messages = useSelector((state) => state.messages);
 
     const clearMessages = () => void dispatch(messageActions.clearMessages(null));

@@ -39,7 +39,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
         const isDelete = confirm('do you really want to delete messages');
 
         if (isDelete) {
-            deleteMessage(message);
+            deleteMessage(message._id);
         }
     };
 

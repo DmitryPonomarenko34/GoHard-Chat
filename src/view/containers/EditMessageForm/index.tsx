@@ -25,7 +25,7 @@ export const EditMessageForm: FC<PropTypes>
 
         const handleSubmitMessage = (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
-            changeMessage({ text: inputValue ? inputValue : '', _id: messageId });
+            changeMessage({ _id: messageId, text: inputValue });
             closeSelectedMessage();
         };
 

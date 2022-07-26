@@ -90,7 +90,7 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef, arrayKeyboardWords }) => {
 
         if (button.getAttribute('value') === '13') {
             if (keyboard && keyboard.text.length !== 0) {
-                createMessage({ username: user?.username, text: keyboard.text });
+                createMessage({ username: user ? user.username : '', text: keyboard.text });
                 resetKeybordWords();
             }
 
