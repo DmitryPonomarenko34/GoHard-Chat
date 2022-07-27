@@ -37,8 +37,8 @@ export const refreshUser = createAsyncThunk(refreshUserAction.type, async (userI
     }
 
     localStorage.clear();
+    thunkDispatch(togglerCreatorAction({ type: 'isLoading', value: false }));
     thunkDispatch(togglerCreatorAction({ type: 'isLoggedIn', value: false }));
-
 
     return response.json();
 });

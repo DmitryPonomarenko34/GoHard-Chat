@@ -4,6 +4,7 @@ import React, { FC, useState } from 'react';
 // Bus
 import { useMessages } from '../../../bus';
 import { useSelectedMessage } from '../../../bus/client/selectedMessage';
+import { useTogglersRedux } from '../../../bus/client/togglers';
 
 // Styles
 import * as S from './styles';
@@ -22,9 +23,12 @@ export const EditMessageForm: FC<PropTypes>
         const [ inputValue, setinputValue ] = useState(messageText);
         const { changeMessage } = useMessages();
         const { closeSelectedMessage } = useSelectedMessage();
+        const { setTogglerAction } = useTogglersRedux();
 
         const handleSubmitMessage = (event: React.FormEvent<HTMLFormElement>) => {
+            setTogglerAction({ type: 'isLoading', value: true });
             event.preventDefault();
+
             changeMessage({ _id: messageId, text: inputValue });
             closeSelectedMessage();
         };

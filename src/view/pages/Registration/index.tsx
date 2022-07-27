@@ -13,7 +13,7 @@ import * as S from './styles';
 
 const Registration: FC = () => {
     const { registerUser } = useUser();
-    const { togglersRedux } = useTogglersRedux();
+    const { togglersRedux, setTogglerAction } = useTogglersRedux();
     const randomNumbers = () => Math.floor(1000 + (Math.random() * 9000));
     const [ username, setUsername ] = useState(`NINJA:${randomNumbers()}`);
 
@@ -23,7 +23,7 @@ const Registration: FC = () => {
 
     const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>, username: string) => {
         event.preventDefault();
-
+        setTogglerAction({ type: 'isLoading', value: true });
         registerUser(username);
     };
 
