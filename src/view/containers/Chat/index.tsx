@@ -25,7 +25,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
     const { togglersRedux } = useTogglersRedux();
     const { messages, deleteMessage  } = useMessages();
     const { selectedMessage, closeSelectedMessage, changeSelectedMessage } = useSelectedMessage();
-
+    const { setTogglerAction } = useTogglersRedux();
     const messageTransformator = (message: Message) => ({
         createdDate:        new Date(message.createdAt).getTime(),
         updatedDate:        new Date(message.updatedAt).getTime(),
@@ -39,6 +39,8 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
         const isDelete = confirm('do you really want to delete messages');
 
         if (isDelete) {
+            setTogglerAction({ type: 'isLoading', value: true });
+
             deleteMessage(message._id);
         }
     };

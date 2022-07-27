@@ -9,6 +9,7 @@ import { Message, MessageUpdatePayload } from '../types';
 
 // Constant
 import { API_URL } from '../../../init/constants';
+import { togglerCreatorAction } from '../../client/togglers';
 
 // Action
 export const changeMessageAction = createAction(`${sliceName}/CHANGE_MESSAGE_ASYNC`);
@@ -30,6 +31,7 @@ export const changeMessage = createAsyncThunk(changeMessageAction.type, async (u
         const data: Message = await response.json();
 
         thunkDispatch(messageActions.changeMessage(data));
+        thunkDispatch(togglerCreatorAction({ type: 'isLoading', value: false }));
 
         return data;
     }

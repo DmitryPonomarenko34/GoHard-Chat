@@ -37,6 +37,7 @@ export const registerUser = createAsyncThunk(registerUserAction.type, async (use
         localStorage.setItem(USER_ID, data._id);
         thunkDispatch(userActions.setUser(data));
         thunkDispatch(togglerCreatorAction({ type: 'isLoggedIn', value: true }));
+        thunkDispatch(togglerCreatorAction({ type: 'isLoading', value: false }));
 
         return data;
     }
