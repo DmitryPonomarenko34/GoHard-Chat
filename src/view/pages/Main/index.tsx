@@ -3,6 +3,7 @@ import { RuLayout, EnLayout } from './data';
 
 // Core
 import React, { FC, useEffect, useRef } from 'react';
+// import { useQuery } from '@apollo/client';
 
 // Bus
 import { useMessages, useUser } from '../../../bus';
@@ -26,7 +27,7 @@ const Main: FC = () => {
     const { createMessage } = useMessages(true);
     const { togglersRedux, setTogglerAction } = useTogglersRedux();
     const { keyboard, getKeyboardWord, resetKeybordWords } = useKeyboard();
-
+    // const { data } = useQuery();
     const keyboardRef = useRef<HTMLDivElement | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
     const editInputRef = useRef<HTMLInputElement | null>(null);
@@ -102,6 +103,17 @@ const Main: FC = () => {
             <Chat
                 editInputRef = { editInputRef }
             />
+            {/* {
+                data?.getMessages.map((elem: any) => (
+                    <div>
+                        {elem.text}
+                        {elem.id}
+                        {elem.username}
+                        {elem.createdAt}
+                        {elem.updatedAt}
+                    </div>
+                ))
+            } */}
             <CreateMessageForm
                 handleChangeInput = { handleChangeInput }
                 handleCreateMessage = { handleCreateMessage }

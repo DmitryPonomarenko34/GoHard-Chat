@@ -9,35 +9,37 @@ import { messageActions } from './slice';
 
 // Tools
 import { useAppDispatch, useSelector } from '../../tools/hooks';
+import { useQuery } from '@apollo/client';
 
-let timerId: NodeJS.Timer | undefined = void 0; // eslint-disable-line no-undef
+// Schema
+import { GET_MESSAGES } from './schema';
+
+
+// let timerId: NodeJS.Timer | undefined = void 0; // eslint-disable-line no-undef
 
 export const useMessages = (isFetching?: boolean) => {
-    const { getMessages, createMessage, changeMessage, deleteMessage } = useMessagesThunk();
+    const { createMessage, changeMessage, deleteMessage } = useMessagesThunk();
+    const { data } = useQuery(GET_MESSAGES);
 
-    const dispatch = useAppDispatch();
-    const messages = useSelector((state) => state.messages);
+    // const clearMessages = () => void dispatch(messageActions.clearMessages(null));
 
-    const clearMessages = () => void dispatch(messageActions.clearMessages(null));
+    // useEffect(() => {
+    //     if (isFetching) {
+    //         getMessages();
 
-    useEffect(() => {
-        if (isFetching) {
-            getMessages();
+    //         timerId = setInterval(() => { // eslint-disable-line @typescript-eslint/no-unused-vars
+    //             getMessages();
+    //         }, 5000);
+    //     }
 
-            timerId = setInterval(() => { // eslint-disable-line @typescript-eslint/no-unused-vars
-                getMessages();
-            }, 5000);
-        }
-
-        return () => clearInterval(timerId);
-    }, []);
+    //     return () => clearInterval(timerId);
+    // }, []);
 
     return {
-        messages,
-        getMessages,
+        data,
         createMessage,
         changeMessage,
         deleteMessage,
-        clearMessages,
+        // clearMessages,
     };
 };
