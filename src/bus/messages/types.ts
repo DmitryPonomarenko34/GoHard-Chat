@@ -3,14 +3,16 @@ import { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
 
 // State
 export type Message = {
-    _id: string,
+    id: string,
     username: string,
     text: string,
     createdAt: string,
     updatedAt: string,
 }
 
-export type Messages = Array<Message>
+export type Messages = {
+    getMessages: Array<Message>
+}
 
 export type MessagesState = Messages | null
 

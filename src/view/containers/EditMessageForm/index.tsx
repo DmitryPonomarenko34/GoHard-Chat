@@ -1,9 +1,11 @@
 // Core
+import { useLazyQuery, useMutation } from '@apollo/client';
 import React, { FC, useState } from 'react';
 
 // Bus
 import { useSelectedMessage } from '../../../bus/client/selectedMessage';
 import { useTogglersRedux } from '../../../bus/client/togglers';
+import { CHANGE_MESSAGE, GET_MESSAGES } from '../../../bus/messages/schema';
 
 // Styles
 import * as S from './styles';
@@ -12,22 +14,25 @@ import * as S from './styles';
 type PropTypes = {
     editInputRef: React.RefObject<HTMLInputElement>
     messageText: string
-    // messageId: string
+    messageId: string
 }
 
 export const EditMessageForm: FC<PropTypes>
     = (
-        { messageText, editInputRef }, // messageId
+        { messageText, editInputRef, messageId },
     ) => {
         const [ inputValue, setinputValue ] = useState(messageText);
         const { closeSelectedMessage } = useSelectedMessage();
         const { setTogglerAction } = useTogglersRedux();
+        const [ , { refetch: refetchMessages }] = useLazyQuery(GET_MESSAGES);
+        const [ changeMessage ] = useMutation(CHANGE_MESSAGE, { onCompleted() {
+            refetchMessages();
+        } });
 
         const handleSubmitMessage = (event: React.FormEvent<HTMLFormElement>) => {
-            setTogglerAction({ type: 'isLoading', value: true });
             event.preventDefault();
-
-            // changeMessage({ _id: messageId, text: inputValue });
+            setTogglerAction({ type: 'isLoading', value: true });
+            changeMessage({ variables: { updateMessageId: messageId, text: inputValue }});
             closeSelectedMessage();
         };
 

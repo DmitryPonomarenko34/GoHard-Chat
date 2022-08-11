@@ -9,7 +9,7 @@ import iconNinja from '../../../assets/icons/userIcon.svg';
 
 // Types
 type PropTypes = {
-    username: string
+    username: string;
     handleLogoutUser: () => void;
 }
 

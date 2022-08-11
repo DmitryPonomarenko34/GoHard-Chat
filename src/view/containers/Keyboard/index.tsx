@@ -1,10 +1,13 @@
 // Core
+import { useLazyQuery } from '@apollo/client';
 import React, { FC } from 'react';
 
 // Bus
 import { useKeyboard } from '../../../bus/client/keyboard';
 import { useTogglersRedux } from '../../../bus/client/togglers';
-// import { useUser } from '../../../bus/user';
+
+// Schema
+import { GET_MESSAGES } from '../../../bus/messages/schema';
 
 // Component
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -27,7 +30,7 @@ type PropTypes = {
 export const Keyboard: FC<PropTypes> = ({ keybortRef, arrayKeyboardWords }) => {
     const { keyboard, deleteLastWord, getKeyboardWord, resetKeybordWords } = useKeyboard();
     const { togglersRedux, setTogglerAction } = useTogglersRedux();
-    // const { user } = useUser();
+    const [ , { refetch: refetchMessage }] = useLazyQuery(GET_MESSAGES);
 
     const getArray = (array: Array<{value: string; keycode: number}>, tuUpperCase?: boolean) => {
         const newArray = array.map((elem) => {
@@ -88,7 +91,7 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef, arrayKeyboardWords }) => {
 
         if (button.getAttribute('value') === '13') {
             if (keyboard && keyboard.text.length !== 0) {
-                // createMessage({ username: user ? user.username : '', text: keyboard.text });
+                refetchMessage();
                 resetKeybordWords();
             }
 

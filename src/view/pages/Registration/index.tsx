@@ -16,10 +16,12 @@ import { USER_ID } from '../../../init';
 
 // Types
 import { UserRegisterState } from '../../../bus/user/types';
+import { useTogglersRedux } from '../../../bus/client/togglers';
 
 const Registration: FC = () => {
     const randomNumbers = () => Math.floor(1000 + (Math.random() * 9000));
     const [ username, setUsername ] = useState(`NINJA:${randomNumbers()}`);
+    const { setTogglerAction } = useTogglersRedux();
     const [
         registerUser, {
             loading: isRegisterLoad,
@@ -38,6 +40,7 @@ const Registration: FC = () => {
             onCompleted(data) {
                 if (data) {
                     localStorage.setItem(USER_ID, data.registrUser.id);
+                    setTogglerAction({ type: 'isLoggedIn', value: true });
                 }
             },
             onError() {

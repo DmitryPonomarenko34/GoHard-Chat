@@ -4,7 +4,7 @@ import { gql } from '@apollo/client';
 // Schema
 export const GET_MESSAGES = gql`
   query GetMessages {
-    dogs {
+    getMessages {
       id
       text
       username

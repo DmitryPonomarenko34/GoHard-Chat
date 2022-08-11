@@ -1,5 +1,6 @@
 // Core
 import React, { FC } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
 
 // Component
 import { EditMessageForm, MessageInfoActions, MessageDateInfo } from '../../components';
@@ -8,39 +9,43 @@ import { EditMessageForm, MessageInfoActions, MessageDateInfo } from '../../comp
 import { useSelectedMessage } from '../../../bus/client/selectedMessage';
 import { useTogglersRedux } from '../../../bus/client/togglers';
 
+// Schema
+import { DELETE_MESSAGE, GET_MESSAGES } from '../../../bus/messages/schema';
+
 // Styles
 import * as S from './styles';
 
 // Types
-import { Message } from '../../../bus/messages/types';
+import { Message, Messages } from '../../../bus/messages/types';
 
 type PropTypes = {
     editInputRef: React.RefObject<HTMLInputElement>
+    ownername: string
 }
 
-export const Chat: FC<PropTypes> = ({ editInputRef }) => {
-    // const { user } = useUser();
-    const { togglersRedux } = useTogglersRedux();
+export const Chat: FC<PropTypes> = ({ editInputRef, ownername }) => {
+    const { togglersRedux, setTogglerAction } = useTogglersRedux();
     const { selectedMessage, closeSelectedMessage, changeSelectedMessage } = useSelectedMessage();
-    const { setTogglerAction } = useTogglersRedux();
+    const { data: messagesData, refetch: refetchMesages } = useQuery<Messages>(GET_MESSAGES, { pollInterval: 4000 });
+    const [ deleteMessage ] = useMutation<string>(DELETE_MESSAGE, { onCompleted() {
+        refetchMesages();
+    } });
     const messageTransformator = (message: Message) => ({
-        createdDate:        new Date(message.createdAt).getTime(),
-        updatedDate:        new Date(message.updatedAt).getTime(),
-        messageCreatedTime: new Date(message.createdAt).toLocaleTimeString(),
-        messageAuthor:      true,                                         // message.username === user?.username ? true : null,
-        isEditingMessage:   selectedMessage?._id === message._id,
+        createdDate:        new Date(Number(message.createdAt)).getTime(),
+        updatedDate:        new Date(Number(message.updatedAt)).getTime(),
+        messageCreatedTime: new Date(Number(message.createdAt)).toLocaleTimeString(),
+        messageAuthor:      message.username === ownername ? true : null,
+        isEditingMessage:   selectedMessage?.id === message.id,
     });
 
-    const messages = [ 1, 2, 3, 4 ];
-
-    const handleRemoveMessage = () => { //message: Massage
+    const handleRemoveMessage = (message: Message) => {
         // eslint-disable-next-line no-alert
         const isDelete = confirm('do you really want to delete messages');
 
         if (isDelete) {
             setTogglerAction({ type: 'isLoading', value: true });
 
-            // deleteMessage(message._id);
+            deleteMessage({ variables: { deleteMessageId: message.id }});
         }
     };
 
@@ -52,7 +57,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
         <S.Container>
             <S.Chat>
                 {
-                    messages?.map((message: any) => {
+                    messagesData?.getMessages.map((message) => {
                         const {
                             createdDate, updatedDate,
                             isEditingMessage,
@@ -61,7 +66,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
 
                         return (
                             <S.Message
-                                key = { message._id }
+                                key = { message.id }
                                 messageAuthor = { messageAuthor }>
                                 <S.UserName messageAuthor = { messageAuthor }>
                                     {message.username}
@@ -84,7 +89,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef }) => {
                                         ? (
                                             <EditMessageForm
                                                 editInputRef = { editInputRef }
-                                                // messageId = { '123' }  //message._id
+                                                messageId = { message.id }
                                                 messageText = { message.text }
                                             />
                                         )

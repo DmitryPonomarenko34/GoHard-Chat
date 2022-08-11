@@ -37,9 +37,14 @@ export const App: FC = () => {
 
     useEffect(() => {
         if (userId) {
-            refreshAuth({ variables: { refreshAuthId: userId }, onCompleted() {
-                setTogglerAction({ type: 'isLoggedIn', value: true });
-            } });
+            refreshAuth(
+                {
+                    variables: { refreshAuthId: userId },
+                    onCompleted() {
+                        setTogglerAction({ type: 'isLoggedIn', value: true });
+                    },
+                },
+            );
         }
     }, []);
 

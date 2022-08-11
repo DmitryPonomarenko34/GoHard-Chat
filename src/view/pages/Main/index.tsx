@@ -3,31 +3,48 @@ import { RuLayout, EnLayout } from './data';
 
 // Core
 import React, { FC, useEffect, useRef } from 'react';
-// import { useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 
 // Bus
-// import { useUser } from '../../../bus'; //useMessages
 import { useTogglersRedux } from '../../../bus/client/togglers';
 import { useKeyboard } from '../../../bus/client/keyboard';
+
+// Schema
+import { REFRESH_AUTH } from '../../../bus/user/schema';
+import { CREATE_MESSAGE, GET_MESSAGES } from '../../../bus/messages/schema';
 
 // Container
 import { Chat } from '../../containers';
 
 // Components
-import { ErrorBoundary, CreateMessageForm, Keyboard } from '../../components'; // UserInfo
+import { ErrorBoundary, CreateMessageForm, Keyboard, UserInfo } from '../../components'; // UserInfo
 
 // Elements
-// import { ShurikenSpinner } from '../../elements';
+import { ShurikenSpinner } from '../../elements';
 
 // Style
 import * as S from './styles';
 
+// Types
+import { UserRefreshState } from '../../../bus/user/types';
+import { Message } from '../../../bus/messages/types';
+
+// Constant
+import { USER_ID } from '../../../init';
+
 const Main: FC = () => {
-    // const { user, logoutUser } = useUser();
-    // const { createMessage } = useMessages(true);
+    const userId = localStorage.getItem(USER_ID);
+    const [
+        , {
+            data: user,
+            loading: isUserLoad,
+            refetch,
+        },
+    ] = useLazyQuery<UserRefreshState>(REFRESH_AUTH, { variables: { refreshAuthId: userId }});
+    const [ createMessage ] = useMutation<Message>(CREATE_MESSAGE);
+    const [ , { refetch: refetchMessage }] = useLazyQuery(GET_MESSAGES);
     const { togglersRedux, setTogglerAction } = useTogglersRedux();
     const { keyboard, getKeyboardWord, resetKeybordWords } = useKeyboard();
-    // const { data } = useQuery();
     const keyboardRef = useRef<HTMLDivElement | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
     const editInputRef = useRef<HTMLInputElement | null>(null);
@@ -64,7 +81,8 @@ const Main: FC = () => {
         event.preventDefault();
 
         if (keyboard) {
-            // createMessage({ username: user ? user.username : '', text: keyboard.text });
+            createMessage({ variables: { username: user ? user.refreshAuth.username : '', text: keyboard.text }});
+            refetchMessage();
             resetKeybordWords();
         }
 
@@ -73,7 +91,14 @@ const Main: FC = () => {
         }
     };
 
+    const logoutUser = () => {
+        localStorage.removeItem(USER_ID);
+        setTogglerAction({ type: 'isLoggedIn', value: false });
+    };
+
     useEffect(() => {
+        refetch();
+
         window.addEventListener('keydown', (event) => {
             handleOnKey(event, '#E15A32', '#fff');
 
@@ -83,37 +108,27 @@ const Main: FC = () => {
 
             inputRef.current?.focus();
         });
-
         window.addEventListener('keyup', (event) => handleOnKey(event, '#ccc', 'none'));
     }, []);
 
 
-    // if (user === null) {
-    //     return (
-    //         <ShurikenSpinner />
-    //     );
-    // }
+    // eslint-disable-next-line no-undefined
+    if (isUserLoad) {
+        return (
+            <ShurikenSpinner />
+        );
+    }
 
     return (
         <S.Container>
-            {/* <UserInfo
+            <UserInfo
                 handleLogoutUser = { logoutUser }
-                username = { user.username }
-            /> */}
+                username = { user ? user.refreshAuth.username : '' }
+            />
             <Chat
                 editInputRef = { editInputRef }
+                ownername = { user ? user.refreshAuth.username : '' }
             />
-            {/* {
-                data?.getMessages.map((elem: any) => (
-                    <div>
-                        {elem.text}
-                        {elem.id}
-                        {elem.username}
-                        {elem.createdAt}
-                        {elem.updatedAt}
-                    </div>
-                ))
-            } */}
             <CreateMessageForm
                 handleChangeInput = { handleChangeInput }
                 handleCreateMessage = { handleCreateMessage }
