@@ -1,64 +1,63 @@
 // Core
 import React, { FC, useState } from 'react';
+import { useMutation } from '@apollo/client';
 
-// Bus
-import { useUser } from '../../../bus/user';
+// Schema
+import { REGISTER_USER } from '../../../bus/user/schema';
 
 // Components
-import { ErrorBoundary } from '../../components';
+import { ErrorBoundary, RegistrationUserInfo, RegistrationForm } from '../../components';
 
 // Styles
 import * as S from './styles';
 
+// Constant
+import { USER_ID } from '../../../init';
+
 // Types
-type PropTypes = {
-    /* type props here */
-}
+import { UserRegisterState } from '../../../bus/user/types';
+import { useTogglersRedux } from '../../../bus/client/togglers';
 
-//Asset
-import NinjaIcon from '../../../assets/icons/ninja-mask.svg';
+const Registration: FC = () => {
+    const randomNumbers = () => Math.floor(1000 + (Math.random() * 9000));
+    const [ username, setUsername ] = useState(`NINJA:${randomNumbers()}`);
+    const { setTogglerAction } = useTogglersRedux();
+    const [
+        registerUser, {
+            loading: isRegisterLoad,
+        },
+    ] = useMutation<UserRegisterState>(REGISTER_USER);
 
-const Registration: FC<PropTypes> = () => {
-    const { registerUser } = useUser();
+    const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        return setUsername(event.target.value);
+    };
 
-    const random = () => Math.floor(1000 + (Math.random() * 9000));
-    const [ username, setUsername ] = useState(`NINJA:${random()}`);
+    const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>, username: string) => {
+        event.preventDefault();
+
+        registerUser({
+            variables: { username: username },
+            onCompleted(data) {
+                if (data) {
+                    localStorage.setItem(USER_ID, data.registrUser.id);
+                    setTogglerAction({ type: 'isLoggedIn', value: true });
+                }
+            },
+            onError() {
+                localStorage.removeItem(USER_ID);
+            },
+        });
+    };
 
     return (
         <S.Container>
-            <S.DecorIcon
-                alt = 'decor ninja icon'
-                src = { NinjaIcon }
+            <RegistrationUserInfo />
+            <RegistrationForm
+                handleChangeInput = { handleChangeInput }
+                handleSubmitForm = { handleSubmitForm }
+                isLoading = { isRegisterLoad }
+                username = { username }
             />
-            <S.Title>
-                <S.TitleAccentWord>
-                    Ninja
-                </S.TitleAccentWord>
-                Registration
-            </S.Title>
-            <S.Form
-                action = '#'
-                onSubmit = { (event) => {
-                    event.preventDefault();
-                    registerUser(username);
-                }  }>
-                <S.Label htmlFor = 'text'>
-                    <S.LabelText>
-                        Enter your NinjaName:
-                    </S.LabelText>
-                    <S.Input
-                        name = 'text'
-                        placeholder = 'Write your ninja name'
-                        type = 'text'
-                        value = { username }
-                        onChange = { (event) => setUsername(event.target.value) }
-                    />
-                </S.Label>
-                <S.SubmitBtn
-                    type = 'submit'>
-                    Submit
-                </S.SubmitBtn>
-            </S.Form>
         </S.Container>
     );
 };

@@ -1,19 +1,25 @@
 // Core
-import React, { FC, useEffect, useCallback } from 'react';
+import React, { FC, useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import { useLazyQuery } from '@apollo/client';
 
 // Bus
-import { useUser } from '../bus/user';
+import { useTogglersRedux } from '../bus/client/togglers';
+
+// Schema
+import { REFRESH_AUTH } from '../bus/user/schema';
 
 // Containers
 import { Routes } from './routes';
 
 // Hooks
 import { useLocalStorage } from '../tools/hooks';
-import { useTogglersRedux } from '../bus/client/togglers';
 
 // Assets
 import { GlobalStyles, defaultTheme } from '../assets';
+
+// Constant
+import { USER_ID } from '../init';
 
 // Styles
 export const AppContainer = styled.div`
@@ -24,20 +30,22 @@ export const AppContainer = styled.div`
 `;
 
 export const App: FC = () => {
-    const { setTogglerAction } = useTogglersRedux();
     const [ isDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
-    const { refreshUser } = useUser();
-
-    const setOnlineStatusHanlder = useCallback(() => void setTogglerAction({
-        type:  'isOnline',
-        value: navigator.onLine,
-    }), [ setTogglerAction ]);
+    const [ refreshAuth ] = useLazyQuery(REFRESH_AUTH);
+    const userId = localStorage.getItem(USER_ID);
+    const { setTogglerAction } = useTogglersRedux();
 
     useEffect(() => {
-        refreshUser();
-        setOnlineStatusHanlder();
-        window.addEventListener('online', setOnlineStatusHanlder);
-        window.addEventListener('offline', setOnlineStatusHanlder);
+        if (userId) {
+            refreshAuth(
+                {
+                    variables: { refreshAuthId: userId },
+                    onCompleted() {
+                        setTogglerAction({ type: 'isLoggedIn', value: true });
+                    },
+                },
+            );
+        }
     }, []);
 
     return (
