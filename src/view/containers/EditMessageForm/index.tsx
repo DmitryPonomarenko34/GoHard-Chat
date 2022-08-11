@@ -2,7 +2,6 @@
 import React, { FC, useState } from 'react';
 
 // Bus
-import { useMessages } from '../../../bus';
 import { useSelectedMessage } from '../../../bus/client/selectedMessage';
 import { useTogglersRedux } from '../../../bus/client/togglers';
 
@@ -13,15 +12,14 @@ import * as S from './styles';
 type PropTypes = {
     editInputRef: React.RefObject<HTMLInputElement>
     messageText: string
-    messageId: string
+    // messageId: string
 }
 
 export const EditMessageForm: FC<PropTypes>
     = (
-        { messageText, messageId, editInputRef },
+        { messageText, editInputRef }, // messageId
     ) => {
         const [ inputValue, setinputValue ] = useState(messageText);
-        const { changeMessage } = useMessages();
         const { closeSelectedMessage } = useSelectedMessage();
         const { setTogglerAction } = useTogglersRedux();
 
@@ -29,7 +27,7 @@ export const EditMessageForm: FC<PropTypes>
             setTogglerAction({ type: 'isLoading', value: true });
             event.preventDefault();
 
-            changeMessage({ _id: messageId, text: inputValue });
+            // changeMessage({ _id: messageId, text: inputValue });
             closeSelectedMessage();
         };
 

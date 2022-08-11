@@ -4,8 +4,7 @@ import React, { FC } from 'react';
 // Bus
 import { useKeyboard } from '../../../bus/client/keyboard';
 import { useTogglersRedux } from '../../../bus/client/togglers';
-import { useMessages } from '../../../bus/messages';
-import { useUser } from '../../../bus/user';
+// import { useUser } from '../../../bus/user';
 
 // Component
 import { ErrorBoundary } from '../../components/ErrorBoundary';
@@ -28,8 +27,7 @@ type PropTypes = {
 export const Keyboard: FC<PropTypes> = ({ keybortRef, arrayKeyboardWords }) => {
     const { keyboard, deleteLastWord, getKeyboardWord, resetKeybordWords } = useKeyboard();
     const { togglersRedux, setTogglerAction } = useTogglersRedux();
-    const { createMessage } = useMessages();
-    const { user } = useUser();
+    // const { user } = useUser();
 
     const getArray = (array: Array<{value: string; keycode: number}>, tuUpperCase?: boolean) => {
         const newArray = array.map((elem) => {
@@ -90,7 +88,7 @@ export const Keyboard: FC<PropTypes> = ({ keybortRef, arrayKeyboardWords }) => {
 
         if (button.getAttribute('value') === '13') {
             if (keyboard && keyboard.text.length !== 0) {
-                createMessage({ username: user ? user.username : '', text: keyboard.text });
+                // createMessage({ username: user ? user.username : '', text: keyboard.text });
                 resetKeybordWords();
             }
 

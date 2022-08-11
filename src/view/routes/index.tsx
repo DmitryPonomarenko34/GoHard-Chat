@@ -13,6 +13,7 @@ import { ShurikenSpinner } from '../elements';
 
 export const Routes: FC = () => {
     const { togglersRedux: { isLoggedIn }} = useTogglersRedux();
+    console.log(isLoggedIn);
 
     return (
         <Suspense fallback = { <ShurikenSpinner/> }>

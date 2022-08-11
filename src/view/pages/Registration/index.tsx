@@ -1,9 +1,9 @@
 // Core
 import React, { FC, useState } from 'react';
+import { useMutation } from '@apollo/client';
 
-// Bus
-import { useUser } from '../../../bus/user';
-import { useTogglersRedux } from '../../../bus/client/togglers';
+// Schema
+import { REGISTER_USER } from '../../../bus/user/schema';
 
 // Components
 import { ErrorBoundary, RegistrationUserInfo, RegistrationForm } from '../../components';
@@ -11,11 +11,20 @@ import { ErrorBoundary, RegistrationUserInfo, RegistrationForm } from '../../com
 // Styles
 import * as S from './styles';
 
+// Constant
+import { USER_ID } from '../../../init';
+
+// Types
+import { UserRegisterState } from '../../../bus/user/types';
+
 const Registration: FC = () => {
-    const { registerUser } = useUser();
-    const { togglersRedux, setTogglerAction } = useTogglersRedux();
     const randomNumbers = () => Math.floor(1000 + (Math.random() * 9000));
     const [ username, setUsername ] = useState(`NINJA:${randomNumbers()}`);
+    const [
+        registerUser, {
+            loading: isRegisterLoad,
+        },
+    ] = useMutation<UserRegisterState>(REGISTER_USER);
 
     const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         return setUsername(event.target.value);
@@ -23,8 +32,18 @@ const Registration: FC = () => {
 
     const handleSubmitForm = (event: React.FormEvent<HTMLFormElement>, username: string) => {
         event.preventDefault();
-        setTogglerAction({ type: 'isLoading', value: true });
-        registerUser(username);
+
+        registerUser({
+            variables: { username: username },
+            onCompleted(data) {
+                if (data) {
+                    localStorage.setItem(USER_ID, data.registrUser.id);
+                }
+            },
+            onError() {
+                localStorage.removeItem(USER_ID);
+            },
+        });
     };
 
     return (
@@ -33,7 +52,7 @@ const Registration: FC = () => {
             <RegistrationForm
                 handleChangeInput = { handleChangeInput }
                 handleSubmitForm = { handleSubmitForm }
-                isLoading = { togglersRedux.isLoading }
+                isLoading = { isRegisterLoad }
                 username = { username }
             />
         </S.Container>

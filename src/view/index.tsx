@@ -1,9 +1,13 @@
 // Core
 import React, { FC, useEffect } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import { useLazyQuery } from '@apollo/client';
 
 // Bus
-import { useUser } from '../bus/user';
+import { useTogglersRedux } from '../bus/client/togglers';
+
+// Schema
+import { REFRESH_AUTH } from '../bus/user/schema';
 
 // Containers
 import { Routes } from './routes';
@@ -13,6 +17,9 @@ import { useLocalStorage } from '../tools/hooks';
 
 // Assets
 import { GlobalStyles, defaultTheme } from '../assets';
+
+// Constant
+import { USER_ID } from '../init';
 
 // Styles
 export const AppContainer = styled.div`
@@ -24,10 +31,16 @@ export const AppContainer = styled.div`
 
 export const App: FC = () => {
     const [ isDefaultTheme ] = useLocalStorage('isDefaultTheme', true);
-    const { refreshUser } = useUser();
+    const [ refreshAuth ] = useLazyQuery(REFRESH_AUTH);
+    const userId = localStorage.getItem(USER_ID);
+    const { setTogglerAction } = useTogglersRedux();
 
     useEffect(() => {
-        refreshUser();
+        if (userId) {
+            refreshAuth({ variables: { refreshAuthId: userId }, onCompleted() {
+                setTogglerAction({ type: 'isLoggedIn', value: true });
+            } });
+        }
     }, []);
 
     return (

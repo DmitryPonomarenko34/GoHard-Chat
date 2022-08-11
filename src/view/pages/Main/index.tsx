@@ -6,7 +6,7 @@ import React, { FC, useEffect, useRef } from 'react';
 // import { useQuery } from '@apollo/client';
 
 // Bus
-import { useMessages, useUser } from '../../../bus';
+// import { useUser } from '../../../bus'; //useMessages
 import { useTogglersRedux } from '../../../bus/client/togglers';
 import { useKeyboard } from '../../../bus/client/keyboard';
 
@@ -14,17 +14,17 @@ import { useKeyboard } from '../../../bus/client/keyboard';
 import { Chat } from '../../containers';
 
 // Components
-import { ErrorBoundary, UserInfo, CreateMessageForm, Keyboard } from '../../components';
+import { ErrorBoundary, CreateMessageForm, Keyboard } from '../../components'; // UserInfo
 
 // Elements
-import { ShurikenSpinner } from '../../elements';
+// import { ShurikenSpinner } from '../../elements';
 
 // Style
 import * as S from './styles';
 
 const Main: FC = () => {
-    const { user, logoutUser } = useUser();
-    const { createMessage } = useMessages(true);
+    // const { user, logoutUser } = useUser();
+    // const { createMessage } = useMessages(true);
     const { togglersRedux, setTogglerAction } = useTogglersRedux();
     const { keyboard, getKeyboardWord, resetKeybordWords } = useKeyboard();
     // const { data } = useQuery();
@@ -64,7 +64,7 @@ const Main: FC = () => {
         event.preventDefault();
 
         if (keyboard) {
-            createMessage({ username: user ? user.username : '', text: keyboard.text });
+            // createMessage({ username: user ? user.username : '', text: keyboard.text });
             resetKeybordWords();
         }
 
@@ -88,18 +88,18 @@ const Main: FC = () => {
     }, []);
 
 
-    if (user === null) {
-        return (
-            <ShurikenSpinner />
-        );
-    }
+    // if (user === null) {
+    //     return (
+    //         <ShurikenSpinner />
+    //     );
+    // }
 
     return (
         <S.Container>
-            <UserInfo
+            {/* <UserInfo
                 handleLogoutUser = { logoutUser }
                 username = { user.username }
-            />
+            /> */}
             <Chat
                 editInputRef = { editInputRef }
             />
