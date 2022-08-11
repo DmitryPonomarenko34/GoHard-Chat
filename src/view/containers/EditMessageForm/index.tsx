@@ -27,6 +27,7 @@ export const EditMessageForm: FC<PropTypes>
         const [ , { refetch: refetchMessages }] = useLazyQuery(GET_MESSAGES);
         const [ changeMessage ] = useMutation(CHANGE_MESSAGE, { onCompleted() {
             refetchMessages();
+            setTogglerAction({ type: 'isLoading', value: false });
         } });
 
         const handleSubmitMessage = (event: React.FormEvent<HTMLFormElement>) => {

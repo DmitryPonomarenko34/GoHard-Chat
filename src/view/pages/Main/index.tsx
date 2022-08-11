@@ -41,8 +41,10 @@ const Main: FC = () => {
             refetch,
         },
     ] = useLazyQuery<UserRefreshState>(REFRESH_AUTH, { variables: { refreshAuthId: userId }});
-    const [ createMessage ] = useMutation<Message>(CREATE_MESSAGE);
     const [ , { refetch: refetchMessage }] = useLazyQuery(GET_MESSAGES);
+    const [ createMessage, { loading: isSubmitingMessage }] = useMutation<Message>(CREATE_MESSAGE, { onCompleted() {
+        refetchMessage();
+    } });
     const { togglersRedux, setTogglerAction } = useTogglersRedux();
     const { keyboard, getKeyboardWord, resetKeybordWords } = useKeyboard();
     const keyboardRef = useRef<HTMLDivElement | null>(null);
@@ -140,6 +142,7 @@ const Main: FC = () => {
                     handleOnKey(event, '#ccc', 'none');
                 }  }
                 inputRef = { inputRef }
+                isSubmitingMessage = { isSubmitingMessage }
                 keyboardText = { keyboard.text }
             />
             {

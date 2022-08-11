@@ -13,6 +13,7 @@ type PropTypes = {
     handleOnKeyUp: (event: React.KeyboardEvent<HTMLInputElement>, bgColor?: string, borderColor?: string) => void
     handleOnKeyDown: (event: React.KeyboardEvent<HTMLInputElement>, bgColor?: string, borderColor?: string) => void
     inputRef: React.RefObject<HTMLInputElement>
+    isSubmitingMessage: boolean
 }
 
 // Asset
@@ -22,7 +23,7 @@ export const CreateMessageForm: FC<PropTypes>
     = ({
         keyboardText, handleKeyboard, handleCreateMessage,
         handleChangeInput, handleOnKeyUp, handleOnKeyDown,
-        inputRef,
+        inputRef, isSubmitingMessage,
     }) => {
         return (
             <S.Container>
@@ -42,7 +43,7 @@ export const CreateMessageForm: FC<PropTypes>
                     <S.SubmitBtn
                         disabled = { !keyboardText }
                         type = 'submit'>
-                        send
+                        {isSubmitingMessage ? 'submiting...' : 'send'}
                     </S.SubmitBtn>
                 </S.Form>
             </S.Container>

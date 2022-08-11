@@ -29,6 +29,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef, ownername }) => {
     const { data: messagesData, refetch: refetchMesages } = useQuery<Messages>(GET_MESSAGES, { pollInterval: 4000 });
     const [ deleteMessage ] = useMutation<string>(DELETE_MESSAGE, { onCompleted() {
         refetchMesages();
+        setTogglerAction({ type: 'isLoading', value: false });
     } });
     const messageTransformator = (message: Message) => ({
         createdDate:        new Date(Number(message.createdAt)).getTime(),
@@ -46,6 +47,7 @@ export const Chat: FC<PropTypes> = ({ editInputRef, ownername }) => {
             setTogglerAction({ type: 'isLoading', value: true });
 
             deleteMessage({ variables: { deleteMessageId: message.id }});
+            refetchMesages();
         }
     };
 
